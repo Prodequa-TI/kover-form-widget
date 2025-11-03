@@ -7,6 +7,7 @@ import {
 } from '../type/types';
 import {
     type Insurances,
+    type InsurancesData,
 } from '@/mocks/request.mock';
 import type { EstimateFormData } from '../config/EstimeFormConfig';
 import { API_DEFAULTS } from '../config/apiDefaults';
@@ -98,7 +99,7 @@ export async function generateQuota(
                 paymentMethod: API_DEFAULTS.paymentDefaults.paymentMethod,
             },
         };
-          const result = await httpClient.post<Insurances>('/insurances', requestData, {
+          const result = await httpClient.post<InsurancesData>('/insurances', requestData, {
             headers: {
                 'Content-Type': 'application/json',
             }

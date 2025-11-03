@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, CreditCardIcon } from 'lucide-react';
 import type { InsurancesData } from '@/mocks/request.mock';
-import type { InsurancePaymentStatusResponse } from '../services/insurance.service';
+import { sendInspectionEmail, type InsurancePaymentStatusResponse } from '../services/insurance.service';
+import { useEffect } from 'react';
 
 interface PaymentConfirmationProps {
     insuranceData: InsurancesData;
@@ -10,8 +11,20 @@ interface PaymentConfirmationProps {
 }
 
 export default function PaymentConfirmation({
+    insuranceData,
     onFinish,
 }: PaymentConfirmationProps) {
+
+    useEffect(() => {
+        const sendEmail = async () => {
+            const result = await sendInspectionEmail(insuranceData.id);
+            if (!result) {
+                console.error('Error al enviar email de inspección');
+            }
+        }
+        sendEmail();
+    }, [])
+
     return (
         <div className='mx-auto max-w-4xl px-4 py-10'>
             <div className='border-4  rounded-xl overflow-hidden bg-white'>
