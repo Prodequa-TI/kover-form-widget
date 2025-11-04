@@ -71,7 +71,7 @@ export const CustomerDataForm = ({
                 setCedulaError(false);
                 return;
             }
-            
+
             setIsLoadingCedula(true);
             setCedulaFound(false);
             setCedulaError(false);
@@ -102,20 +102,20 @@ export const CustomerDataForm = ({
                 onCedulaVerified?.(false);
                 form.setError('customer.documentNumber', {
                     type: 'manual',
-                    message: 'No se encontró información para la cédula ingresada.',
+                    message:
+                        'No se encontró información para la cédula ingresada.',
                 });
-
             } finally {
                 setIsLoadingCedula(false);
             }
         };
 
         autoFillCedula();
-    }, [documentNumber, isCedula, form,onCedulaVerified]);
+    }, [documentNumber, isCedula, form, onCedulaVerified]);
 
     return (
         <>
-            <div className='grid grid-cols-2 gap-4 '>
+            <div className='flex flex-col gap-4 md:grid md:grid-cols-2'>
                 <Controller
                     control={form.control}
                     name='customer.email'
@@ -161,8 +161,7 @@ export const CustomerDataForm = ({
                         </Field>
                     )}
                 />
-            </div>
-            <div className='grid grid-cols-2 gap-4 '>
+
                 <Controller
                     control={form.control}
                     name='customer.documentType'
@@ -184,7 +183,8 @@ export const CustomerDataForm = ({
                                 }>
                                 <SelectTrigger
                                     id='customer.documentType'
-                                    aria-invalid={fieldState.invalid} className='select-none'>
+                                    aria-invalid={fieldState.invalid}
+                                    className='select-none'>
                                     <SelectValue placeholder='Tipo de documento' />
                                 </SelectTrigger>
                                 <SelectContent className='bg-popover z-50'>
@@ -257,7 +257,6 @@ export const CustomerDataForm = ({
                     )}
                 />
             </div>
-
             {isPassport && <PersonalPassportForm form={form} />}
         </>
     );
