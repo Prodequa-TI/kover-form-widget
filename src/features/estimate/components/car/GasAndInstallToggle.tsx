@@ -7,11 +7,10 @@ interface CarFormProps {
     form: UseFormReturn<EstimateFormData>;
     gasEnabled: boolean;
 }
-export const GasAndInstallToggel = ({ form, gasEnabled }: CarFormProps) => {
-
+export const GasAndInstallToggle = ({ form, gasEnabled }: CarFormProps) => {
     return (
         <>
-            <div className='col-span-1'>
+            <div className='flex flex-col md:grid md:grid-cols-2 gap-4'>
                 <Controller
                     control={form.control}
                     name='car.gasType'
@@ -62,8 +61,7 @@ export const GasAndInstallToggel = ({ form, gasEnabled }: CarFormProps) => {
                         </Field>
                     )}
                 />
-            </div>
-            <div>
+
                 <Controller
                     control={form.control}
                     name='car.installationType'
@@ -76,8 +74,15 @@ export const GasAndInstallToggel = ({ form, gasEnabled }: CarFormProps) => {
                                 <Button
                                     type='button'
                                     disabled={!gasEnabled}
-                                    aria-pressed={field.value === InstallatationType.ADAPTED}
-                                    onClick={() => field.onChange( InstallatationType.ADAPTED )}
+                                    aria-pressed={
+                                        field.value ===
+                                        InstallatationType.ADAPTED
+                                    }
+                                    onClick={() =>
+                                        field.onChange(
+                                            InstallatationType.ADAPTED
+                                        )
+                                    }
                                     className={`py-2.5 px-5 rounded-md border-none transition-colors w-full ${
                                         field.value ===
                                         InstallatationType.ADAPTED
