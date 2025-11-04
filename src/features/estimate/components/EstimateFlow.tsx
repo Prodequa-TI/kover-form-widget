@@ -61,7 +61,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
       paymentUrl,
       "popupPago",
       `width=600,height=700,left=${left},top=${top},scrollbars=yes,resizable=yes`
-    );
+    ); // _blank
 
     if (!popup) {
       alert("Popup bloqueado, por favor habilite las ventanas emergentes");

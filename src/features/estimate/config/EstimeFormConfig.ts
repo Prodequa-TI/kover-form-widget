@@ -32,16 +32,20 @@ yup.addMethod<yup.StringSchema>(
     }
 );
 
-yup.addMethod<yup.StringSchema>(yup.string, 'personaleEmail', function (message = 'Correo electronico inválido.') {
-    return this.test('personaleEmail', message, function(value) {
-        if (!value) return true;
-        const domain = value.split('@')[1]?.toLowerCase();
-        if (NOT_ALLOWED_CORPORATE_EMAIL_DOMAINS.includes(domain)) { 
-            return false;
-        }
-        return true;
-    })
- })
+yup.addMethod<yup.StringSchema>(
+    yup.string,
+    'personaleEmail',
+    function (message = 'Correo electronico inválido.') {
+        return this.test('personaleEmail', message, function (value) {
+            if (!value) return true;
+            const domain = value.split('@')[1]?.toLowerCase();
+            if (NOT_ALLOWED_CORPORATE_EMAIL_DOMAINS.includes(domain)) {
+                return false;
+            }
+            return true;
+        });
+    }
+);
 
 // Patrones de ejemplo (ajusta a tu país/regla)
 const rdCedulaDigits = /^\d{11}$/;
@@ -54,8 +58,8 @@ const MAX_WORTH = 7_000_000;
 export const initialValuesCustomer: Customer = {
     email: '',
     phone: '',
-    documentType: undefined,
-    documentNumber: '',
+    documentType: Documents.ID,
+    documentNumber: '402-2004330-7',
     firstName: '',
     lastname: '',
     gender: undefined,

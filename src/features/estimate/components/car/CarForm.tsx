@@ -18,9 +18,9 @@ import { SelectFuelType } from './SelectFuelType';
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { EstimateFormData } from '../../config/EstimeFormConfig';
 import { Switch } from '@/components/ui/switch';
-import { GasAndInstallToggel } from './GasAndInstallToggel';
 import { SelectCarModel } from './SelectBrancModel';
 import { Input } from '@/components/ui/input';
+import { GasAndInstallToggle } from './GasAndInstallToggle';
 
 interface CarFormProps {
     form: UseFormReturn<EstimateFormData>;
@@ -53,54 +53,55 @@ export function CarForm({ form }: CarFormProps) {
 
     return (
         <>
-            <div className='space-y-6 animate-in fade-in-50 duration-500'>
-                <div className='grid grid-cols-2 gap-4 '>
-                    <Controller
-                        control={form.control}
-                        name='car.brand'
-                        render={({ field, fieldState }) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <SelectCarBrand
-                                    name={field.name}
-                                    value={field.value ?? ''}
-                                    items={cars}
-                                    onValueChange={(value) => {
-                                        field.onChange(value);
-                                        handleGetModels(value);
-                                    }}
-                                    invalid={fieldState.invalid}
-                                />
-                                {fieldState.invalid && (
-                                    <FieldError errors={[fieldState.error]} />
-                                )}
-                            </Field>
-                        )}
-                    />
-                    <Controller
-                        control={form.control}
-                        name='car.modelId'
-                        render={({ field, fieldState }) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <SelectCarModel
-                                    name={field.name}
-                                    value={
-                                        field.value === 0
-                                            ? undefined
-                                            : String(field.value)
-                                    }
-                                    items={models}
-                                    onValueChange={(value) =>
-                                        field.onChange(Number(value))
-                                    }
-                                    invalid={fieldState.invalid}
-                                    disabled={!brand}
-                                />
-                                {fieldState.invalid && (
-                                    <FieldError errors={[fieldState.error]} />
-                                )}
-                            </Field>
-                        )}
-                    />
+            <div className='flex flex-col md:grid md:grid-cols-2 gap-4 '>
+                <Controller
+                    control={form.control}
+                    name='car.brand'
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <SelectCarBrand
+                                name={field.name}
+                                value={field.value ?? ''}
+                                items={cars}
+                                onValueChange={(value) => {
+                                    field.onChange(value);
+                                    handleGetModels(value);
+                                }}
+                                invalid={fieldState.invalid}
+                            />
+                            {fieldState.invalid && (
+                                <FieldError errors={[fieldState.error]} />
+                            )}
+                        </Field>
+                    )}
+                />
+                <Controller
+                    control={form.control}
+                    name='car.modelId'
+                    render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                            <SelectCarModel
+                                name={field.name}
+                                value={
+                                    field.value === 0
+                                        ? undefined
+                                        : String(field.value)
+                                }
+                                items={models}
+                                onValueChange={(value) =>
+                                    field.onChange(Number(value))
+                                }
+                                invalid={fieldState.invalid}
+                                disabled={!brand}
+                            />
+                            {fieldState.invalid && (
+                                <FieldError errors={[fieldState.error]} />
+                            )}
+                        </Field>
+                    )}
+                />
+
+                <div className='md:col-start-1 md:col-end-3'>
                     <Controller
                         control={form.control}
                         name='car.year'
@@ -123,82 +124,74 @@ export function CarForm({ form }: CarFormProps) {
                         )}
                     />
                 </div>
-                <div className='grid grid-cols-2 gap-4'>
-                    <Controller
-                        control={form.control}
-                        name='car.isNew'
-                        render={({ field, fieldState }) => (
-                            <label
-                                htmlFor='car.isNew'
-                                className='cursor-pointer select-none'>
-                                <Field
-                                    orientation='horizontal'
-                                    data-invalid={fieldState.invalid}
-                                    className='flex flex-row items-center justify-between rounded-lg border p-4 bg-card hover:bg-gray-50 transition-colors'>
-                                    <FieldContent>
-                                        <FieldLabel htmlFor='car.isNew'>
-                                            Vehiculo nuevo
-                                        </FieldLabel>
-                                        <FieldDescription>
-                                            ¿Tu auto es nuevo?
-                                        </FieldDescription>
-                                    </FieldContent>
-                                    <Switch
-                                        id='car.isNew'
-                                        name={field.name}
-                                        checked={field.value}
-                                        onCheckedChange={field.onChange}
-                                        aria-invalid={fieldState.invalid}
-                                        className='bg-indigo-500'
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError
-                                            errors={[fieldState.error]}
-                                        />
-                                    )}
-                                </Field>
-                            </label>
-                        )}
-                    />
-                    <Controller
-                        control={form.control}
-                        name='car.isPersonalUse'
-                        render={({ field, fieldState }) => (
-                            <label
-                                htmlFor='car.isPersonalUse'
-                                className='cursor-pointer select-none'>
-                                <Field
-                                    orientation='horizontal'
-                                    data-invalid={fieldState.invalid}
-                                    className='flex flex-row items-center justify-between rounded-lg border p-4 bg-card hover:bg-gray-50 transition-colors'>
-                                    <FieldContent>
-                                        <FieldLabel htmlFor='form-rhf-complex-emailNotifications'>
-                                            Uso Personal
-                                        </FieldLabel>
-                                        <FieldDescription>
-                                            Confirma que es de uso particular
-                                        </FieldDescription>
-                                    </FieldContent>
-                                    <Switch
-                                        id='car.isPersonalUse'
-                                        name={field.name}
-                                        checked={field.value}
-                                        onCheckedChange={field.onChange}
-                                        aria-invalid={fieldState.invalid}
-                                        className='bg-indigo-500'
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError
-                                            errors={[fieldState.error]}
-                                        />
-                                    )}
-                                </Field>
-                            </label>
-                        )}
-                    />
-                </div>
-            </div>
-            <div className='grid grid-cols-2 gap-4'>
+                <Controller
+                    control={form.control}
+                    name='car.isNew'
+                    render={({ field, fieldState }) => (
+                        <label
+                            htmlFor='car.isNew'
+                            className='cursor-pointer select-none'>
+                            <Field
+                                orientation='horizontal'
+                                data-invalid={fieldState.invalid}
+                                className='flex flex-row items-center justify-between rounded-lg border p-4 bg-card hover:bg-gray-50 transition-colors'>
+                                <FieldContent>
+                                    <FieldLabel htmlFor='car.isNew'>
+                                        Vehiculo nuevo
+                                    </FieldLabel>
+                                    <FieldDescription>
+                                        ¿Tu auto es nuevo?
+                                    </FieldDescription>
+                                </FieldContent>
+                                <Switch
+                                    id='car.isNew'
+                                    name={field.name}
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                    aria-invalid={fieldState.invalid}
+                                    className='bg-indigo-500'
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        </label>
+                    )}
+                />
+                <Controller
+                    control={form.control}
+                    name='car.isPersonalUse'
+                    render={({ field, fieldState }) => (
+                        <label
+                            htmlFor='car.isPersonalUse'
+                            className='cursor-pointer select-none'>
+                            <Field
+                                orientation='horizontal'
+                                data-invalid={fieldState.invalid}
+                                className='flex flex-row items-center justify-between rounded-lg border p-4 bg-card hover:bg-gray-50 transition-colors'>
+                                <FieldContent>
+                                    <FieldLabel htmlFor='form-rhf-complex-emailNotifications'>
+                                        Uso Personal
+                                    </FieldLabel>
+                                    <FieldDescription>
+                                        Confirma que es de uso particular
+                                    </FieldDescription>
+                                </FieldContent>
+                                <Switch
+                                    id='car.isPersonalUse'
+                                    name={field.name}
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                    aria-invalid={fieldState.invalid}
+                                    className='bg-indigo-500'
+                                />
+                                {fieldState.invalid && (
+                                    <FieldError errors={[fieldState.error]} />
+                                )}
+                            </Field>
+                        </label>
+                    )}
+                />
                 <Controller
                     control={form.control}
                     name='car.fuelType'
@@ -224,7 +217,6 @@ export function CarForm({ form }: CarFormProps) {
                                         ]);
                                     }
                                 }}
-                                
                             />
                             {fieldState.invalid && (
                                 <FieldError errors={[fieldState.error]} />
@@ -270,10 +262,10 @@ export function CarForm({ form }: CarFormProps) {
                         </Field>
                     )}
                 />
-                {fuelType === FuelsType.GAS && (
-                    <GasAndInstallToggel form={form} gasEnabled={gasEnabled} />
-                )}
             </div>
+            {fuelType === FuelsType.GAS && (
+                <GasAndInstallToggle form={form} gasEnabled={gasEnabled} />
+            )}
         </>
     );
 }

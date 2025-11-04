@@ -19,7 +19,7 @@ type PersonalPassportFormProps = {
 export const PersonalPassportForm = ({ form }: PersonalPassportFormProps) => {
     return (
         <>
-            <div className='grid gap-4 sm:grid-cols-2'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 <Controller
                     control={form.control}
                     name='customer.firstName'
@@ -62,8 +62,7 @@ export const PersonalPassportForm = ({ form }: PersonalPassportFormProps) => {
                         </Field>
                     )}
                 />
-            </div>
-            <div className='grid gap-4 sm:grid-cols-2'>
+
                 <Controller
                     control={form.control}
                     name='customer.gender'
