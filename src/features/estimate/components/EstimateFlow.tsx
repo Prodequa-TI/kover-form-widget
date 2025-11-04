@@ -7,12 +7,11 @@ import {
     getUrlPayment,
     type InsurancePaymentStatusResponse,
 } from '../services/insurance.service';
-import { Validacion } from './validacion';
 import PaymentConfirmation from './PaymentConfirmation';
 
 type FlowStep = 'estimate' | 'emit' | 'emited' | 'confirmation';
 interface FlowProps {
-    storeToken?: string;
+  storeToken?: string;
 }
 
 export const EstimateFlow = ({ storeToken }: FlowProps) => {
@@ -52,30 +51,33 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
         setPaymentErrorMessage('Error al obtener el enlace de pago, por favor inténtalo nuevamente.');
         return;
     }
-    const left = (screen.width / 2) - (600 / 2);
-    const top = (screen.height / 2) - (700 / 2);
+
+    const popupHeight = 700;
+    const popupWidth = 600;
+    const left = (screen.width / 2) - (popupWidth / 2);
+    const top = (screen.height / 2) - (popupHeight / 2);
 
     const popup = window.open(
       paymentUrl,
       "popupPago",
-      "width=600,height=700,left=" + left + ",top=" + top + ",scrollbars=yes,resizable=yes"
+      `width=600,height=700,left=${left},top=${top},scrollbars=yes,resizable=yes`
     );
 
     if (!popup) {
-      alert("Popup bloqueado");
+      alert("Popup bloqueado, por favor habilite las ventanas emergentes");
       return;
     }
     
     const interval = setInterval(async () => {
       const payment = await checkStatusPayment(insuranceId);
-      if (!payment.data.isPaid && popup.closed) {
+      if (!payment.isPaid && popup.closed) {
         clearInterval(interval);
         setIsCheckoutOpen(false)
         setPaymentErrorMessage('Ha cancelado el pago. Por favor inténtalo nuevamente.');
         return;
       }
 
-      if (payment.data.isPaid) {
+      if (payment.isPaid) {
         popup.close();
         clearInterval(interval);
         setIsCheckoutOpen(false);
@@ -121,9 +123,6 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
             setSuccessMessage(null);
           }}
         />
-      )}
-      {currentStep === "emited" &&  paymentData && (
-        <Validacion payment={paymentData} />
       )}
     </>
   );
