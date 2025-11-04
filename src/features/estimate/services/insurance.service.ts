@@ -1,17 +1,19 @@
 import { httpClient } from "../../../core/httpClient";
 
 interface InsurancePaymentResponse {
-  data: {
-    paymentUrl: string;
-  };
+  paymentUrl: string;
 }
 
 export interface InsurancePaymentStatusResponse {
-  data: {
-    quoteNumber: string;
-    policyNumber: string;
-    isPaid: boolean;
-  };
+  quoteNumber: string;
+  policyNumber: string;
+  isPaid: boolean;
+}
+
+export interface SendEmailResponse {
+  insuranceId: string;
+  quoteNumber: number;
+  emailToSend: string;
 }
 
 export const getUrlPayment = async (insuranceId: string): Promise<string> => {
@@ -21,5 +23,15 @@ export const getUrlPayment = async (insuranceId: string): Promise<string> => {
 
 export const checkStatusPayment = async (insuranceId: string): Promise<InsurancePaymentStatusResponse> => {
   const response = await httpClient.get<InsurancePaymentStatusResponse>(`/insurances/${insuranceId}/payment-status`);
-  return response;
+  return response.data;
+};
+
+export const sendInspectionEmail = async (insuranceId: string): Promise<boolean> => {
+  try {
+    const response = await httpClient.post<SendEmailResponse>(`/insurances/${insuranceId}/inspection-email`);
+    return response.success;  
+  } catch (error) {
+    console.error('Error al enviar email de inspección', error);
+    return false;
+  }
 };
