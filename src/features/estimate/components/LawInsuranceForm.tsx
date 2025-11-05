@@ -66,7 +66,7 @@ export const LawInsuranceForm = ({ form }: PlansAccordionProps) => {
                                         return (
                                             <div
                                                 key={plan.id}
-                                                className='relative rounded-lg border-blue-500 border bg-card p-4 hover:bg-gray-50 transition-colors'>
+                                                className='relative rounded-lg border-widget-primary border bg-card p-4 hover:bg-gray-50 transition-colors'>
                                                 <div className='absolute right-3 top-3'>
                                                     <RadioGroupItem
                                                         id={inputId}

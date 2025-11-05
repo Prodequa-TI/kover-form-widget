@@ -39,8 +39,15 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
-    --color-indigo: var(--color-indigo);
-    --color-indigo-foreground:var(--color-indigo-foreground)
+    
+    /* ⭐ NUEVAS VARIABLES PARA EL WIDGET CUSTOMIZABLE ⭐ */
+    /* Estas pueden ser sobrescritas por cada cliente */
+    --color-widget-primary: var(--widget-primary);
+    --color-widget-primary-hover: var(--widget-primary-hover);
+    --color-widget-primary-foreground: var(--widget-primary-foreground);
+    --color-widget-secondary: var(--widget-secondary);
+    --color-widget-secondary-foreground: var(--widget-secondary-foreground);
+
 }
 
 
@@ -79,10 +86,20 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
-    --color-indigo: oklch(0.38 0.14 266);
-    --color-indigo-foreground:oklch(0.42 0.18 266);
     --color-blue-700: oklch(0.488 0.243 264.376);
     --tw-translate-y: 0;
+    
+     /* ⭐ VARIABLES DEL WIDGET - VALORES POR DEFECTO ⭐ */
+    /* Indigo como color principal */
+    --widget-primary: oklch(0.585 0.233 277.117);           /* Indigo */
+    --widget-primary-hover: oklch(0.511 0.262 276.966);     /* Indigo más oscuro para hover */
+    --widget-primary-foreground: oklch(0.99 0 0);           /* Blanco para texto */
+    
+    /* Purple como secundario */
+    --widget-secondary: oklch(0.627 0.265 303.9);           /* Purple */
+    --widget-secondary-foreground: oklch(0.558 0.288 302.321); /* Purple hover */
+
+    
 }
 
 .dark {
@@ -119,6 +136,10 @@
     --sidebar-ring: oklch(0.556 0 0);
     --color-indigo: oklch(0.38 0.14 266);
     --color-indigo-foreground:oklch(0.42 0.18 266)
+    /* Variables del widget en modo oscuro (opcional) */
+    --widget-primary: oklch(0.65 0.22 277);
+    --widget-primary-hover: oklch(0.55 0.26 277);
+    --widget-primary-foreground: oklch(0.99 0 0);
 }
 
 @layer base {

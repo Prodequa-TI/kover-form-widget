@@ -149,7 +149,7 @@ export function CarForm({ form }: CarFormProps) {
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
                                     aria-invalid={fieldState.invalid}
-                                    className='bg-indigo-500'
+                                    className='bg-widget-primary'
                                 />
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
@@ -183,7 +183,7 @@ export function CarForm({ form }: CarFormProps) {
                                     checked={field.value}
                                     onCheckedChange={field.onChange}
                                     aria-invalid={fieldState.invalid}
-                                    className='bg-indigo-500'
+                                    className='bg-widget-primary'
                                 />
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />

@@ -52,16 +52,17 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
         return;
     }
 
-    const popupHeight = 700;
-    const popupWidth = 600;
-    const left = (screen.width / 2) - (popupWidth / 2);
-    const top = (screen.height / 2) - (popupHeight / 2);
+    // const popupHeight = 700;
+    // const popupWidth = 600;
+    // const left = (screen.width / 2) - (popupWidth / 2);
+    // const top = (screen.height / 2) - (popupHeight / 2);
 
     const popup = window.open(
       paymentUrl,
-      "popupPago",
-      `width=600,height=700,left=${left},top=${top},scrollbars=yes,resizable=yes`
-    ); // _blank
+      // "popupPago",
+      // `width=600,height=700,left=${left},top=${top},scrollbars=yes,resizable=yes`
+     " _blank"
+    ); 
 
     if (!popup) {
       alert("Popup bloqueado, por favor habilite las ventanas emergentes");
