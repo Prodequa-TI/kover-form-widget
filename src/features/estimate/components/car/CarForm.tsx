@@ -6,14 +6,12 @@ import {
     FieldError,
     FieldLabel,
 } from '@/components/ui/field';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
     FuelsType,
     type CarListResponse,
     type CarModels,
 } from '../../type/types';
-import { getCars } from '../../services/car-estimate.service';
-import { SelectCarBrand } from './SelectBrandCar';
 import { SelectFuelType } from './SelectFuelType';
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { EstimateFormData } from '../../config/EstimeFormConfig';
@@ -21,35 +19,30 @@ import { Switch } from '@/components/ui/switch';
 import { SelectCarModel } from './SelectBrancModel';
 import { Input } from '@/components/ui/input';
 import { GasAndInstallToggle } from './GasAndInstallToggle';
+import { SelectBrandCar } from './SearchBrandCar';
 
 interface CarFormProps {
     form: UseFormReturn<EstimateFormData>;
 }
 
 export function CarForm({ form }: CarFormProps) {
-    const [carsList, setCarsList] = useState<CarListResponse[]>([]);
     const [models, setModels] = useState<CarModels[]>([]);
 
     const actualYear = new Date().getFullYear();
     const years = Array.from({ length: 16 }, (_, i) => actualYear - i);
-    const cars = useMemo(() => carsList.map((c) => c.marca), [carsList]);
     const brand = form.watch('car.brand');
     const fuelType = form.watch('car.fuelType');
     const gasEnabled = fuelType === FuelsType.GAS;
     const MIN_WORTH = 200_000;
     const MAX_WORTH = 7_000_000;
-    const handleGetModels = (brand: string) => {
+    const handleGetModels = (brand: string, rawCarList: CarListResponse[]) => {
         const models =
-            carsList.find((car) => car.marca === brand)?.modelos ?? [];
+            rawCarList.find((car) => car.marca === brand)?.modelos ?? [];
         if (!models) return [];
         setModels(models);
         form.setValue('car.modelId', 0);
         form.clearErrors('car.modelId');
     };
-
-    useEffect(() => {
-        getCars().then((cars) => setCarsList(cars));
-    }, []);
 
     return (
         <>
@@ -59,19 +52,7 @@ export function CarForm({ form }: CarFormProps) {
                     name='car.brand'
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
-                            <SelectCarBrand
-                                name={field.name}
-                                value={field.value ?? ''}
-                                items={cars}
-                                onValueChange={(value) => {
-                                    field.onChange(value);
-                                    handleGetModels(value);
-                                }}
-                                invalid={fieldState.invalid}
-                            />
-                            {fieldState.invalid && (
-                                <FieldError errors={[fieldState.error]} />
-                            )}
+                            <SelectBrandCar field={field} handelGetModels={handleGetModels}/>
                         </Field>
                     )}
                 />
