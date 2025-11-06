@@ -47,59 +47,61 @@ export const LawInsuranceForm = ({ form }: PlansAccordionProps) => {
     return (
         <>
             <div className='space-y-6 animate-in fade-in-50 duration-500'>
-                    <Controller
-                        control={form.control}
-                        name='car.terms.insuranceType'
-                        render={({ field, fieldState }) => {
-                            const isInvalid = fieldState.invalid;
-                            return (
-                                <RadioGroup
-                                    name={field.name}
-                                    value={field.value}
-                                    onValueChange={(value) =>
-                                        field.onChange(value)
-                                    }
-                                    aria-invalid={isInvalid}
-                                    className='flex flex-col gap-4'>
-                                    {PLANS.map((plan) => {
-                                        const inputId = `insurance-${plan.id}`;
-                                        return (
-                                            <div
-                                                key={plan.id}
-                                                className='relative rounded-lg border-widget-primary border bg-card p-4 hover:bg-gray-50 transition-colors'>
-                                                <div className='absolute right-3 top-3'>
-                                                    <RadioGroupItem
-                                                        id={inputId}
-                                                        value={String(plan.id)}
-                                                        className='text-blue-500'
-                                                    />
-                                                </div>
-                                                <label
-                                                    htmlFor={inputId}
-                                                    className='cursor-pointer select-none'>
-                                                    <Field>
-                                                        <FieldContent>
-                                                            <FieldLabel
-                                                                className='text-md'>
-                                                                {plan.title}
-                                                            </FieldLabel>
-                                                            <div className='text-sm text-muted-foreground'>
-                                                                {plan.price}
-                                                            </div>
-                                                            <FieldDescription className='text-[15px] leading-relaxed'>
-                                                                {plan.summary}
-                                                            </FieldDescription>
-                                                        </FieldContent>
-                                                    </Field>
-                                                </label>
+                <Controller
+                    control={form.control}
+                    name='car.terms.insuranceType'
+                    render={({ field, fieldState }) => {
+                        const isInvalid = fieldState.invalid;
+                        return (
+                            <RadioGroup
+                                name={field.name}
+                                value={field.value}
+                                onValueChange={(value) => field.onChange(value)}
+                                aria-invalid={isInvalid}
+                                className='flex flex-col gap-4'>
+                                {PLANS.map((plan) => {
+                                    const inputId = `insurance-${plan.id}`;
+                                    return (
+                                        <div
+                                            key={plan.id}
+                                            className={`relative rounded-lg border-2 bg-card p-4 transition-all hover:shadow-sm ${
+                                                field.value ===
+                                                String(plan.id)
+                                                    ? 'border-widget-primary'
+                                                    : 'border-gray-200'
+                                            }`}>
+                                            <div className='absolute right-3 top-3'>
+                                                <RadioGroupItem
+                                                    id={inputId}
+                                                    value={String(plan.id)}
+                                                    className='text-blue-500'
+                                                />
                                             </div>
-                                        );
-                                    })}
-                                </RadioGroup>
-                            );
-                        }}
-                    />
-                </div>
+                                            <label
+                                                htmlFor={inputId}
+                                                className='cursor-pointer select-none'>
+                                                <Field>
+                                                    <FieldContent>
+                                                        <FieldLabel className='text-md'>
+                                                            {plan.title}
+                                                        </FieldLabel>
+                                                        <div className='text-sm text-muted-foreground'>
+                                                            {plan.price}
+                                                        </div>
+                                                        <FieldDescription className='text-[15px] leading-relaxed'>
+                                                            {plan.summary}
+                                                        </FieldDescription>
+                                                    </FieldContent>
+                                                </Field>
+                                            </label>
+                                        </div>
+                                    );
+                                })}
+                            </RadioGroup>
+                        );
+                    }}
+                />
+            </div>
         </>
     );
 };
