@@ -40,7 +40,6 @@
         --color-sidebar-border: var(--sidebar-border);
         --color-sidebar-ring: var(--sidebar-ring);
         
-        /* ⭐ NUEVAS VARIABLES PARA EL WIDGET CUSTOMIZABLE ⭐ */
         /* Estas pueden ser sobrescritas por cada cliente */
         --color-widget-primary: var(--widget-primary);
         --color-widget-primary-hover: var(--widget-primary-hover);
