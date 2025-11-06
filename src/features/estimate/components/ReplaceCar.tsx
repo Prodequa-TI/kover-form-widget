@@ -59,7 +59,12 @@ export const ReplaceCar = ({ form }: ReplaceCarProps) => {
                                     return (
                                         <div
                                             key={replace.id}
-                                            className='relative rounded-lg border-widget-primary border bg-card p-4 transition-all hover:shadow-sm '>
+                                            className={`relative rounded-lg  border-2 bg-card p-4 transition-all hover:shadow-sm ${
+                                                field.value ===
+                                                String(replace.id)
+                                                    ? 'border-widget-primary'
+                                                    : 'border-gray-200'
+                                            }`}>
                                             <div className='absolute right-3 top-3'>
                                                 <RadioGroupItem
                                                     id={inputId}
