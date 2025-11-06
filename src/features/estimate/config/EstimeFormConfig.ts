@@ -16,6 +16,7 @@ declare module 'yup' {
     interface StringSchema {
         phoneMasked(pattern: RegExp, message?: string): StringSchema;
         personaleEmail(message?: string): StringSchema;
+        dominicPhone(message: string): StringSchema;
     }
 }
 
@@ -31,6 +32,13 @@ yup.addMethod<yup.StringSchema>(
         });
     }
 );
+yup.addMethod<yup.StringSchema>(yup.string, 'dominicPhone', function (message = '') {
+    return this.test('dominicPhone', message, function (value) {
+        if (!value) return true;
+        const digits = value.replace(/\D/g, '');
+        return /^(809|829|849)\d{7}$/.test(digits);
+    })
+})
 
 yup.addMethod<yup.StringSchema>(
     yup.string,
@@ -94,7 +102,8 @@ export const schemaEstimate = yup.object().shape({
             .required('Correo electronico requerido.'),
         phone: yup
             .string()
-            .phoneMasked(rdPhone, 'Teléfono inválido.')
+            .phoneMasked(rdPhone, 'Teléfono debe tener 10 digitos.')
+            .dominicPhone('El teléfono debe comenzar con 809, 829 o 849.')
             .required('El teléfono es requerido.'),
         documentType: yup
             .mixed<Documents>()
