@@ -89,14 +89,12 @@
         --color-blue-700: oklch(0.488 0.243 264.376);
         --tw-translate-y: 0;
         
-        /* ⭐ VARIABLES DEL WIDGET - VALORES POR DEFECTO ⭐ */
         /* Indigo como color principal */
-        --widget-primary: #6366f1;           /* Indigo */
-        --widget-primary-hover: #4f46e5;     /* Indigo más oscuro para hover */
-        
+        --widget-primary: #6366f1;           
+        --widget-primary-hover: #4f46e5;         
         /* Purple como secundario */
-        --widget-secondary: #a855f7;           /* Purple */
-        --widget-secondary-foreground: #9333ea; /* Purple hover */
+        --widget-secondary: #a855f7;           
+        --widget-secondary-foreground: #9333ea; 
 
         
     }
