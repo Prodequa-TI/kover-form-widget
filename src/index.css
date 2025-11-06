@@ -132,6 +132,7 @@
         --sidebar-ring: oklch(0.556 0 0);
         --color-indigo: oklch(0.38 0.14 266);
         --color-indigo-foreground:oklch(0.42 0.18 266)
+        
         /* Variables del widget en modo oscuro (opcional) */
         --widget-primary: oklch(0.65 0.22 277);
         --widget-primary-hover: oklch(0.55 0.26 277);
