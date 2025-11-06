@@ -1,4 +1,3 @@
-import { carsList } from '@/mocks/car-data.mock';
 import {
     Documents,
     type CarListResponse,
@@ -31,8 +30,9 @@ function generateObjectId(): string {
     return timestamp + randomValue + counterHex;
 }
 
-export const getCars = async (): Promise<CarListResponse[]> => {
-    return carsList;
+export const getCars = async (brand: string): Promise<CarListResponse[]> => {
+    const cars = await httpClient.get<CarListResponse[]>(`/insurances/cars/${brand}`);
+    return cars.data;
 };
 
 export async function generateQuota(

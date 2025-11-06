@@ -13,7 +13,7 @@ interface KoverResponse<T> {
 class HttpClient implements IHttpClient {
   private baseUrl: string;
   constructor() {
-    this.baseUrl = API_ENVS.url.qa;
+    this.baseUrl = API_ENVS.url.local;
   }
 
   async get<T>(url: string): Promise<KoverResponse<T>> {
