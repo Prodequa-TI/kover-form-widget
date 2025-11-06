@@ -33,7 +33,6 @@ export const CustomerDataForm = ({
     const [isLoadingCedula, setIsLoadingCedula] = useState(false);
     const [cedulaFound, setCedulaFound] = useState(false);
     const [cedulaError, setCedulaError] = useState(false);
-
     const handleChangeDocumentType = useCallback(
         (value: string, fieldOnChange: (v: number | undefined) => void) => {
             const numValue = value === ' ' ? undefined : Number(value);
@@ -75,7 +74,6 @@ export const CustomerDataForm = ({
             setIsLoadingCedula(true);
             setCedulaFound(false);
             setCedulaError(false);
-
             try {
                 const personData = await fetchPersonDataByCedula(cleanNumber);
 
@@ -154,6 +152,7 @@ export const CustomerDataForm = ({
                                 aria-invalid={fieldState.invalid}
                                 value={field.value || ''}
                                 onChange={(value) => field.onChange(value)}
+                                saveUnmasked={true}
                             />
                             {fieldState.invalid && (
                                 <FieldError errors={[fieldState.error]} />

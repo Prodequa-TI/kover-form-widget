@@ -10,7 +10,7 @@ type MaskedInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 };
 
 export const MaskedInput = forwardRef<HTMLInputElement, MaskedInputProps>(
-    ({ mask, onChange, value,saveUnmasked , ...rest }, forwardedRef) => {
+    ({ mask, onChange, value, saveUnmasked , ...rest }, forwardedRef) => {
         const inputRef = useRef<HTMLInputElement>(null);
         const maskInstanceRef = useRef<MaskInput | null>(null);
 
