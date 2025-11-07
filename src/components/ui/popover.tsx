@@ -1,5 +1,6 @@
 import * as React from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
+import { ShadowRootContext } from "./select"
 
 import { cn } from "@/lib/utils"
 
@@ -14,15 +15,15 @@ function PopoverTrigger({
 }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1" {...props} />
 }
-
 function PopoverContent({
   className,
   align = "center",
   sideOffset = 4,
   ...props
 }: React.ComponentProps<typeof PopoverPrimitive.Content>) {
+  const shadowRoot = React.useContext(ShadowRootContext);
   return (
-    <PopoverPrimitive.Portal>
+    <PopoverPrimitive.Portal container={shadowRoot?.querySelector('#widget-container') as HTMLElement || undefined}>
       <PopoverPrimitive.Content
         data-slot="popover-content"
         align={align}
