@@ -27,7 +27,7 @@ export const GasAndInstallToggle = ({ form, gasEnabled }: CarFormProps) => {
                                     onClick={() => field.onChange(Gas.GLP)}
                                     className={`py-2.5 px-5 rounded-md border-none transition-colors w-full ${
                                         field.value === Gas.GLP
-                                            ? 'bg-widget-primary text-white hover:opacity-95'
+                                            ? 'bg-kover-widget-primary text-white hover:opacity-95'
                                             : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
                                     }${
                                         !gasEnabled
@@ -44,7 +44,7 @@ export const GasAndInstallToggle = ({ form, gasEnabled }: CarFormProps) => {
                                     onClick={() => field.onChange(Gas.GNV)}
                                     className={`py-2.5 px-5 rounded-md border-none transition-colors w-full ${
                                         field.value === Gas.GNV
-                                            ? 'bg-widget-primary text-white hover:opacity-95'
+                                            ? 'bg-kover-widget-primary text-white hover:opacity-95'
                                             : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
                                     } ${
                                         !gasEnabled
@@ -86,7 +86,7 @@ export const GasAndInstallToggle = ({ form, gasEnabled }: CarFormProps) => {
                                     className={`py-2.5 px-5 rounded-md border-none transition-colors w-full ${
                                         field.value ===
                                         InstallatationType.ADAPTED
-                                            ? 'bg-widget-primary text-white hover:opacity-95'
+                                            ? 'bg-kover-widget-primary text-white hover:opacity-95'
                                             : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
                                     } ${
                                         !gasEnabled
@@ -111,7 +111,7 @@ export const GasAndInstallToggle = ({ form, gasEnabled }: CarFormProps) => {
                                     className={`py-2.5 px-5 rounded-md border-none transition-colors w-full ${
                                         field.value ===
                                         InstallatationType.TO_BUILD
-                                            ? 'bg-widget-primary text-white hover:opacity-95'
+                                            ? 'bg-kover-widget-primary text-white hover:opacity-95'
                                             : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
                                     } ${
                                         !gasEnabled
