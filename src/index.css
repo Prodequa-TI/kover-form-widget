@@ -41,11 +41,11 @@
         --color-sidebar-ring: var(--sidebar-ring);
         
         /* Estas pueden ser sobrescritas por cada cliente */
-        --color-widget-primary: var(--widget-primary);
-        --color-widget-primary-hover: var(--widget-primary-hover);
-        --color-widget-primary-foreground: var(--widget-primary-foreground);
-        --color-widget-secondary: var(--widget-secondary);
-        --color-widget-secondary-foreground: var(--widget-secondary-foreground);
+        --color-kover-widget-primary: var(--widget-primary);
+        --color-kover-widget-primary-hover: var(--widget-primary-hover);
+        --color-kover-widget-primary-foreground: var(--widget-primary-foreground);
+        --color-kover-widget-secondary: var(--widget-secondary);
+        --color-kover-widget-secondary-foreground: var(--widget-secondary-foreground);
 
     }
 

@@ -62,7 +62,7 @@ export const ReplaceCar = ({ form }: ReplaceCarProps) => {
                                             className={`relative rounded-lg  border-2 bg-card p-4 transition-all hover:shadow-sm ${
                                                 field.value ===
                                                 String(replace.id)
-                                                    ? 'border-widget-primary'
+                                                    ? 'border-kover-widget-primary'
                                                     : 'border-gray-200'
                                             }`}>
                                             <div className='absolute right-3 top-3'>

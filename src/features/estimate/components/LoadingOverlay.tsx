@@ -26,9 +26,9 @@ export default function LoadingOverlay({
                         </p>
                     </div>
                     <div className='flex gap-2'>
-                        <div className='w-3 h-3 bg-widget-primary rounded-full animate-bounce animate-delay-0'></div>
-                        <div className='w-3 h-3 bg-widget-primary rounded-full animate-bounce animate-delay-150'></div>
-                        <div className='w-3 h-3 bg-widget-primary rounded-full animate-bounce animate-delay-300'></div>
+                        <div className='w-3 h-3 bg-kover-widget-primary rounded-full animate-bounce animate-delay-0'></div>
+                        <div className='w-3 h-3 bg-kover-widget-primary rounded-full animate-bounce animate-delay-150'></div>
+                        <div className='w-3 h-3 bg-kover-widget-primary rounded-full animate-bounce animate-delay-300'></div>
                     </div>
                 </div>
             </div>

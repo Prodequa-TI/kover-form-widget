@@ -102,7 +102,7 @@ export default function PaymentConfirmation({
                         <Button
                             variant='outline'
                             onClick={onFinish}
-                            className='px-12 h-12 text-base font-semibold border-2 border-widget-primary text-blue-900 hover:bg-blue-50 cursor-pointer'>
+                            className='px-12 h-12 text-base font-semibold border-2 border-kover-widget-primary text-blue-900 hover:bg-blue-50 cursor-pointer'>
                             SALIR
                         </Button>
                     </div>
