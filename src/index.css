@@ -41,11 +41,11 @@
         --color-sidebar-ring: var(--sidebar-ring);
         
         /* Estas pueden ser sobrescritas por cada cliente */
-        --color-kover-widget-primary: var(--widget-primary);
-        --color-kover-widget-primary-hover: var(--widget-primary-hover);
-        --color-kover-widget-primary-foreground: var(--widget-primary-foreground);
-        --color-kover-widget-secondary: var(--widget-secondary);
-        --color-kover-widget-secondary-foreground: var(--widget-secondary-foreground);
+        --color-kover-widget-primary: var(--kover-widget-primary);
+        --color-kover-widget-primary-hover: var(--kover-widget-primary-hover);
+        --color-kover-widget-primary-foreground: var(--kover-widget-primary-foreground);
+        --color-kover-widget-secondary: var(--kover-widget-secondary);
+        --color-kover-widget-secondary-foreground: var(--kover-widget-secondary-foreground);
 
     }
 
@@ -89,11 +89,11 @@
         --tw-translate-y: 0;
         
         /* Indigo como color principal */
-        --widget-primary: #6366f1;           
-        --widget-primary-hover: #4f46e5;         
+        --kover-widget-primary: #6366f1;           
+        --kover-widget-primary-hover: #4f46e5;         
         /* Purple como secundario */
-        --widget-secondary: #a855f7;           
-        --widget-secondary-foreground: #9333ea; 
+        --kover-widget-secondary: #a855f7;           
+        --kover-widget-secondary-foreground: #9333ea; 
 
         
     }
@@ -134,9 +134,9 @@
         --color-indigo-foreground:oklch(0.42 0.18 266)
         
         /* Variables del widget en modo oscuro (opcional) */
-        --widget-primary: oklch(0.65 0.22 277);
-        --widget-primary-hover: oklch(0.55 0.26 277);
-        --widget-primary-foreground: oklch(0.99 0 0);
+        --kover-widget-primary: oklch(0.65 0.22 277);
+        --kover-widget-primary-hover: oklch(0.55 0.26 277);
+        --kover-widget-primary-foreground: oklch(0.99 0 0);
     }
 
     @layer base {
