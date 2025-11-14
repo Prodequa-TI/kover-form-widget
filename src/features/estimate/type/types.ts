@@ -103,6 +103,10 @@ export interface FuelType {
     name: string;
 }
 
+export interface UpdateInsuranceRequest {
+    customer: Partial<Customer>;
+}
+
 export const NOT_ALLOWED_CORPORATE_EMAIL_DOMAINS = [
     'prodequa.com',
     'mytikray.com',
