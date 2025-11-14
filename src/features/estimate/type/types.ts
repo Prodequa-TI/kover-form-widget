@@ -70,8 +70,8 @@ export interface Customer {
 }
 export interface Address {
     street: string;
-    province?: number;
-    municipality?: number;
+    province?: string;
+    municipality?: string;
 }
 export interface Province {
     id: number;

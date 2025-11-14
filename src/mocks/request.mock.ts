@@ -29,16 +29,14 @@ export interface DataCustomer {
     phone:          string;
     email:          string;
     occupation:     string;
-    address:        PurpleAddress;
+    address:        AddressData;
     _id:            string;
 }
 
-export interface PurpleAddress {
+export interface AddressData {
     province:     string;
     municipality: string;
-    sector:       string;
     street:       string;
-    _id:          string;
 }
 
 export interface QuotationRequest {
