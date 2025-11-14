@@ -1,9 +1,11 @@
-import { provinces, municipalities } from "@/mocks/directions.mock";
+import { provinces, municipalities } from '@/mocks/directions.mock';
 
 export const getProvinces = () => {
-  return provinces;
-}
+    return provinces;
+};
 
 export const getMunicipalities = (provinceId: number) => {
-  return municipalities.filter((municipality) => municipality.provinciaId === provinceId);
-}
+    return municipalities.filter(
+        (municipality) => municipality.provinciaId === provinceId
+    );
+};

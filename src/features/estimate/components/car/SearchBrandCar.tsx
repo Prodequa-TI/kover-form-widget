@@ -75,7 +75,7 @@ export function SelectBrandCar({ field, handelGetModels }: BrandSelectProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="select-none w-[200px] justify-between font-normal h-[100%]"
+          className="select-none w-[200px] justify-between font-normal h-full"
         >
           {value
             ? cars.find((car) => car.value === value)?.label
