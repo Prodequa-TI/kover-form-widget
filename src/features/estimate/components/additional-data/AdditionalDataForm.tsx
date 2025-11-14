@@ -38,12 +38,18 @@ export const AddressForm = ({ form }: AddressFormProps) => {
     // Cargar municipios cuando cambia la provincia
     useEffect(() => {
         if (selectedProvince) {
-            const municipalitiesList = getMunicipalities(selectedProvince);
-            setMunicipalities(municipalitiesList);
+            // Buscar el ID de la provincia basado en el nombre
+            const province = provinces.find(p => p.nombre === selectedProvince);
+            if (province) {
+                const municipalitiesList = getMunicipalities(province.id);
+                setMunicipalities(municipalitiesList);
+            } else {
+                setMunicipalities([]);
+            }
         } else {
             setMunicipalities([]);
         }
-    }, [selectedProvince]);
+    }, [selectedProvince, provinces]);
     return (
         <div className='flex flex-col gap-4 md:grid md:grid-cols-2'>
             <div className='col-start-1 col-end-3'>
@@ -100,16 +106,12 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                         </FieldLabel>
                         <Select
                             name={field.name}
-                            value={
-                                field.value != null ? String(field.value) : ''
-                            }
+                            value={field.value || ''}
                             onValueChange={(value) => {
-                                const numValue =
-                                    value === '' ? undefined : Number(value);
-                                field.onChange(numValue);
+                                field.onChange(value);
                                 form.setValue(
                                     'customer.address.municipality',
-                                    undefined
+                                    ''
                                 );
                                 form.clearErrors([
                                     'customer.address.municipality',
@@ -125,7 +127,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                                 {provinces.map((prov) => (
                                     <SelectItem
                                         key={prov.id}
-                                        value={String(prov.id)}>
+                                        value={prov.nombre}>
                                         {prov.nombre}
                                     </SelectItem>
                                 ))}
@@ -149,13 +151,9 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                         </FieldLabel>
                         <Select
                             name={field.name}
-                            value={
-                                field.value != null ? String(field.value) : ''
-                            }
+                            value={field.value || ''}
                             onValueChange={(value) => {
-                                const numValue =
-                                    value === '' ? undefined : Number(value);
-                                field.onChange(numValue);
+                                field.onChange(value);
                             }}
                             disabled={!form.watch('customer.address.province')}>
                             <SelectTrigger
@@ -168,7 +166,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                                 {municipalities.map((muni) => (
                                     <SelectItem
                                         key={muni.id}
-                                        value={String(muni.id)}>
+                                        value={muni.nombre}>
                                         {muni.nombre}
                                     </SelectItem>
                                 ))}
