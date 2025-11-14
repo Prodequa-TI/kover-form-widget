@@ -140,7 +140,7 @@ export const schemaEstimate = yup.object().shape({
                         'Pasaporte inválido (6-15 caracteres alfanuméricos).'
                     ),
             }),
-        occupation: yup.string(),
+        occupation: yup.string().optional(),
         firstName: yup.string().when('documentType', {
             is: Documents.PASSPORT,
             then: (schema) =>
@@ -177,19 +177,9 @@ export const schemaEstimate = yup.object().shape({
             otherwise: (schema) => schema.optional(),
         }),
         address: yup.object({
-            street: yup
-                .string()
-                .required('La calle es requerida.')
-                .min(3, 'Mínimo 3 caracteres'),
-            province: yup
-                .number()
-                .required('La provincia es requerida.')
-                .min(1, 'Selecciona una provincia válida.'),
-            municipality: yup.number().when('province', {
-                is: (province: string) => !!province && province.length > 0,
-                then: (schema) => schema.min(1, 'Seleciona un municipio.'),
-                otherwise: (schema) => schema.optional().transform(() => 0),
-            }),
+            street: yup.string().optional(),
+            province: yup.number().optional(),
+            municipality: yup.number().optional(),
         }),
     }),
 

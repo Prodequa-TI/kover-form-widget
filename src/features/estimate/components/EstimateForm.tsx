@@ -22,7 +22,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { XCircle } from 'lucide-react';
 import { usePreventScrollLock } from '../hook/usePreventSchrollLock';
 import LoadingOverlay from './LoadingOverlay';
-import { AddressForm } from './additional-data/AdditionalDataForm';
 
 interface EstimateFormProps {
     onSuccess: (data: InsurancesData) => void;
@@ -112,13 +111,6 @@ export const EstimateForm = ({
                                 form={form}
                                 onCedulaVerified={setIsCedulaVerified}
                             />
-                        </div>
-                        <Separator />
-                        <div className='space-y-6 animate-in fade-in-50 duration-500'>
-                            <h4 className=' font-bold text-kover-widget-primary mb-6'>
-                                Datos adicionales
-                            </h4>
-                            <AddressForm form={form} />
                         </div>
                         <Separator />
                         <div className='space-y-6 animate-in fade-in-50 duration-500'>

@@ -8,8 +8,9 @@ import {
     type InsurancePaymentStatusResponse,
 } from '../services/insurance.service';
 import PaymentConfirmation from './PaymentConfirmation';
+import { AdditionalDataFormWrapper } from './additional-data/AdditionalDataFormWrapper';
 
-type FlowStep = 'estimate' | 'emit' | 'emited' | 'confirmation';
+type FlowStep = 'estimate' | 'emit' | 'additional-data' | 'confirmation';
 interface FlowProps {
   storeToken?: string;
 }
@@ -22,14 +23,31 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
   const [paymentErrorMessage, setPaymentErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isPayment, setIsPayment] = useState<boolean>(false);
+  const [additionalData, setAdditionalData] = useState<any>(null);
 
     const handleEstimateSuccess = (data: InsurancesData) => {
         setIsPayment(false);
         setInsuranceData(data);
         setCurrentStep('emit');
     };
+
     const handleBack = () => {
         setCurrentStep('estimate');
+    };
+
+    const handleEmitClick = () => {
+        setCurrentStep('additional-data');
+    };
+
+    const handleBackFromAdditionalData = () => {
+        setCurrentStep('emit');
+    };
+
+    const handleAdditionalDataSubmit = async (data: any) => {
+        setAdditionalData(data);
+        if (insuranceData) {
+            await handleEmit(insuranceData.id);
+        }
     };
 
   const handleEmit = async (insuranceId: string) => {
@@ -105,10 +123,28 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
       {currentStep === "emit" && insuranceData && (
         <Emitir
           onBack={handleBack}
+          isCheckoutOpen={false}
+          paymentErrorMessage=""
+          successMessage={successMessage}
+          onEmit={handleEmitClick}
+          insuranceData={insuranceData}
+          isPayment={isPayment}
+        />
+      )}
+      {currentStep === "additional-data" && insuranceData && !isCheckoutOpen && (
+        <AdditionalDataFormWrapper
+          insuranceData={insuranceData}
+          onBack={handleBackFromAdditionalData}
+          onSubmit={handleAdditionalDataSubmit}
+        />
+      )}
+      {currentStep === "additional-data" && insuranceData && isCheckoutOpen && (
+        <Emitir
+          onBack={handleBackFromAdditionalData}
           isCheckoutOpen={isCheckoutOpen}
           paymentErrorMessage={paymentErrorMessage}
-          successMessage={successMessage}
-          onEmit={() => handleEmit(insuranceData.id)}
+          successMessage={null}
+          onEmit={() => {}}
           insuranceData={insuranceData}
           isPayment={isPayment}
         />
@@ -122,6 +158,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
             setInsuranceData(null);
             setPayment(null);
             setSuccessMessage(null);
+            setAdditionalData(null);
           }}
         />
       )}

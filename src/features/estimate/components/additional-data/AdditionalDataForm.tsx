@@ -8,14 +8,17 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Controller, type UseFormReturn } from 'react-hook-form';
-import type { EstimateFormData } from '../../config/EstimeFormConfig';
 import { useEffect, useState } from 'react';
 import type { Municipality, Occupations, Province } from '../../type/types';
-import { getMunicipalities, getProvinces } from '../../services/direction.service';
+import {
+    getMunicipalities,
+    getProvinces,
+} from '../../services/direction.service';
 import { OcuppationInput } from './OcuppationSelect';
 import { getOccupations } from '../../services/ocupation.service';
+import type { AdditionalDataFormData } from './AdditionalDataFormWrapper';
 interface AddressFormProps {
-    form: UseFormReturn<EstimateFormData>;
+    form: UseFormReturn<AdditionalDataFormData>;
 }
 
 export const AddressForm = ({ form }: AddressFormProps) => {
