@@ -45,6 +45,14 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
 
     const handleAdditionalDataSubmit = async (data: AdditionalDataFormData) => {
         if (insuranceData) {
+            console.log(data.customer, insuranceData.id, 'data.customer');
+            // const isUpdated = await updateInsurance(insuranceData.id, data);
+            // if (!isUpdated) {
+            //   // Manejar error
+            //   console.log('Error al actualizar la cotización');
+            //   return;
+            // }
+            // Llamar en un segundo boton para emitir
             await handleEmit(insuranceData.id);
         }
     };
@@ -130,22 +138,11 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           isPayment={isPayment}
         />
       )}
-      {currentStep === "additional-data" && insuranceData && !isCheckoutOpen && (
+      {currentStep === "additional-data" && insuranceData && (
         <AdditionalDataFormWrapper
           insuranceData={insuranceData}
           onBack={handleBackFromAdditionalData}
           onSubmit={handleAdditionalDataSubmit}
-        />
-      )}
-      {currentStep === "additional-data" && insuranceData && isCheckoutOpen && (
-        <Emitir
-          onBack={handleBackFromAdditionalData}
-          isCheckoutOpen={isCheckoutOpen}
-          paymentErrorMessage={paymentErrorMessage}
-          successMessage={null}
-          onEmit={() => {}}
-          insuranceData={insuranceData}
-          isPayment={isPayment}
         />
       )}
       {currentStep === "confirmation" && paymentData && insuranceData && (
@@ -157,7 +154,6 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
             setInsuranceData(null);
             setPayment(null);
             setSuccessMessage(null);
-            setAdditionalData(null);
           }}
         />
       )}
