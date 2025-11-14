@@ -5,10 +5,11 @@ import Emitir from './Emitir';
 import {
     checkStatusPayment,
     getUrlPayment,
+    updateInsurance,
     type InsurancePaymentStatusResponse,
 } from '../services/insurance.service';
 import PaymentConfirmation from './PaymentConfirmation';
-import { AdditionalDataFormWrapper } from './additional-data/AdditionalDataFormWrapper';
+import { AdditionalDataFormWrapper, type AdditionalDataFormData } from './additional-data/AdditionalDataFormWrapper';
 
 type FlowStep = 'estimate' | 'emit' | 'additional-data' | 'confirmation';
 interface FlowProps {
@@ -23,7 +24,6 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
   const [paymentErrorMessage, setPaymentErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isPayment, setIsPayment] = useState<boolean>(false);
-  const [additionalData, setAdditionalData] = useState<any>(null);
 
     const handleEstimateSuccess = (data: InsurancesData) => {
         setIsPayment(false);
@@ -43,8 +43,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
         setCurrentStep('emit');
     };
 
-    const handleAdditionalDataSubmit = async (data: any) => {
-        setAdditionalData(data);
+    const handleAdditionalDataSubmit = async (data: AdditionalDataFormData) => {
         if (insuranceData) {
             await handleEmit(insuranceData.id);
         }
@@ -78,8 +77,9 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     const popup = window.open(
       paymentUrl,
       "popupPago",
-      `width=${popupWidth},height=${popupHeight},left=${left},top=${top},scrollbars=yes,resizable=yes`
-    );
+      `width=600,height=700,left=${left},top=${top},scrollbars=yes,resizable=yes`
+    //  " _blank"
+    ); 
 
     if (!popup) {
       alert("Popup bloqueado, por favor habilite las ventanas emergentes");

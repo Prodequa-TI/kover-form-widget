@@ -22,16 +22,16 @@ const additionalDataSchema = yup.object({
                 .required('La calle es requerida.')
                 .min(3, 'Mínimo 3 caracteres'),
             province: yup
-                .number()
+                .string()
                 .required('La provincia es requerida.')
                 .min(1, 'Selecciona una provincia válida.'),
-            municipality: yup.number().when('province', {
-                is: (province: number) => !!province && province > 0,
+            municipality: yup.string().when('province', {
+                is: (province: string) => !!province && province.length > 0,
                 then: (schema) =>
                     schema
                         .required('El municipio es requerido.')
                         .min(1, 'Selecciona un municipio válido.'),
-                otherwise: (schema) => schema.optional().transform(() => 0),
+                otherwise: (schema) => schema.optional(),
             }),
         }),
     }),
@@ -40,7 +40,6 @@ const additionalDataSchema = yup.object({
 export type AdditionalDataFormData = yup.InferType<typeof additionalDataSchema>;
 
 export const AdditionalDataFormWrapper = ({
-    insuranceData,
     onBack,
     onSubmit,
 }: AdditionalDataFormWrapperProps) => {
@@ -51,8 +50,8 @@ export const AdditionalDataFormWrapper = ({
                 occupation: '',
                 address: {
                     street: '',
-                    province: undefined,
-                    municipality: undefined,
+                    province: '',
+                    municipality: '',
                 },
             },
         },
