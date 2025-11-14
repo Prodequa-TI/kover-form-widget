@@ -65,8 +65,29 @@ export interface Customer {
     lastname?: string;
     gender?: Gender;
     birthDate?: string;
+    occupation: string;
+    address: Address;
+}
+export interface Address {
+    street: string;
+    province?: number;
+    municipality?: number;
+}
+export interface Province {
+    id: number;
+    nombre: string;
 }
 
+export interface Municipality {
+    id: number;
+    provinciaId: number;
+    nombre: string;
+}
+
+export interface Occupations {
+    idOccupation: number;
+    occupation: string;
+}
 export interface CarModels {
     idModelo: number;
     modelo: string;

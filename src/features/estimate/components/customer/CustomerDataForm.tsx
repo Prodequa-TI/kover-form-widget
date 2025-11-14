@@ -26,13 +26,15 @@ export const CustomerDataForm = ({
     form,
     onCedulaVerified,
 }: CustomDataFormProps) => {
+    const [isLoadingCedula, setIsLoadingCedula] = useState(false);
+    const [cedulaFound, setCedulaFound] = useState(false);
+    const [cedulaError, setCedulaError] = useState(false);
+
     const documentType = form.watch('customer.documentType');
     const documentNumber = form.watch('customer.documentNumber');
     const isPassport = documentType === Documents.PASSPORT;
     const isCedula = documentType === Documents.ID;
-    const [isLoadingCedula, setIsLoadingCedula] = useState(false);
-    const [cedulaFound, setCedulaFound] = useState(false);
-    const [cedulaError, setCedulaError] = useState(false);
+
     const handleChangeDocumentType = useCallback(
         (value: string, fieldOnChange: (v: number | undefined) => void) => {
             const numValue = value === ' ' ? undefined : Number(value);
