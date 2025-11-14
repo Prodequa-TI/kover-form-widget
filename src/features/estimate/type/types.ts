@@ -70,8 +70,8 @@ export interface Customer {
 }
 export interface Address {
     street: string;
-    province?: number;
-    municipality?: number;
+    province?: string;
+    municipality?: string;
 }
 export interface Province {
     id: number;
@@ -101,6 +101,10 @@ export interface CarListResponse {
 export interface FuelType {
     id: number;
     name: string;
+}
+
+export interface UpdateInsuranceRequest {
+    customer: Partial<Customer>;
 }
 
 export const NOT_ALLOWED_CORPORATE_EMAIL_DOMAINS = [
