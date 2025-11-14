@@ -1,4 +1,5 @@
 import { httpClient } from "../../../core/httpClient";
+import type { Customer } from "../type/types";
 
 interface InsurancePaymentResponse {
   paymentUrl: string;
@@ -35,3 +36,13 @@ export const sendInspectionEmail = async (insuranceId: string): Promise<boolean>
     return false;
   }
 };
+
+export const updateInsurance = async (insuranceId: string, data: Partial<Customer>): Promise<boolean> => {
+  try {
+    const response = await httpClient.put(`/insurances/${insuranceId}`, data);
+    return response.success;
+  } catch (error) {
+    console.error('Error al actualizar la cotización', error);
+    return false;
+  }
+}

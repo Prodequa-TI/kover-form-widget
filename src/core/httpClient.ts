@@ -35,6 +35,18 @@ class HttpClient implements IHttpClient {
     }
     return response.json();
   }
+
+  async put<T>(url: string, data?: unknown, config?: RequestInit): Promise<KoverResponse<T>> {
+    const response = await fetch(`${this.baseUrl}${url}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      ...config,
+    });
+    if (!response.ok) {
+      throw new Error('Error al enviar petición');
+    }
+    return response.json();
+  }
 }
 
 export const httpClient = new HttpClient();
