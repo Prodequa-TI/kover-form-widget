@@ -76,12 +76,6 @@ export const initialValuesCustomer: Customer = {
     lastname: '',
     gender: undefined,
     birthDate: '',
-    occupation: '',
-    address: {
-        street: '',
-        province: undefined,
-        municipality: undefined,
-    },
 };
 export const initialValuesCar: Car = {
     brand: '',
@@ -91,7 +85,7 @@ export const initialValuesCar: Car = {
     fuelType: undefined,
     gasType: undefined,
     installationType: undefined,
-    isPersonalUse: false,
+    isPersonalUse: undefined,
     worth: 0,
     terms: {
         insuranceType: CarInsurances.BASE,
@@ -140,7 +134,6 @@ export const schemaEstimate = yup.object().shape({
                         'Pasaporte inválido (6-15 caracteres alfanuméricos).'
                     ),
             }),
-        occupation: yup.string().optional(),
         firstName: yup.string().when('documentType', {
             is: Documents.PASSPORT,
             then: (schema) =>
@@ -176,15 +169,10 @@ export const schemaEstimate = yup.object().shape({
                     .required('Género requerido'),
             otherwise: (schema) => schema.optional(),
         }),
-        address: yup.object({
-            street: yup.string().optional(),
-            province: yup.number().optional(),
-            municipality: yup.number().optional(),
-        }),
     }),
 
     car: yup.object({
-        brand: yup.string().defined().default(''),
+        brand: yup.string().required('Selecciona una marca de auto.'),
         modelId: yup.number().when('brand', {
             is: (brand: string) => !!brand && brand.length > 0,
             then: (schema) => schema.min(1, 'Selecciona un modelo válido.'),
@@ -223,7 +211,15 @@ export const schemaEstimate = yup.object().shape({
                     .required('Selecciona el tipo de instalación.'),
             otherwise: (schema) => schema.optional().nullable(),
         }),
-        isPersonalUse: yup.boolean().default(false),
+        isPersonalUse: yup
+            .boolean()
+            .nullable()
+            .required('Debe seleccionar el tipo de uso del vehículo.')
+            .test(
+                'is-defined',
+                'Debe seleccionar el tipo de uso del vehículo.',
+                (value) => value === true || value === false
+            ),
         worth: yup
             .number()
             .transform((v, o) => (o === '' || o == null ? undefined : v))
