@@ -45,7 +45,7 @@ export interface Car {
     fuelType?: FuelsType;
     gasType?: Gas;
     installationType?: InstallatationType;
-    isPersonalUse: boolean;
+    isPersonalUse?: boolean;
     worth: number;
     terms: Term;
 }
@@ -65,13 +65,16 @@ export interface Customer {
     lastname?: string;
     gender?: Gender;
     birthDate?: string;
-    occupation: string;
-    address: Address;
+    occupation?: string;
+    address?: Address;
+    politicallyExposed?: boolean;
+    requiresFiscalReceipt?: boolean;
 }
 export interface Address {
-    street: string;
+    street?: string;
     province?: string;
     municipality?: string;
+    sector?: string;
 }
 export interface Province {
     id: number;

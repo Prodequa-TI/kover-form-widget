@@ -20,16 +20,20 @@ interface AdditionalDataFormWrapperProps {
 // Reutilizamos las validaciones del EstimateFormConfig
 const additionalDataSchema = yup.object({
     customer: yup.object({
-        occupation: yup.string().required('La ocupación es requerida'),
+        occupation: yup.string().required('Selecciona una ocupación.'),
         address: yup.object({
             street: yup
                 .string()
                 .required('La calle es requerida.')
                 .min(3, 'Mínimo 3 caracteres'),
-            province: yup
-                .string()
-                .required('La provincia es requerida.')
-                .min(1, 'Selecciona una provincia válida.'),
+            province: yup.string().when('street', {
+                is: (street: string) => !!street && street.length >= 3,
+                then: (schema) =>
+                    schema
+                        .required('Selecciona una provincia.')
+                        .min(1, 'Selecciona una provincia.'),
+                otherwise: (schema) => schema.optional(),
+            }),
             municipality: yup.string().when('province', {
                 is: (province: string) => !!province && province.length > 0,
                 then: (schema) =>
@@ -38,7 +42,18 @@ const additionalDataSchema = yup.object({
                         .min(1, 'Selecciona un municipio válido.'),
                 otherwise: (schema) => schema.optional(),
             }),
+            sector: yup.string().when('municipality', {
+                is: (municipality: string) =>
+                    !!municipality && municipality.length > 0,
+                then: (schema) =>
+                    schema
+                        .required('El sector es requerido.')
+                        .min(1, 'Selecciona un sector.'),
+                otherwise: (schema) => schema.optional(),
+            }),
         }),
+        politicallyExposed: yup.boolean().defined().default(false),
+        requiresFiscalReceipt: yup.boolean().defined().default(false),
     }),
 });
 
@@ -63,14 +78,17 @@ export const AdditionalDataFormWrapper = ({
                     street: '',
                     province: '',
                     municipality: '',
+                    sector: '',
                 },
+                politicallyExposed: false,
+                requiresFiscalReceipt: false,
             },
         },
         mode: 'onChange',
     });
 
     const {
-        formState: { isValid, isSubmitting },
+        formState: { isSubmitting },
     } = form;
 
     const handleSubmit = async (data: AdditionalDataFormData) => {
@@ -105,7 +123,7 @@ export const AdditionalDataFormWrapper = ({
         }
     };
     return (
-        <div className='mx-auto max-w-3xl px-4 py-6 md:py-10 w-full'>
+        <div className='px-4 py-6 md:py-10 w-full'>
             <div className='mb-8 text-center'>
                 <h1 className='text-2xl md:text-3xl font-bold tracking-tight text-slate-900'>
                     Datos Adicionales
@@ -139,11 +157,12 @@ export const AdditionalDataFormWrapper = ({
                     </div>
                 </Alert>
             )}
-            <form onSubmit={form.handleSubmit(handleSubmit)}>
-                <FieldGroup>
-                    <div className='max-w-xl mx-auto'>
+            <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className='flex justify-center w-full'>
+                <FieldGroup className='w-full max-w-3xl'>
+                    <div className='w-full'>
                         <AddressForm form={form} />
-
                         <div className='mt-10 flex flex-col md:flex-row items-center justify-between gap-4 w-full'>
                             <Button
                                 type='button'
@@ -156,8 +175,7 @@ export const AdditionalDataFormWrapper = ({
                             {!isDataSaved ? (
                                 <Button
                                     type='submit'
-                                    className='h-11 px-10 cursor-pointer w-full md:w-auto bg-[#003D82] hover:bg-[#002855]'
-                                    disabled={!isValid || isSubmitting}>
+                                    className='h-11 px-10 cursor-pointer w-full md:w-auto bg-[#003D82] hover:bg-[#002855]'>
                                     {isSubmitting
                                         ? 'Guardando...'
                                         : 'GUARDAR DATOS'}
