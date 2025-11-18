@@ -38,11 +38,6 @@ export const sendInspectionEmail = async (insuranceId: string): Promise<boolean>
 };
 
 export const updateInsurance = async (insuranceId: string, data: Partial<UpdateInsuranceRequest>): Promise<boolean> => {
-  try {
-    const response = await httpClient.put(`/insurances/${insuranceId}`, data, { headers: { 'Content-Type': 'application/json' } });
-    return response.success;
-  } catch (error) {
-    console.error('Error al actualizar la cotización', error);
-    return false;
-  }
+  const response = await httpClient.put(`/insurances/${insuranceId}`, data, { headers: { 'Content-Type': 'application/json' } });
+  return response.success;
 }

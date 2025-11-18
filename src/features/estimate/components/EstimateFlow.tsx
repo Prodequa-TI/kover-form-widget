@@ -15,15 +15,79 @@ import {
 } from './additional-data/AdditionalDataFormWrapper';
 import { QuoteSummary } from './QuoteSummary';
 
-type FlowStep = 'estimate' | 'emit' | 'additional-data' | 'confirmation' | 'quote-summary';
+type FlowStep =
+    | 'estimate'
+    | 'emit'
+    | 'additional-data'
+    | 'confirmation'
+    | 'quote-summary';
 interface FlowProps {
     storeToken?: string;
 }
 
+// Mock data temporal para desarrollo
+const mockInsuranceData: InsurancesData = {
+    companyId: '68fbf86399f1ecfe2c04f532',
+    quoteNumber: 199213,
+    product: 'auto-insurance',
+    status: 'quoted',
+    customer: {
+        firstName: 'María',
+        lastName: 'González',
+        gender: 'F',
+        documentType: 'Cédula',
+        documentNumber: '40220043307',
+        phone: '8091234567',
+        email: 'raul.g.quispe@gmail.com',
+        occupation: 'Vendedor o Comerciante',
+        address: {
+            province: 'Distrito Nacional / Santo Domingo',
+            municipality: 'Santo Domingo de Guzmán',
+            street: '1',
+        },
+        _id: '691cebdbc267e2de159d3cde',
+    },
+
+    vehicle: {
+        modelId: 1,
+        year: 2025,
+        fuelType: 'Gasolina / Diesel',
+        isPersonalUse: true,
+        value: 2000000,
+        plate: 'G320734',
+        color: 'BLANCO',
+        displacement: 4,
+        doors: 4,
+        chassis: '123123',
+        engine: '25874',
+        _id: '691cebdbc267e2de159d3ce0',
+    },
+
+    terms: {
+        paymentFraction: 'M',
+        paymentMethod: 't/c',
+        lawInsurance: 'Auto Exceso',
+        vehicularAssistance: true,
+        substituteAuto: 'Rent-a-Car',
+        premium: 0,
+        tax: 0,
+        totalAmount: 1000,
+        _id: '691cebdbc267e2de159d3ce1',
+    },
+    requestDate: new Date(),
+    quoteDate: new Date(),
+    quotationRequest: {} as any,
+    quotationResponse: {} as any,
+
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    id: '691ce464ed1b1d03ca5d5140',
+};
+
 export const EstimateFlow = ({ storeToken }: FlowProps) => {
-    const [currentStep, setCurrentStep] = useState<FlowStep>('additional-data');
+    const [currentStep, setCurrentStep] = useState<FlowStep>('estimate');
     const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(
-        null
+        mockInsuranceData // Usar mock temporal
     );
     const [paymentData, setPayment] =
         useState<InsurancePaymentStatusResponse | null>(null);
@@ -62,12 +126,10 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
                 municipality: data.customer.address.municipality,
                 sector: data.customer.address.sector,
             },
-
         };
         const success = await updateInsurance(insuranceData.id, data);
 
         if (success) {
-            
             setIsDataSaved(true);
             return true;
         }
@@ -170,7 +232,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
                     isPayment={isPayment}
                 />
             )}
-            {currentStep === 'additional-data'  && (
+            {currentStep === 'additional-data' && (
                 <AdditionalDataFormWrapper
                     insuranceData={insuranceData as InsurancesData}
                     onBack={handleBackFromAdditionalData}

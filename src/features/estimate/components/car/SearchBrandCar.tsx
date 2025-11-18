@@ -26,9 +26,10 @@ import type { EstimateFormData } from '../../config/EstimeFormConfig';
 interface BrandSelectProps {
   field: ControllerRenderProps<EstimateFormData>;
   handelGetModels: (brand: string, rawCars: CarListResponse[]) => void;
+  invalid?:boolean;
 }
 
-export function SelectBrandCar({ field, handelGetModels }: BrandSelectProps) {
+export function SelectBrandCar({ field, handelGetModels,invalid }: BrandSelectProps) {
   const [cars, setCars] = useState<{ value: string; label: string }[]>([]);
   const [rawCars, setRawCars] = useState<CarListResponse[]>([]);
   const [open, setOpen] = useState(false);
@@ -75,7 +76,8 @@ export function SelectBrandCar({ field, handelGetModels }: BrandSelectProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="select-none w-[200px] justify-between font-normal h-full"
+           aria-invalid={invalid}
+          className={cn('select-none w-full justify-between font-normal h-10',invalid && 'border-red-500')}
         >
           {value
             ? cars.find((car) => car.value === value)?.label
@@ -83,7 +85,7 @@ export function SelectBrandCar({ field, handelGetModels }: BrandSelectProps) {
           <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+       <PopoverContent className='w-full p-0'>
         <Command>
           <CommandInput
             onInput={handleChangeInput}
