@@ -21,7 +21,7 @@ interface FlowProps {
 }
 
 export const EstimateFlow = ({ storeToken }: FlowProps) => {
-    const [currentStep, setCurrentStep] = useState<FlowStep>('additional-data');
+    const [currentStep, setCurrentStep] = useState<FlowStep>('estimate');
     const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(
         null
     );
@@ -39,6 +39,10 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
         setCurrentStep('emit');
     };
 
+    const handleUpdateInsurance = () => {
+        setCurrentStep('quote-summary');
+    }
+
     const handleBack = () => {
         setCurrentStep('estimate');
     };
@@ -55,16 +59,17 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     ): Promise<boolean> => {
         if (!insuranceData) return false;
         const updatePayload = {
-            occupation: data.customer.occupation,
-            address: {
-                street: data.customer.address.street,
-                province: data.customer.address.province,
-                municipality: data.customer.address.municipality,
-                sector: data.customer.address.sector,
-            },
-
+                customer: {
+                    occupation: data.customer.occupation,
+                address: {
+                    street: data.customer.address.street,
+                    province: data.customer.address.province,
+                    municipality: data.customer.address.municipality,
+                    sector: data.customer.address.sector,
+                },
+            }
         };
-        const success = await updateInsurance(insuranceData.id, data);
+        const success = await updateInsurance(insuranceData.id, updatePayload);
 
         if (success) {
             
@@ -110,7 +115,6 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
             paymentUrl,
             'popupPago',
             `width=600,height=700,left=${left},top=${top},scrollbars=yes,resizable=yes`
-            //  " _blank"
         );
 
         if (!popup) {
@@ -170,17 +174,18 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
                     isPayment={isPayment}
                 />
             )}
-            {currentStep === 'additional-data'  && (
+            {currentStep === 'additional-data' && insuranceData && (
                 <AdditionalDataFormWrapper
                     insuranceData={insuranceData as InsurancesData}
                     onBack={handleBackFromAdditionalData}
                     onSubmit={handleSaveAdditionalData}
                     onProcessPayment={handleProcessPayment}
                     isDataSaved={isDataSaved}
+                    nextStep={handleUpdateInsurance}
                 />
             )}
             {currentStep === 'quote-summary' && insuranceData && (
-                <QuoteSummary insuranceData={insuranceData} />
+                <QuoteSummary insuranceData={insuranceData} handlePayment={handleEmit}/>
             )}
             {currentStep === 'confirmation' && paymentData && insuranceData && (
                 <PaymentConfirmation

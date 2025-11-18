@@ -24,6 +24,7 @@ import { OcuppationInput } from './OcuppationSelect';
 import { getOccupations } from '../../services/ocupation.service';
 import type { AdditionalDataFormData } from './AdditionalDataFormWrapper';
 import { Switch } from '@/components/ui/switch';
+import { PolicyData } from './PoliticalData';
 interface AddressFormProps {
     form: UseFormReturn<AdditionalDataFormData>;
 }
@@ -302,6 +303,9 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                     </Field>
                 )}
             />
+            <div className='col-start-1 col-end-3'>
+                <PolicyData form={form} />
+            </div>
         </div>
     );
 };
