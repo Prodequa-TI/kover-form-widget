@@ -13,14 +13,15 @@ import {
     AdditionalDataFormWrapper,
     type AdditionalDataFormData,
 } from './additional-data/AdditionalDataFormWrapper';
+import { QuoteSummary } from './QuoteSummary';
 
-type FlowStep = 'estimate' | 'emit' | 'additional-data' | 'confirmation';
+type FlowStep = 'estimate' | 'emit' | 'additional-data' | 'confirmation' | 'quote-summary';
 interface FlowProps {
     storeToken?: string;
 }
 
 export const EstimateFlow = ({ storeToken }: FlowProps) => {
-    const [currentStep, setCurrentStep] = useState<FlowStep>('estimate');
+    const [currentStep, setCurrentStep] = useState<FlowStep>('additional-data');
     const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(
         null
     );
@@ -59,9 +60,11 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
                 street: data.customer.address.street,
                 province: data.customer.address.province,
                 municipality: data.customer.address.municipality,
+                sector: data.customer.address.sector,
             },
+
         };
-        const success = await updateInsurance(insuranceData.id, updatePayload);
+        const success = await updateInsurance(insuranceData.id, data);
 
         if (success) {
             
@@ -72,13 +75,6 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     };
     const handleProcessPayment = async () => {
         if (insuranceData) {
-            // const isUpdated = await updateInsurance(insuranceData.id, data);
-            // if (!isUpdated) {
-            //   // Manejar error
-            //   console.log('Error al actualizar la cotización');
-            //   return;
-            // }
-            // Llamar en un segundo boton para emitir
             await handleEmit(insuranceData.id);
         }
     };
@@ -174,14 +170,17 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
                     isPayment={isPayment}
                 />
             )}
-            {currentStep === 'additional-data' && insuranceData && (
+            {currentStep === 'additional-data'  && (
                 <AdditionalDataFormWrapper
-                    insuranceData={insuranceData}
+                    insuranceData={insuranceData as InsurancesData}
                     onBack={handleBackFromAdditionalData}
                     onSubmit={handleSaveAdditionalData}
                     onProcessPayment={handleProcessPayment}
                     isDataSaved={isDataSaved}
                 />
+            )}
+            {currentStep === 'quote-summary' && insuranceData && (
+                <QuoteSummary insuranceData={insuranceData} />
             )}
             {currentStep === 'confirmation' && paymentData && insuranceData && (
                 <PaymentConfirmation
