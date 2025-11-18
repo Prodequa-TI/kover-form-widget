@@ -149,7 +149,7 @@ export const CustomerDataForm = ({
                             <MaskedInput
                                 mask='(###)-###-####'
                                 id={field.name}
-                                placeholder='(809)-565-5673'
+                                placeholder='(809) - ___ - ____'
                                 className=' bg-[#F8FAFC]'
                                 aria-invalid={fieldState.invalid}
                                 value={field.value || ''}

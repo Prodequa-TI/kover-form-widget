@@ -6,7 +6,7 @@ import type { InsurancesData } from '@/mocks/request.mock';
 import { AddressForm } from './AdditionalDataForm';
 import { FieldGroup } from '@/components/ui/field';
 import { useState } from 'react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CheckCircle2, XCircle } from 'lucide-react';
 
 interface AdditionalDataFormWrapperProps {
@@ -88,25 +88,36 @@ export const AdditionalDataFormWrapper = ({
     });
 
     const {
+        reset,
         formState: { isSubmitting },
     } = form;
 
     const handleSubmit = async (data: AdditionalDataFormData) => {
-        setAlertMessage(null);
-        const success = await onSubmit(data);
-
-        if (success) {
-            setAlertMessage({
-                type: 'success',
-                message: '¡Datos guardados exitosamente!',
-            });
-            // Ocultar el mensaje después de 5 segundos
-            setTimeout(() => setAlertMessage(null), 5000);
-        } else {
+        try {
+            setAlertMessage(null);
+            const success = await onSubmit(data);
+            if (success) {
+                reset();
+                setAlertMessage({
+                    type: 'success',
+                    message: '¡Datos guardados exitosamente!',
+                });
+                setTimeout(() => setAlertMessage(null), 5000);
+            } else {
+                setAlertMessage({
+                    type: 'error',
+                    message:
+                        'No se pudieron guardar los datos. Por favor intenta nuevamente.',
+                });
+            }
+        } catch (error) {
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : 'Ocurrió un error inesperado. Por favor intenta nuevamente.';
             setAlertMessage({
                 type: 'error',
-                message:
-                    'Error al guardar los datos. Por favor, inténtalo nuevamente.',
+                message: errorMessage,
             });
         }
     };
@@ -115,10 +126,13 @@ export const AdditionalDataFormWrapper = ({
         try {
             await onProcessPayment();
         } catch (error) {
+            const errorMessage =
+                error instanceof Error
+                    ? error.message
+                    : 'Error al procesar el pago. Por favor, inténtalo nuevamente.';
             setAlertMessage({
                 type: 'error',
-                message:
-                    'Error al procesar el pago. Por favor, inténtalo nuevamente.',
+                message: errorMessage,
             });
         }
     };
@@ -133,34 +147,43 @@ export const AdditionalDataFormWrapper = ({
                     con la emisión
                 </p>
             </div>
-            {alertMessage && (
-                <Alert
-                    className={`mb-6 ${
-                        alertMessage.type === 'success'
-                            ? 'bg-green-50 border-green-200'
-                            : 'bg-red-50 border-red-200'
-                    }`}>
-                    <div className='flex items-center gap-2'>
-                        {alertMessage.type === 'success' ? (
-                            <CheckCircle2 className='h-5 w-5 text-green-600' />
-                        ) : (
-                            <XCircle className='h-5 w-5 text-red-600' />
-                        )}
-                        <AlertDescription
-                            className={`text-sm whitespace-normal break-normal ${
-                                alertMessage.type === 'success'
-                                    ? 'text-green-800'
-                                    : 'text-red-800'
-                            }`}>
-                            {alertMessage.message}
-                        </AlertDescription>
-                    </div>
-                </Alert>
-            )}
             <form
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className='flex justify-center w-full'>
                 <FieldGroup className='w-full max-w-3xl'>
+                    {alertMessage && (
+                        <Alert
+                            variant={
+                                alertMessage.type == 'success'
+                                    ? 'default'
+                                    : 'destructive'
+                            }>
+                            {alertMessage.type === 'success' ? (
+                                <CheckCircle2 className='h-5 w-5 text-green-600 shrink-0' />
+                            ) : (
+                                <XCircle className='h-5 w-5 text-red-600 shrink-0' />
+                            )}
+                            {
+                                (alertMessage.type === 'success' ? (
+                                    <AlertTitle>
+                                      Pefecto!, tus cambios se guardaron
+                                    </AlertTitle>
+                                ) : (
+                                    <AlertTitle>
+                                        Error en la actualización
+                                    </AlertTitle>
+                                ))
+                            }
+                            <AlertDescription
+                                className={`text-sm  ${
+                                    alertMessage.type === 'success'
+                                        ? 'text-green-800'
+                                        : 'text-red-800'
+                                }`}>
+                                {alertMessage.message}
+                            </AlertDescription>
+                        </Alert>
+                    )}
                     <div className='w-full'>
                         <AddressForm form={form} />
                         <div className='mt-10 flex flex-col md:flex-row items-center justify-between gap-4 w-full'>
