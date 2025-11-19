@@ -50,19 +50,6 @@ const formatDate = (dateString: Date) => {
   });
 };
 
-const getStatusColor = (status: string) => {
-  switch (status.toLowerCase()) {
-    case 'quoted':
-      return 'bg-kover-widget-primary text-white';
-    case 'active':
-      return 'bg-success text-success-foreground';
-    case 'pending':
-      return 'bg-warning text-warning-foreground';
-    default:
-      return 'bg-muted text-muted-foreground';
-  }
-};
-
 export function QuoteSummary({ insuranceData, handlePayment }: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
   const formatYears = (totalMonths: number) => {
@@ -137,9 +124,9 @@ export function QuoteSummary({ insuranceData, handlePayment }: QuoteSummaryProps
                   <p className="text-sm font-medium text-muted-foreground">
                     Plazo de seguro
                   </p>
-                  <div className={`${getStatusColor(insuranceData.status)} w-full p-1`}>
+                  <p className="text-base font-semibold text-foreground">
                     {formatYears(insuranceData.quotationResponse.data.terminos.plazo)}
-                  </div>
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
