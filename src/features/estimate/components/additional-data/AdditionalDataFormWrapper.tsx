@@ -15,6 +15,7 @@ interface AdditionalDataFormWrapperProps {
     onSubmit: (data: AdditionalDataFormData) => Promise<boolean>;
     onProcessPayment: () => Promise<void>;
     isDataSaved: boolean;
+    nextStep: () => void;
 }
 
 // Reutilizamos las validaciones del EstimateFormConfig
@@ -54,7 +55,41 @@ const additionalDataSchema = yup.object({
         }),
         politicallyExposed: yup.boolean().defined().default(false),
         requiresFiscalReceipt: yup.boolean().defined().default(false),
+        hasIntermediary: yup.boolean().defined().default(false),
+        intermediary: yup.string().when('hasIntermediary', {
+            is: (hasIntermediary: boolean) => hasIntermediary,
+            then: (schema) => schema.required('El intermediario es requerido'),
+            otherwise: (schema) => schema.optional(),
+        })
     }),
+    endorsmentPolicy: yup.object({
+        hasEndorsmentPolicy: yup.boolean().defined().default(false),
+        institution: yup.string().when('hasEndorsmentPolicy', {
+            is: (hasEndorsmentPolicy: boolean) => hasEndorsmentPolicy,
+            then: (schema) => schema.required('La institución es requerida'),
+            otherwise: (schema) => schema.optional(),
+        }),
+        subsidiary: yup.string().when('hasEndorsmentPolicy', {
+            is: (hasEndorsmentPolicy: boolean) => hasEndorsmentPolicy,
+            then: (schema) => schema.required('La subsidiaria es requerida'),
+            otherwise: (schema) => schema.optional(),
+        }),
+        executiveName: yup.string().when('hasEndorsmentPolicy', {
+            is: (hasEndorsmentPolicy: boolean) => hasEndorsmentPolicy,
+            then: (schema) => schema.required('El nombre del ejecutivo es requerido'),
+            otherwise: (schema) => schema.optional(),
+        }),
+        executiveEmail: yup.string().email('Debe ser un correo válido').when('hasEndorsmentPolicy', {
+            is: (hasEndorsmentPolicy: boolean) => hasEndorsmentPolicy,
+            then: (schema) => schema.personaleEmail().required('El correo electrónico del ejecutivo es requerido'),
+            otherwise: (schema) => schema.optional(),
+        }),
+        executivePhoneNumber: yup.string().when('hasEndorsmentPolicy', {
+            is: (hasEndorsmentPolicy: boolean) => hasEndorsmentPolicy,
+            then: (schema) => schema.matches(/^\d{10}$/, 'Teléfono debe tener 10 digitos.').dominicPhone('El teléfono debe comenzar con 809, 829 o 849.'),
+            otherwise: (schema) => schema.optional(),
+        })
+    })
 });
 
 export type AdditionalDataFormData = yup.InferType<typeof additionalDataSchema>;
@@ -62,8 +97,8 @@ export type AdditionalDataFormData = yup.InferType<typeof additionalDataSchema>;
 export const AdditionalDataFormWrapper = ({
     onBack,
     onSubmit,
-    onProcessPayment,
     isDataSaved,
+    nextStep,
 }: AdditionalDataFormWrapperProps) => {
     const [alertMessage, setAlertMessage] = useState<{
         type: 'success' | 'error';
@@ -82,7 +117,17 @@ export const AdditionalDataFormWrapper = ({
                 },
                 politicallyExposed: false,
                 requiresFiscalReceipt: false,
+                hasIntermediary: false,
+                intermediary: ''
             },
+            endorsmentPolicy: {
+                hasEndorsmentPolicy: false,
+                institution: '',
+                subsidiary: '',
+                executiveName: '',
+                executiveEmail: '',
+                executivePhoneNumber: ''
+            }
         },
         mode: 'onChange',
     });
@@ -103,6 +148,7 @@ export const AdditionalDataFormWrapper = ({
                     message: '¡Datos guardados exitosamente!',
                 });
                 setTimeout(() => setAlertMessage(null), 5000);
+                nextStep();
             } else {
                 setAlertMessage({
                     type: 'error',
@@ -115,21 +161,6 @@ export const AdditionalDataFormWrapper = ({
                 error instanceof Error
                     ? error.message
                     : 'Ocurrió un error inesperado. Por favor intenta nuevamente.';
-            setAlertMessage({
-                type: 'error',
-                message: errorMessage,
-            });
-        }
-    };
-    const handleProcessPayment = async () => {
-        setAlertMessage(null);
-        try {
-            await onProcessPayment();
-        } catch (error) {
-            const errorMessage =
-                error instanceof Error
-                    ? error.message
-                    : 'Error al procesar el pago. Por favor, inténtalo nuevamente.';
             setAlertMessage({
                 type: 'error',
                 message: errorMessage,
@@ -206,12 +237,11 @@ export const AdditionalDataFormWrapper = ({
                             ) : (
                                 <Button
                                     type='button'
-                                    onClick={handleProcessPayment}
                                     className='h-11 px-10 cursor-pointer w-full md:w-auto bg-green-600 hover:bg-green-700'
                                     disabled={isSubmitting}>
                                     {isSubmitting
                                         ? 'Procesando...'
-                                        : 'PROCESAR PAGO'}
+                                        : 'Emitir'}
                                 </Button>
                             )}
                         </div>
