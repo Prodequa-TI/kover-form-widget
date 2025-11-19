@@ -14,7 +14,6 @@ interface AdditionalDataFormWrapperProps {
     onBack: () => void;
     onSubmit: (data: AdditionalDataFormData) => Promise<boolean>;
     onProcessPayment: () => Promise<void>;
-    isDataSaved: boolean;
     nextStep: () => void;
 }
 
@@ -97,7 +96,6 @@ export type AdditionalDataFormData = yup.InferType<typeof additionalDataSchema>;
 export const AdditionalDataFormWrapper = ({
     onBack,
     onSubmit,
-    isDataSaved,
     nextStep,
 }: AdditionalDataFormWrapperProps) => {
     const [alertMessage, setAlertMessage] = useState<{
@@ -226,24 +224,15 @@ export const AdditionalDataFormWrapper = ({
                                 disabled={isSubmitting}>
                                 ATRÁS
                             </Button>
-                            {!isDataSaved ? (
-                                <Button
+                            <Button
                                     type='submit'
-                                    className='h-11 px-10 cursor-pointer w-full md:w-auto bg-[#003D82] hover:bg-[#002855]'>
+                                    className='h-11 px-10 cursor-pointer w-full md:w-auto bg-orange-500 hover:bg-[#002855]'
+                                    disabled={isSubmitting}
+                                    >
                                     {isSubmitting
                                         ? 'Guardando...'
                                         : 'GUARDAR DATOS'}
                                 </Button>
-                            ) : (
-                                <Button
-                                    type='button'
-                                    className='h-11 px-10 cursor-pointer w-full md:w-auto bg-green-600 hover:bg-green-700'
-                                    disabled={isSubmitting}>
-                                    {isSubmitting
-                                        ? 'Procesando...'
-                                        : 'Emitir'}
-                                </Button>
-                            )}
                         </div>
                     </div>
                 </FieldGroup>
