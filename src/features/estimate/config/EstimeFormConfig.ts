@@ -213,13 +213,7 @@ export const schemaEstimate = yup.object().shape({
         }),
         isPersonalUse: yup
             .boolean()
-            .nullable()
-            .required('Debe seleccionar el tipo de uso del vehículo.')
-            .test(
-                'is-defined',
-                'Debe seleccionar el tipo de uso del vehículo.',
-                (value) => value === true || value === false
-            ),
+            .required('Debe seleccionar el tipo de uso del vehículo.').oneOf([true]),
         worth: yup
             .number()
             .transform((v, o) => (o === '' || o == null ? undefined : v))

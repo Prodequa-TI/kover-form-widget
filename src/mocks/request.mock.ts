@@ -24,6 +24,7 @@ export interface DataCustomer {
     firstName:      string;
     lastName:       string;
     gender:         string;
+    birthDate:      Date;
     documentType:   string;
     documentNumber: string;
     phone:          string;
