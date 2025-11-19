@@ -69,7 +69,7 @@ export default function PaymentConfirmation({
                     </p>
                     <p className='text-slate-700 text-base leading-relaxed mb-8 max-w-2xl mx-auto'>
                         ¿No lo recibiste?{' '}
-                        <span className='text-orange-500' onClick={resendEmail}>
+                        <span className='text-orange-500 cursor-pointer' onClick={resendEmail}>
                             Has click para reenviar
                         </span>
                     </p>
