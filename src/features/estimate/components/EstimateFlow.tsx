@@ -13,7 +13,7 @@ import {
     AdditionalDataFormWrapper,
     type AdditionalDataFormData,
 } from './additional-data/AdditionalDataFormWrapper';
-import { QuoteSummary } from './QuoteSummary';
+import { QuoteSummary } from './summary/QuoteSummary';
 
 type FlowStep =
     | 'estimate'
