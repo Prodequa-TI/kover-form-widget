@@ -16,8 +16,7 @@ import { Button } from '@/components/ui/button';
 
 import { generateQuota } from '../services/car-estimate.service';
 import type { InsurancesData } from '@/mocks/request.mock';
-import { Documents } from '../type/types';
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { XCircle } from 'lucide-react';
 import { usePreventScrollLock } from '../hook/usePreventSchrollLock';
@@ -34,7 +33,6 @@ export const EstimateForm = ({
     setGlobalSuccessMessage,
     storeToken,
 }: EstimateFormProps) => {
-    const [isCedulaVerified, setIsCedulaVerified] = useState(false);
     const [errorAlert, setErrorAlert] = useState<string | null>(null);
     const form = useForm<EstimateFormData>({
         resolver: yupResolver(schemaEstimate),
@@ -43,13 +41,9 @@ export const EstimateForm = ({
         reValidateMode: 'onChange',
     });
     const {
-        formState: { isValid, isSubmitting },
+        reset,
+        formState: { isSubmitting },
     } = form;
-
-    const documentType = form.watch('customer.documentType');
-    const documentNumber = form.watch('customer.documentNumber');
-    const isPersonalUse = form.watch('car.isPersonalUse');
-    const isCedula = documentType === Documents.ID;
 
     const onSubmit = async (data: EstimateFormData) => {
         try {
@@ -63,6 +57,7 @@ export const EstimateForm = ({
 
             // Pasar los datos al siguiente paso (Emitir)
             onSuccess(response.data);
+            reset()
         } catch (error) {
             // Manejar errores
             const errorMessage =
@@ -73,24 +68,24 @@ export const EstimateForm = ({
         }
     };
 
-    const canSubmit = useMemo(() => {
-        if (!isValid) return false;
-        if (isSubmitting) return false;
-        if (!isPersonalUse) return false;
-        if (isCedula) {
-            const cleanNumber = documentNumber?.replace(/\D/g, '') || '';
-            return cleanNumber.length === 11 && isCedulaVerified;
-        }
+    // const canSubmit = useMemo(() => {
+    //     if (!isValid) return false;
+    //     if (isSubmitting) return false;
+    //     if (!isPersonalUse) return false;
+    //     if (isCedula) {
+    //         const cleanNumber = documentNumber?.replace(/\D/g, '') || '';
+    //         return cleanNumber.length === 11 && isCedulaVerified;
+    //     }
 
-        return true;
-    }, [
-        isValid,
-        isSubmitting,
-        isCedula,
-        documentNumber,
-        isCedulaVerified,
-        isPersonalUse,
-    ]);
+    //     return true;
+    // }, [
+    //     isValid,
+    //     isSubmitting,
+    //     isCedula,
+    //     documentNumber,
+    //     isCedulaVerified,
+    //     isPersonalUse,
+    // ]);
     usePreventScrollLock();
     return (
         <>
@@ -109,7 +104,6 @@ export const EstimateForm = ({
                             </h4>
                             <CustomerDataForm
                                 form={form}
-                                onCedulaVerified={setIsCedulaVerified}
                             />
                         </div>
                         <Separator />
@@ -159,15 +153,7 @@ export const EstimateForm = ({
                         )}
                         <Button
                             type='submit'
-                            disabled={!canSubmit}
-                            className={`
-                                h-12 px-12 text-lg rounded-md transition-all
-                                ${
-                                    canSubmit
-                                        ? 'bg-kover-widget-primary hover:bg-kover-widget-primary-hover cursor-pointer'
-                                        : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-60'
-                                }
-                            `}>
+                            className='h-12 px-12 text-lg rounded-md transition-all bg-kover-widget-primary hover:bg-kover-widget-primary-hover cursor-pointer text-white'>
                             {isSubmitting ? 'ENVIANDO...' : 'COTIZAR'}
                         </Button>
                     </div>

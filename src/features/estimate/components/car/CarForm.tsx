@@ -20,6 +20,7 @@ import { SelectCarModel } from './SelectBrancModel';
 import { Input } from '@/components/ui/input';
 import { GasAndInstallToggle } from './GasAndInstallToggle';
 import { SelectBrandCar } from './SearchBrandCar';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 interface CarFormProps {
     form: UseFormReturn<EstimateFormData>;
@@ -52,7 +53,17 @@ export function CarForm({ form }: CarFormProps) {
                     name='car.brand'
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
-                            <SelectBrandCar field={field} handelGetModels={handleGetModels}/>
+                            <FieldLabel htmlFor='car.brand'>
+                                Marca del vehículo
+                            </FieldLabel>
+                            <SelectBrandCar
+                                field={field}
+                                handelGetModels={handleGetModels}
+                                invalid={fieldState.invalid}
+                            />
+                            {fieldState.invalid && (
+                                <FieldError errors={[fieldState.error]} />
+                            )}
                         </Field>
                     )}
                 />
@@ -61,6 +72,9 @@ export function CarForm({ form }: CarFormProps) {
                     name='car.modelId'
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
+                            <FieldLabel htmlFor='car.modelId'>
+                                Modelo
+                            </FieldLabel>
                             <SelectCarModel
                                 name={field.name}
                                 value={
@@ -88,6 +102,7 @@ export function CarForm({ form }: CarFormProps) {
                         name='car.year'
                         render={({ field, fieldState }) => (
                             <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor='car.year'>Año</FieldLabel>
                                 <SelectCarYear
                                     items={years}
                                     name={field.name}
@@ -142,36 +157,60 @@ export function CarForm({ form }: CarFormProps) {
                 <Controller
                     control={form.control}
                     name='car.isPersonalUse'
-                    render={({ field, fieldState }) => (
-                        <label
-                            htmlFor='car.isPersonalUse'
-                            className='cursor-pointer select-none'>
-                            <Field
-                                orientation='horizontal'
-                                data-invalid={fieldState.invalid}
-                                className='flex flex-row items-center justify-between rounded-lg border p-4 bg-card hover:bg-gray-50 transition-colors'>
-                                <FieldContent>
-                                    <FieldLabel htmlFor='form-rhf-complex-emailNotifications'>
-                                        Uso Personal
-                                    </FieldLabel>
-                                    <FieldDescription>
-                                        Confirma que es de uso particular
-                                    </FieldDescription>
-                                </FieldContent>
-                                <Switch
-                                    id='car.isPersonalUse'
+                    render={({ field, fieldState }) => {
+                        const isInvalid = fieldState.invalid;
+                        const inputId = 'personal-use';
+                        const currentValue =
+                            field.value === undefined
+                                ? ''
+                                : field.value
+                                ? 'true'
+                                : 'false';
+
+                        return (
+                            <Field data-invalid={isInvalid}>
+                                <RadioGroup
                                     name={field.name}
-                                    checked={field.value}
-                                    onCheckedChange={field.onChange}
-                                    aria-invalid={fieldState.invalid}
-                                    className='bg-kover-widget-primary'
-                                />
-                                {fieldState.invalid && (
+                                    value={currentValue}
+                                    onValueChange={(value) => {
+                                        field.onChange(value === 'true');
+                                    }}
+                                    aria-invalid={isInvalid}>
+                                    <div
+                                        className={`relative rounded-lg border-2 bg-card p-4 transition-all hover:shadow-sm ${
+                                            isInvalid
+                                                ? 'border-red-500' // borde rojo si hay error
+                                                : currentValue === 'true'
+                                                ? 'border-kover-widget-primary'
+                                                : 'border-gray-200'
+                                        }`}>
+                                        <div className='absolute right-3 top-3'>
+                                            <RadioGroupItem
+                                                id={inputId}
+                                                value='true'
+                                                className='text-kover-widget-primary'
+                                            />
+                                        </div>
+                                        <label
+                                            htmlFor={inputId}
+                                            className='cursor-pointer select-none'>
+                                            <FieldContent>
+                                                <FieldLabel>
+                                                    Uso Personal
+                                                </FieldLabel>
+                                                <FieldDescription className='text-[15px] leading-relaxed'>
+                                                    Para uso particular
+                                                </FieldDescription>
+                                            </FieldContent>
+                                        </label>
+                                    </div>
+                                </RadioGroup>
+                                {isInvalid && (
                                     <FieldError errors={[fieldState.error]} />
                                 )}
                             </Field>
-                        </label>
-                    )}
+                        );
+                    }}
                 />
                 <Controller
                     control={form.control}
@@ -198,6 +237,7 @@ export function CarForm({ form }: CarFormProps) {
                                         ]);
                                     }
                                 }}
+                                invalid={fieldState.invalid}
                             />
                             {fieldState.invalid && (
                                 <FieldError errors={[fieldState.error]} />

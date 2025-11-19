@@ -15,16 +15,19 @@ import {
 } from './additional-data/AdditionalDataFormWrapper';
 import { QuoteSummary } from './QuoteSummary';
 
-type FlowStep = 'estimate' | 'emit' | 'additional-data' | 'confirmation' | 'quote-summary';
+type FlowStep =
+    | 'estimate'
+    | 'emit'
+    | 'additional-data'
+    | 'confirmation'
+    | 'quote-summary';
 interface FlowProps {
     storeToken?: string;
 }
 
 export const EstimateFlow = ({ storeToken }: FlowProps) => {
     const [currentStep, setCurrentStep] = useState<FlowStep>('estimate');
-    const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(
-        null
-    );
+    const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(null);
     const [paymentData, setPayment] =
         useState<InsurancePaymentStatusResponse | null>(null);
     const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
@@ -72,7 +75,6 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
         const success = await updateInsurance(insuranceData.id, updatePayload);
 
         if (success) {
-            
             setIsDataSaved(true);
             return true;
         }

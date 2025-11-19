@@ -14,7 +14,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Controller, type UseFormReturn } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import type { Municipality, Occupations, Province } from '../../type/types';
 import {
     getMunicipalities,
@@ -33,9 +33,12 @@ export const AddressForm = ({ form }: AddressFormProps) => {
     const [provinces, setProvinces] = useState<Province[]>([]);
     const [municipalities, setMunicipalities] = useState<Municipality[]>([]);
     const [occupation, setOccupation] = useState<Occupations[]>([]);
+
+    // Optimización: usar useMemo para evitar cálculos innecesarios
     const selectedProvince = form.watch('customer.address.province');
+    const selectedMunicipality = form.watch('customer.address.municipality');
     const street = form.watch('customer.address.street');
-    const isStreetValid = street && street.length >= 3;
+    const isStreetValid = useMemo(() => street && street.length >= 3, [street]);
 
     useEffect(() => {
         const provincesList = getProvinces();
@@ -63,18 +66,20 @@ export const AddressForm = ({ form }: AddressFormProps) => {
             setMunicipalities([]);
         }
     }, [selectedProvince, provinces]);
+    // Optimización: usar useEffect con un debounce implícito o solo cuando sea necesario
     useEffect(() => {
-        if (!isStreetValid) {
-            form.setValue('customer.address.province', '');
-            form.setValue('customer.address.municipality', '');
-            form.setValue('customer.address.sector', '');
+        if (!isStreetValid && (selectedProvince || selectedMunicipality)) {
+            
+            form.setValue('customer.address.province', '', { shouldValidate: false });
+            form.setValue('customer.address.municipality', '', { shouldValidate: false });
+            form.setValue('customer.address.sector', '', { shouldValidate: false });
             form.clearErrors([
                 'customer.address.province',
                 'customer.address.municipality',
                 'customer.address.sector',
             ]);
         }
-    }, [isStreetValid, form]);
+    }, [isStreetValid, selectedProvince, selectedMunicipality, form]);
     
     return (
         <div className='flex flex-col gap-4 md:grid md:grid-cols-2'>
@@ -220,8 +225,9 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                             disabled={!isStreetValid}>
                             <SelectTrigger
                                 id='address.province'
+                                data-invalid={fieldState.invalid}
                                 aria-invalid={fieldState.invalid}
-                                className='bg-[#F8FAFC]'>
+                                className='data-[invalid=true]:border-red-500 bg-[#F8FAFC]'>
                                 <SelectValue placeholder='Provincia' />
                             </SelectTrigger>
                             <SelectContent className='bg-popover z-50'>
@@ -255,11 +261,12 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                             onValueChange={(value) => {
                                 field.onChange(value);
                             }}
-                            disabled={!form.watch('customer.address.province')}>
+                            disabled={!selectedProvince}>
                             <SelectTrigger
                                 id='address.municipality'
+                                data-invalid={fieldState.invalid}
                                 aria-invalid={fieldState.invalid}
-                                className='bg-[#F8FAFC]'>
+                                className='data-[invalid=true]:border-red-500 bg-[#F8FAFC]'>
                                 <SelectValue placeholder='Municipio' />
                             </SelectTrigger>
                             <SelectContent className='bg-popover z-50'>
@@ -293,9 +300,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                             className='bg-[#F8FAFC]'
                             {...field}
                             aria-invalid={fieldState.invalid}
-                            disabled={
-                                !form.watch('customer.address.municipality')
-                            }
+                            disabled={!selectedMunicipality}
                         />
                         {fieldState.invalid && (
                             <FieldError errors={[fieldState.error]} />
