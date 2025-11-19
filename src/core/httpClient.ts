@@ -1,4 +1,4 @@
-import { API_ENVS } from "@/features/estimate/config/apiConfig";
+import { envs } from "@/features/estimate/config/apiConfig";
 
 interface IHttpClient {
   get<T>(url: string): Promise<KoverResponse<T>>;
@@ -13,7 +13,7 @@ interface KoverResponse<T> {
 class HttpClient implements IHttpClient {
   private baseUrl: string;
   constructor() {
-    this.baseUrl = API_ENVS.url.qa;
+    this.baseUrl = envs.kover.url;
   }
 
   async get<T>(url: string): Promise<KoverResponse<T>> {

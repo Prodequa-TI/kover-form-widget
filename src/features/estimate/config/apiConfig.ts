@@ -1,6 +1,5 @@
-export const API_ENVS = {
-  url: {
-    qa: 'https://dev.kover.do/api',
-    local: 'http://localhost:3000/api',
+export const envs = {
+  kover: {
+    url: import.meta.env.VITE_KOVER_API_URL || 'https://dev.kover.do/api',
   }
 }

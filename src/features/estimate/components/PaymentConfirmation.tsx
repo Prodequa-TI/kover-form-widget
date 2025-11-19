@@ -3,14 +3,12 @@ import { AlertCircleIcon, AlertTriangle, CreditCardIcon } from 'lucide-react';
 import type { InsurancesData } from '@/mocks/request.mock';
 import {
     sendInspectionEmail,
-    type InsurancePaymentStatusResponse,
 } from '../services/insurance.service';
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface PaymentConfirmationProps {
     insuranceData: InsurancesData;
-    paymentData: InsurancePaymentStatusResponse;
     onFinish?: () => void;
 }
 
@@ -75,12 +73,13 @@ export default function PaymentConfirmation({
                             Has click para reenviar
                         </span>
                     </p>
+                    <div className='flex justify-center items-center'>
                     {finishResendingEmail && (
                         <Alert
-                            variant={emailWasSent ? 'default' : 'destructive'}
-                            className='mb-6 relative'>
-                            <AlertCircleIcon />
-                            <AlertTitle>
+                            variant={'default'}
+                            className={`mb-8 w-[70%] md:w-[50%] text-left ${emailWasSent ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}`}>
+                            <AlertCircleIcon  className={emailWasSent ? 'text-green-700' : 'text-green-700'} />
+                            <AlertTitle className={emailWasSent ? 'text-green-800' : 'text-red-800'}>
                                 {emailWasSent && 'Envio exitoso'}
                                 {!emailWasSent && 'Envio fallido'}
                             </AlertTitle>
@@ -98,6 +97,7 @@ export default function PaymentConfirmation({
                             </button>
                         </Alert>
                     )}
+                </div>
                     <div className='flex items-center justify-center gap-6'>
                         <Button
                             variant='outline'
@@ -107,6 +107,7 @@ export default function PaymentConfirmation({
                         </Button>
                     </div>
                 </div>
+                
             </div>
         </div>
     );

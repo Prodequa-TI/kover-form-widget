@@ -3,28 +3,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { AlertCircleIcon, CarFrontIcon, CheckCircle2 } from 'lucide-react';
+import { CarFrontIcon, CheckCircle2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import type { InsurancesData } from '@/mocks/request.mock';
 
 interface EmitirProps {
     onBack: () => void;
     onEmit: () => void;
-    isCheckoutOpen: boolean;
     successMessage: string | null;
-    paymentErrorMessage: string;
     insuranceData?: InsurancesData;
-    isPayment: boolean;
 }
 
 export default function Emitir({
     onBack,
     onEmit,
     successMessage,
-    isCheckoutOpen,
-    paymentErrorMessage,
     insuranceData,
-    isPayment,
 }: EmitirProps) {
     const [kmMes, setKmMes] = React.useState<number>(0);
 
@@ -61,18 +55,16 @@ export default function Emitir({
 
     return (
         <div className='mx-auto max-w-5xl px-4 py-6 md:py-10 w-full'>
-            {(successMessage || isPayment) && (
+            {(successMessage) && (
                 <Alert
                     variant='default'
                     className='mb-6 relative border-green-500 bg-green-50'>
                     <CheckCircle2 className='h-4 w-4 text-green-700' />
                     <AlertTitle className='text-green-700 font-semibold'>
-                        {isPayment ? 'Pago recibido' : 'Cotización generada'}
+                        Cotización generada
                     </AlertTitle>
                     <AlertDescription className='text-green-700 '>
-                        {isPayment
-                            ? '¡Gracias por tu pago! Se enviará un correo para el proceso de inspección.'
-                            : successMessage}
+                        { successMessage }
                     </AlertDescription>
                 </Alert>
             )}
@@ -224,35 +216,20 @@ export default function Emitir({
                     </div>
                 </div>
             </div>
-            <div className='flex items-center justify-center '>
-                {(isCheckoutOpen || paymentErrorMessage) && (
-                <Alert variant='default' className='mt-10 w-[70%] md:w-[50%]'>
-                    <AlertCircleIcon />
-                    <AlertTitle>
-                        {isCheckoutOpen && 'Obteniendo enlace de pago...'}
-                        {paymentErrorMessage && 'Error en el proceso de pago'}
-                    </AlertTitle>
-                    <AlertDescription>
-                        {paymentErrorMessage && paymentErrorMessage}
-                        {isCheckoutOpen &&
-                            'Por favor, complete el proceso de pago antes de cerrarlo!'}
-                    </AlertDescription>
-                </Alert>
-            )}
-            </div>
+
             <div className='mt-10 flex flex-col md:flex-row items-center justify-between gap-4 w-full'>
                 <Button
                     variant='secondary'
                     className='h-11 px-10 cursor-pointer w-full md:w-44'
                     onClick={onBack}
-                    disabled={isCheckoutOpen}>
+                    >
                     ATRÁS
                 </Button>
                 <Button
                     className=' w-full md:w-44 h-11 px-10 bg-orange-500 hover:bg-orange-600 text-base font-semibold cursor-pointer'
                     onClick={onEmit}
-                    disabled={isCheckoutOpen || isPayment}>
-                    EMITIR
+                >
+                    CONTINUAR
                 </Button>
             </div>
         </div>
