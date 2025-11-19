@@ -15,12 +15,16 @@ import { Button } from '@/components/ui/button';
 
 import {
   AlertCircleIcon,
-  CalendarIcon,
+  Calendar,
+  CardSim,
+  CarFront,
   CarIcon,
   CheckCircleIcon,
   FileTextIcon,
+  Fuel,
   MailIcon,
   MapPinIcon,
+  Palette,
   PhoneIcon,
   ShieldCheckIcon,
   UserIcon,
@@ -64,27 +68,34 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getStatusLabel = (status: string) => {
-  switch (status.toLowerCase()) {
-    case 'quoted':
-      return 'Cotizado';
-    case 'active':
-      return 'Activo';
-    case 'pending':
-      return 'Pendiente';
-    default:
-      return status;
-  }
-};
 export function QuoteSummary({
   insuranceData,
   handlePayment,
-  handleStep,
   isCheckoutOpen,
+  handleStep,
   paymentErrorMessage,
 }: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
-
+  const formatYears = (totalMonths: number) => {
+    const years = Math.floor(totalMonths / 12);
+    const months = totalMonths % 12; //
+    if (totalMonths === 0) {
+      return '0 meses';
+    }
+    let result = '';
+    if (years > 0) {
+      const yearText = years === 1 ? 'año' : 'años';
+      result += years + ' ' + yearText;
+    } else if (months > 0) {
+      const monthText = months === 1 ? 'mes' : 'meses';
+      const monthString = months + ' ' + monthText;
+      if (result.length > 0) {
+        result += ' y ';
+      }
+      result += monthString;
+    }
+    return result;
+  };
   return (
     <>
       <div className="flex flex-col items-center gap-6 mb-4">
@@ -109,32 +120,41 @@ export function QuoteSummary({
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
-                    Número de Cotización
+                    Prima fija mensual
                   </p>
                   <p className="text-base font-semibold text-foreground">
-                    #{insuranceData.quoteNumber}
+                    {formatCurrency(
+                      insuranceData.quotationResponse.data.terminos.primaFija
+                    )}
                   </p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Producto</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Tarifa x KM:
+                  </p>
                   <p className="text-base font-semibold text-foreground">
-                    {insuranceData.product}
+                    {formatCurrency(
+                      insuranceData.quotationResponse.data.terminos.primaKm
+                    )}
                   </p>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Estado</p>
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Plazo de seguro
+                  </p>
                   <div className={`${getStatusColor(insuranceData.status)} w-full p-1`}>
-                    {getStatusLabel(insuranceData.status)}
+                    {formatYears(insuranceData.quotationResponse.data.terminos.plazo)}
                   </div>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
-                    Fecha de Cotización
+                    Monto asegurado
                   </p>
                   <div className="flex items-center gap-2">
-                    <CalendarIcon className="h-4 w-4 text-muted-foreground" />
                     <p className="text-base font-semibold text-foreground">
-                      {formatDate(insuranceData.requestDate)}
+                      {formatCurrency(
+                        insuranceData.quotationResponse.data.terminos.montoAsegurado
+                      )}
                     </p>
                   </div>
                 </div>
@@ -169,6 +189,17 @@ export function QuoteSummary({
                     </p>
                   </div>
                   <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Fecha de nacimiento
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4 text-muted-foreground" />
+                      <p className="text-base font-semibold text-foreground">
+                        {formatDate(insuranceData.customer.birthDate)}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">Teléfono</p>
                     <div className="flex items-center gap-2">
                       <PhoneIcon className="h-4 w-4 text-muted-foreground" />
@@ -185,12 +216,6 @@ export function QuoteSummary({
                         {insuranceData.customer.email}
                       </p>
                     </div>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium text-muted-foreground">Ocupación</p>
-                    <p className="text-base font-semibold text-foreground">
-                      {insuranceData.customer.occupation}
-                    </p>
                   </div>
                 </div>
 
@@ -222,61 +247,71 @@ export function QuoteSummary({
             <AccordionContent className="px-6 pb-6 pt-2">
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Placa</p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.plate}
-                  </p>
+                  <p className="text-sm font-medium text-muted-foreground">Marca</p>
+                  <div className="flex items-center gap-2">
+                    <CarFront className="h-4 w-4 text-muted-foreground" />
+                    <p className="text-base font-semibold text-foreground">
+                      {insuranceData.quotationResponse.data.vehiculo.marca}
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <p className="text-sm font-medium text-muted-foreground">Modelo</p>
+                  <div className="flex items-center gap-2">
+                    <CarFront className="h-4 w-4 text-muted-foreground" />
+                    <p className="text-base font-semibold text-foreground">
+                      {insuranceData.quotationResponse.data.vehiculo.modelo}
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">Año</p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.year}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <p className="text-base font-semibold text-foreground">
+                      {insuranceData.quotationResponse.data.vehiculo.anio}
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">Color</p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.color}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <Palette className="h-4 w-4 text-muted-foreground" />
+                    <p className="text-base font-semibold text-foreground">
+                      {insuranceData.vehicle.color}
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
                     Tipo de Combustible
                   </p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.fuelType}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <Fuel className="h-4 w-4 text-muted-foreground" />
+                    <p className="text-base font-semibold text-foreground">
+                      {insuranceData.vehicle.fuelType}
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Valor del Vehículo
-                  </p>
-                  <p className="text-base font-semibold text-foreground">
-                    {formatCurrency(insuranceData.vehicle.value)}
-                  </p>
+                  <p className="text-sm font-medium text-muted-foreground">Placa</p>
+                  <div className="flex items-center gap-2">
+                    <CardSim className="h-4 w-4 text-muted-foreground" />
+                    <p className="text-base font-semibold text-foreground">
+                      {insuranceData.vehicle.plate}
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Cilindrada</p>
+                  <p className="text-sm font-medium text-muted-foreground">Motor</p>
                   <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.displacement} cc
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Puertas</p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.doors}
+                    {insuranceData.vehicle.engine}
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">Chasis</p>
                   <p className="text-base font-semibold text-foreground">
                     {insuranceData.vehicle.chassis}
-                  </p>
-                </div>
-                <div className="space-y-1 md:col-span-2">
-                  <p className="text-sm font-medium text-muted-foreground">Motor</p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.engine}
                   </p>
                 </div>
               </div>
@@ -313,7 +348,7 @@ export function QuoteSummary({
         </Accordion>
       </div>
 
-      <div className="m-[20px]">
+      <div className="m-5">
         <div className="flex items-center justify-center gap-2">
           <Checkbox id="terms" onCheckedChange={(e) => setAcceptedTerms(e)}></Checkbox>
           <Label htmlFor="terms">
@@ -337,7 +372,7 @@ export function QuoteSummary({
             ATRÁS
           </Button>
           <Button
-            disabled={!acceptedTerms as boolean || isCheckoutOpen}
+            disabled={(!acceptedTerms as boolean) || isCheckoutOpen}
             onClick={() => handlePayment(insuranceData.id)}
             className="w-full md:w-44 h-11 px-10 bg-orange-500 hover:bg-orange-600 text-base font-semibold cursor-pointer"
           >
