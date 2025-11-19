@@ -14,21 +14,26 @@ import type { CheckedState } from '@radix-ui/react-checkbox';
 import { Button } from '@/components/ui/button';
 
 import {
+  AlertCircleIcon,
   CalendarIcon,
   CarIcon,
   CheckCircleIcon,
   FileTextIcon,
-  LeafyGreenIcon,
   MailIcon,
   MapPinIcon,
   PhoneIcon,
   ShieldCheckIcon,
   UserIcon,
 } from 'lucide-react';
+import type { FlowStep } from '../../type/types';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface QuoteSummaryProps {
   insuranceData: InsurancesData;
   handlePayment: (insuranceId: string) => Promise<void>;
+  handleStep: (step: FlowStep) => void;
+  isCheckoutOpen: boolean;
+  paymentErrorMessage: string;
 }
 
 const formatCurrency = (amount: number) => {
@@ -71,21 +76,21 @@ const getStatusLabel = (status: string) => {
       return status;
   }
 };
-export function QuoteSummary({ insuranceData, handlePayment }: QuoteSummaryProps) {
+export function QuoteSummary({
+  insuranceData,
+  handlePayment,
+  handleStep,
+  isCheckoutOpen,
+  paymentErrorMessage,
+}: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
 
   return (
     <>
       <div className="flex flex-col items-center gap-6 mb-4">
         <h1 className="text-3xl text-kover-widget-primary font-semibold">
-          Para to que conduces
+          Por lo que conduces
         </h1>
-        <div className="text-green-600 flex justify-center items-center gap-2">
-          <LeafyGreenIcon className="size-5" />
-          <p className="text-sm">
-            Con tu compra ayudarás a sembrar 2 arboles en los bosques de la amazonia.
-          </p>
-        </div>
         <div className="flex flex-col items-center">
           <p className="text-sm">Aquí te mostramos lo que estas contratando,</p>
           <p className="text-sm">por favor revisa que todo este correcto.</p>
@@ -326,17 +331,35 @@ export function QuoteSummary({ insuranceData, handlePayment }: QuoteSummaryProps
           <Button
             variant="secondary"
             className="h-11 px-10 cursor-pointer w-full md:w-44"
-            onClick={() => console.log('click')}
+            onClick={() => handleStep('additional-data')}
+            disabled={isCheckoutOpen}
           >
             ATRÁS
           </Button>
           <Button
-            disabled={!acceptedTerms as boolean}
+            disabled={!acceptedTerms as boolean || isCheckoutOpen}
             onClick={() => handlePayment(insuranceData.id)}
             className="w-full md:w-44 h-11 px-10 bg-orange-500 hover:bg-orange-600 text-base font-semibold cursor-pointer"
           >
-            Ir al pago!
+            PAGAR
           </Button>
+        </div>
+
+        <div className="flex items-center justify-center ">
+          {(isCheckoutOpen || paymentErrorMessage) && (
+            <Alert variant="default" className="mt-10 w-[70%] md:w-[50%]">
+              <AlertCircleIcon />
+              <AlertTitle>
+                {isCheckoutOpen && 'Obteniendo enlace de pago...'}
+                {paymentErrorMessage && 'Error en el proceso de pago'}
+              </AlertTitle>
+              <AlertDescription>
+                {paymentErrorMessage && paymentErrorMessage}
+                {isCheckoutOpen &&
+                  'Por favor, complete el proceso de pago antes de cerrarlo!'}
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
       </div>
     </>
