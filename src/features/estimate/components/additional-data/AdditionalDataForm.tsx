@@ -81,7 +81,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
     <div className="space-y-8">
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <div className="h-1 w-1 rounded-full bg-kover-widget-primary"></div>
           <h3 className="text-sm font-semibold text-kover-widget-primary">Información Laboral</h3>
         </div>
 
@@ -106,7 +105,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
 
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <div className="h-1 w-1 rounded-full bg-kover-widget-primary"></div>
           <h3 className="text-sm font-semibold text-kover-widget-primary">
             Declaraciones y Requisitos
           </h3>
@@ -188,7 +186,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
 
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <div className="h-1 w-1 rounded-full bg-kover-widget-primary"></div>
           <h3 className="text-sm font-semibold text-kover-widget-primary">
             Dirección de Residencia
           </h3>
@@ -316,7 +313,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
 
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <div className="h-1 w-1 rounded-full bg-kover-widget-primary"></div>
           <h3 className="text-sm font-semibold text-kover-widget-primary">
             Intermediarios y Endosos
           </h3>

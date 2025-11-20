@@ -100,7 +100,7 @@ export function QuoteSummary({
             <AccordionTrigger className="px-6 py-4 hover:bg-muted/50 transition-colors">
               <div className="flex items-center gap-3">
                 <FileTextIcon className="h-5 w-5 text-kover-widget-primary" />
-                <span className="font-semibold text-lg">Datos de la Póliza</span>
+                <span className="font-semibold text-lg">Datos de la póliza</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6 pt-2">
@@ -152,7 +152,7 @@ export function QuoteSummary({
             <AccordionTrigger className="px-6 py-4 hover:bg-muted/50 transition-colors">
               <div className="flex items-center gap-3">
                 <UserIcon className="h-5 w-5 text-kover-widget-primary" />
-                <span className="font-semibold text-lg">Tus Datos</span>
+                <span className="font-semibold text-lg">Tus datos</span>
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6 pt-2">

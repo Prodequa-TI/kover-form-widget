@@ -39,7 +39,6 @@ export const PoliticalExposeData = ({ form }: PoliticalExposeDataProps) => {
     <div className="col-span-2 space-y-4">
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 space-y-4">
         <div className="flex items-center gap-2 mb-4">
-          <div className="h-1 w-1 rounded-full bg-kover-widget-primary"></div>
           <h3 className="text-sm font-semibold text-kover-widget-primary">
             Información de Exposición Política
           </h3>
