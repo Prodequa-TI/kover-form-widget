@@ -1,119 +1,134 @@
+export enum RelationShip {
+  FAMILY = 'Es un familiar',
+  IAM = 'Soy yo',
+}
+
+export enum Kinship {
+  HUSBAND = 'Esposo',
+  WIFE = 'Esposa',
+  BROTHER = 'Hermano',
+  SISTER = 'Hermana',
+  SOON = 'Hijo / Hija',
+  MOTHER = 'Mama',
+  FATHER = 'Papa'
+}
+
 export const enum Documents {
-    ID = 1,
-    PASSPORT = 2,
+  ID = 1,
+  PASSPORT = 2,
 }
 export const enum Gender {
-    MALE = 1,
-    FEMALE = 2,
+  MALE = 1,
+  FEMALE = 2,
 }
 
 export const enum FuelsType {
-    GASOLINE = 'Gasolina / Diesel',
-    GAS = 'Gas',
-    ELECTRIC = 'Vehículo Electrico',
+  GASOLINE = 'Gasolina / Diesel',
+  GAS = 'Gas',
+  ELECTRIC = 'Vehículo Electrico',
 }
 export const enum CarInsurances {
-    BASE = 'Base',
-    PLUS = 'Plus',
-    AUTO_EXCESO = 'AutoExceso',
+  BASE = 'Base',
+  PLUS = 'Plus',
+  AUTO_EXCESO = 'AutoExceso',
 }
 
 export const enum Gas {
-    GLP = 'GLP',
-    GNV = 'GNV',
+  GLP = 'GLP',
+  GNV = 'GNV',
 }
 
 export const enum ReplacementsCar {
-    UBER = 'Uber',
-    RENT_A_CAR = 'Rent a car',
-    NONE = 'No',
+  UBER = 'Uber',
+  RENT_A_CAR = 'Rent a car',
+  NONE = 'No',
 }
 export const enum InstallatationType {
-    ADAPTED = 'Adaptado',
-    TO_BUILD = 'De Fábrica',
+  ADAPTED = 'Adaptado',
+  TO_BUILD = 'De Fábrica',
 }
 
 export interface EstimateFormData {
-    customer: Customer;
-    car: Car;
+  customer: Customer;
+  car: Car;
 }
 export interface Car {
-    brand?: string;
-    modelId: number;
-    year: number;
-    isNew?: boolean;
-    fuelType?: FuelsType;
-    gasType?: Gas;
-    installationType?: InstallatationType;
-    isPersonalUse?: boolean;
-    worth: number;
-    terms: Term;
+  brand?: string;
+  modelId: number;
+  year: number;
+  isNew?: boolean;
+  fuelType?: FuelsType;
+  gasType?: Gas;
+  installationType?: InstallatationType;
+  isPersonalUse?: boolean;
+  worth: number;
+  terms: Term;
 }
 
 interface Term {
-    insuranceType: CarInsurances;
-    vehicleAssistance: boolean;
-    replacementCar: ReplacementsCar;
+  insuranceType: CarInsurances;
+  vehicleAssistance: boolean;
+  replacementCar: ReplacementsCar;
 }
 
 export interface Customer {
-    email: string;
-    phone: string;
-    documentType?: Documents;
-    documentNumber: string;
-    firstName?: string;
-    lastname?: string;
-    gender?: Gender;
-    birthDate?: string;
-    occupation?: string;
-    address?: Address;
-    politicallyExposed?: boolean;
-    requiresFiscalReceipt?: boolean;
+  email: string;
+  phone: string;
+  documentType?: Documents;
+  documentNumber: string;
+  firstName?: string;
+  lastname?: string;
+  gender?: Gender;
+  birthDate?: string;
+  occupation?: string;
+  address?: Address;
+  politicallyExposed?: boolean;
+  requiresFiscalReceipt?: boolean;
 }
 export interface Address {
-    street?: string;
-    province?: string;
-    municipality?: string;
-    sector?: string;
+  street?: string;
+  province?: string;
+  municipality?: string;
+  sector?: string;
 }
 export interface Province {
-    id: number;
-    nombre: string;
+  id: number;
+  nombre: string;
 }
 
 export interface Municipality {
-    id: number;
-    provinciaId: number;
-    nombre: string;
+  id: number;
+  provinciaId: number;
+  nombre: string;
 }
 
 export interface Occupations {
-    idOccupation: number;
-    occupation: string;
+  idOccupation: number;
+  occupation: string;
 }
 export interface CarModels {
-    idModelo: number;
-    modelo: string;
+  idModelo: number;
+  modelo: string;
 }
 
 export interface CarListResponse {
-    marca: string;
-    modelos: CarModels[];
+  marca: string;
+  modelos: CarModels[];
 }
 
 export interface FuelType {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 export interface UpdateInsuranceRequest {
-    customer: Partial<Customer>;
+  customer: Partial<Customer>;
 }
 
 export const NOT_ALLOWED_CORPORATE_EMAIL_DOMAINS = [
-    'prodequa.com',
-    'mytikray.com',
-    'nohaysinsuerte.com',
+  'prodequa.com',
+  'mytikray.com',
+  'nohaysinsuerte.com',
 ];
 
 export type FlowStep =
