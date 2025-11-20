@@ -237,7 +237,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                   >
                     <SelectValue placeholder="Selecciona una provincia" />
                   </SelectTrigger>
-                  <SelectContent className="bg-popover z-50">
+                  <SelectContent className="bg-popover z-50 h-52">
                     {provinces.map((prov) => (
                       <SelectItem key={prov.id} value={prov.nombre}>
                         {prov.nombre}
@@ -274,7 +274,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                   >
                     <SelectValue placeholder="Selecciona un municipio" />
                   </SelectTrigger>
-                  <SelectContent className="bg-popover z-50">
+                  <SelectContent className="bg-popover z-50 h-52">
                     {municipalities.map((muni) => (
                       <SelectItem key={muni.id} value={muni.nombre}>
                         {muni.nombre}
