@@ -39,7 +39,7 @@ export default function PaymentConfirmation({
 
     return (
         <div className='mx-auto max-w-4xl py-10'>
-            <div className='border-4 rounded-xl overflow-hidden bg-white'>
+            <div className='rounded-xl overflow-hidden bg-white'>
                 <div className='p-2 text-center'>
                     <div className='flex justify-center mb-6'>
                         <CreditCardIcon
