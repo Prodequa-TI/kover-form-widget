@@ -130,3 +130,10 @@ export const NOT_ALLOWED_CORPORATE_EMAIL_DOMAINS = [
   'mytikray.com',
   'nohaysinsuerte.com',
 ];
+
+export type FlowStep =
+    | 'estimate'
+    | 'emit'
+    | 'additional-data'
+    | 'confirmation'
+    | 'quote-summary';
