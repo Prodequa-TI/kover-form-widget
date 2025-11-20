@@ -95,7 +95,7 @@ export function SelectBrandCar({ field, handelGetModels,invalid }: BrandSelectPr
             {messageError && <CommandEmpty>{messageError}</CommandEmpty>}
             {isGettingCars && <CommandEmpty>Cargando...</CommandEmpty>}
             {cars.length === 0 && !isGettingCars && !messageError && (
-              <CommandEmpty>No se encontraron marcas.</CommandEmpty>
+              <CommandEmpty>Escriba 2 o más letras...</CommandEmpty>
             )}
             <CommandGroup>
               {cars.map((car) => (
