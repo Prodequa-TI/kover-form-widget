@@ -219,7 +219,7 @@ export const AdditionalDataFormWrapper = ({
     <div className="px-4 py-6 md:py-10 w-full">
       <div className="mb-8 text-center">
         <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
-          Datos Adicionales
+          Datos adicionales
         </h1>
         <p className="mt-1 text-slate-500">
           Por favor, completa la siguiente información para continuar con la emisión
@@ -265,7 +265,7 @@ export const AdditionalDataFormWrapper = ({
               </Button>
               <Button
                 type="submit"
-                className="h-11 px-10 cursor-pointer w-full md:w-auto bg-[#003D82] hover:bg-[#002855]"
+                className="h-11 px-10 cursor-pointer w-full md:w-auto bg-kover-widget-primary hover:bg-kover-widget-primary-hover"
               >
                 {isSubmitting ? 'Guardando...' : 'GUARDAR DATOS'}
               </Button>
