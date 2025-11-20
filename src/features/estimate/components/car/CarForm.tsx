@@ -113,7 +113,7 @@ export function CarForm({ form }: CarFormProps) {
                   onCheckedChange={field.onChange}
                 />
                 <FieldContent>
-                  <FieldLabel htmlFor="car.isNew">Vehiculo nuevo</FieldLabel>
+                  <FieldLabel htmlFor="car.isNew">Vehículo nuevo</FieldLabel>
                   <FieldDescription>
                     Selecciona esta opción si el auto no ha sido previamente registrado o
                     usado.

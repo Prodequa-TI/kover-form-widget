@@ -122,7 +122,7 @@ export const CustomerDataForm = ({
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
                             <FieldLabel htmlFor='customer.email'>
-                                Correo electronico
+                                Correo electrónico
                             </FieldLabel>
                             <Input
                                 type='text'
@@ -144,7 +144,7 @@ export const CustomerDataForm = ({
                     render={({ field, fieldState }) => (
                         <Field data-invalid={fieldState.invalid}>
                             <FieldLabel htmlFor='customer.phone'>
-                                Telefono / WhatsApp
+                                Teléfono / WhatsApp
                             </FieldLabel>
                             <MaskedInput
                                 mask='(###)-###-####'

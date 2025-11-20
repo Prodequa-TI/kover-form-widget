@@ -163,16 +163,16 @@ export function QuoteSummary({
                       Nombre Completo
                     </p>
                     <p className="text-base font-semibold text-foreground">
-                      {insuranceData.customer.firstName} {insuranceData.customer.lastName}
+                      {insuranceData.quotationResponse.data.cliente.nombre} {insuranceData.quotationResponse.data.cliente.apellido}
                     </p>
                   </div>
                   <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">Documento</p>
                     <p className="text-base font-semibold text-foreground">
-                      {insuranceData.customer.documentType === 'cedula'
+                      {insuranceData.quotationResponse.data.cliente.tipoDocumento === 'cedula'
                         ? 'Cédula'
-                        : insuranceData.customer.documentType}
-                      : {insuranceData.customer.documentNumber}
+                        : insuranceData.quotationResponse.data.cliente.tipoDocumento}
+                      : {insuranceData.quotationResponse.data.cliente.numeroDocumento}
                     </p>
                   </div>
                   <div className="space-y-1">
@@ -182,7 +182,7 @@ export function QuoteSummary({
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-muted-foreground" />
                       <p className="text-base font-semibold text-foreground">
-                        {formatDate(insuranceData.customer.birthDate)}
+                        {formatDate(insuranceData.quotationResponse.data.cliente.fechaNacimiento)}
                       </p>
                     </div>
                   </div>
@@ -191,7 +191,7 @@ export function QuoteSummary({
                     <div className="flex items-center gap-2">
                       <PhoneIcon className="h-4 w-4 text-muted-foreground" />
                       <p className="text-base font-semibold text-foreground">
-                        {insuranceData.customer.phone}
+                        {insuranceData.quotationResponse.data.cliente.telefono}
                       </p>
                     </div>
                   </div>
@@ -200,7 +200,7 @@ export function QuoteSummary({
                     <div className="flex items-center gap-2">
                       <MailIcon className="h-4 w-4 text-muted-foreground" />
                       <p className="text-base font-semibold text-foreground">
-                        {insuranceData.customer.email}
+                        {insuranceData.quotationResponse.data.cliente.correo}
                       </p>
                     </div>
                   </div>
@@ -213,11 +213,11 @@ export function QuoteSummary({
                   </p>
                   <div className="pl-6 space-y-1">
                     <p className="text-base text-foreground">
-                      {insuranceData.customer.address.street}
+                      {insuranceData.quotationResponse.data.cliente.direccion.calle}
                     </p>
                     <p className="text-base text-foreground">
-                      {insuranceData.customer.address.municipality},{' '}
-                      {insuranceData.customer.address.province}
+                      {insuranceData.quotationResponse.data.cliente.direccion.municipio},{' '}
+                      {insuranceData.quotationResponse.data.cliente.direccion.provincia}
                     </p>
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export function QuoteSummary({
                   <div className="flex items-center gap-2">
                     <Palette className="h-4 w-4 text-muted-foreground" />
                     <p className="text-base font-semibold text-foreground">
-                      {insuranceData.vehicle.color}
+                      {insuranceData.quotationResponse.data.vehiculo.inspeccion.color}
                     </p>
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export function QuoteSummary({
                   <div className="flex items-center gap-2">
                     <Fuel className="h-4 w-4 text-muted-foreground" />
                     <p className="text-base font-semibold text-foreground">
-                      {insuranceData.vehicle.fuelType}
+                      {insuranceData.quotationResponse.data.vehiculo.combustible}
                     </p>
                   </div>
                 </div>
@@ -285,20 +285,20 @@ export function QuoteSummary({
                   <div className="flex items-center gap-2">
                     <CardSim className="h-4 w-4 text-muted-foreground" />
                     <p className="text-base font-semibold text-foreground">
-                      {insuranceData.vehicle.plate}
+                      {insuranceData.quotationResponse.data.vehiculo.inspeccion.placa}
                     </p>
                   </div>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">Motor</p>
                   <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.engine}
+                    {insuranceData.quotationResponse.data.vehiculo.inspeccion.motor}
                   </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">Chasis</p>
                   <p className="text-base font-semibold text-foreground">
-                    {insuranceData.vehicle.chassis}
+                    {insuranceData.quotationResponse.data.vehiculo.inspeccion.chasis}
                   </p>
                 </div>
               </div>
@@ -361,7 +361,7 @@ export function QuoteSummary({
           <Button
             disabled={(!acceptedTerms as boolean) || isCheckoutOpen}
             onClick={() => handlePayment(insuranceData.id)}
-            className="w-full md:w-44 h-11 px-10 bg-orange-500 hover:bg-orange-600 text-base font-semibold cursor-pointer"
+            className="w-full md:w-44 h-11 px-10 bg-kover-widget-primary hover:bg-kover-widget-primary-hover text-base font-semibold cursor-pointer"
           >
             PAGAR
           </Button>

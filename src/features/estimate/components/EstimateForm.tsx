@@ -107,7 +107,7 @@ export const EstimateForm = ({
             <Separator />
             <div className="space-y-6 animate-in fade-in-50 duration-500">
               <h4 className=" font-bold text-kover-widget-primary mb-6">
-                Asistencia Vehícular
+                Asistencia Vehicular
               </h4>
               <AssistantForm form={form} />
             </div>
