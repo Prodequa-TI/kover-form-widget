@@ -55,7 +55,13 @@ const formatDate = (dateString: Date) => {
   });
 };
 
-export function QuoteSummary({ insuranceData, handlePayment }: QuoteSummaryProps) {
+export function QuoteSummary({
+  insuranceData,
+  handlePayment,
+  handleStep,
+  isCheckoutOpen,
+  paymentErrorMessage,
+}: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
   const formatYears = (totalMonths: number) => {
     const years = Math.floor(totalMonths / 12);
