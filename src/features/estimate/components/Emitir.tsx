@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { CarFrontIcon, CheckCircle2 } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import type { InsurancesData } from '@/mocks/request.mock';
+import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 
 interface EmitirProps {
     onBack: () => void;

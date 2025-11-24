@@ -2,22 +2,68 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { AdditionalDataFormData } from './AdditionalDataFormWrapper';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { SelectCustom } from './SelectCustom';
-import { financialInstitutions, intermediaries } from '@/mocks/emit.mock';
+import { financialInstitutions } from '@/mocks/emit.mock';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { MaskedInput } from '../customer/MaskedInput';
+import { installationMunicipalities, installationTypes } from '@/mocks/installation.mock';
 
 interface PolicyDataProps {
   form: UseFormReturn<AdditionalDataFormData>;
 }
 
 export const PolicyData = ({ form }: PolicyDataProps) => {
-  const [hasIntermediary, setHasIntermediary] = useState<boolean>(false);
+  // const [hasIntermediary, setHasIntermediary] = useState<boolean>(false);
   const [hasEndorsmentPolicy, setHasEndorsmentPolicy] = useState<boolean>(false);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="space-y-4">
+      <div className="col-span-2 flex flex-col gap-4">
+        <Controller
+          control={form.control}
+          name="smartDevice.installationType"
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel>¿Cómo deseas instalar el dispositivo smart?</FieldLabel>
+              <SelectCustom
+                items={installationTypes}
+                value={field.value ?? ''}
+                name="smartDevice.installationType"
+                placeHolder="Seleccionar tipo de dispositivo"
+                onChange={(value) => {
+                  field.onChange(value);
+                }}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        <Controller
+          control={form.control}
+          name="smartDevice.installationCenter"
+          render={({ field, fieldState }) => (
+            <Field>
+              <SelectCustom
+                items={
+                  installationMunicipalities[
+                    form.watch('smartDevice.installationType')
+                  ] ?? []
+                }
+                value={field.value ?? ''}
+                name="smartDevice.installationCenter"
+                placeHolder="Seleccionar centro de instalación"
+                onChange={(value) => {
+                  field.onChange(value);
+                }}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      {/** Intermediario no es necesario por el momento */}
+      {/* <div className="space-y-4">
         <Controller
           control={form.control}
           name="customer.hasIntermediary"
@@ -61,9 +107,9 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
             />
           </div>
         )}
-      </div>
+      </div> */}
 
-      <div className="space-y-4">
+      <div className="space-y-4 col-span-2">
         <Controller
           control={form.control}
           name="endorsmentPolicy.hasEndorsmentPolicy"

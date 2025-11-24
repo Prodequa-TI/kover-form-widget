@@ -1,5 +1,5 @@
 import { httpClient } from "../../../core/httpClient";
-import type { UpdateInsuranceRequest } from "../type/types";
+import type { UpdateInsuranceRequest } from "../type/insurance.types";
 
 interface InsurancePaymentResponse {
   paymentUrl: string;

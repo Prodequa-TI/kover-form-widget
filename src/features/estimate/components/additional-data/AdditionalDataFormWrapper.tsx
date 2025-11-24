@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import type { InsurancesData } from '@/mocks/request.mock';
+import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { AddressForm } from './AdditionalDataForm';
 import { FieldGroup } from '@/components/ui/field';
 import { useState } from 'react';
@@ -133,6 +133,10 @@ const additionalDataSchema = yup.object({
       otherwise: (schema) => schema.optional(),
     }),
   }),
+  smartDevice: yup.object({
+    installationType: yup.string().required('Selecciona un tipo de instalación.'),
+    installationCenter: yup.string().required('Selecciona el centro de instalación.'),
+  }),
 });
 
 export type AdditionalDataFormData = yup.InferType<typeof additionalDataSchema>;
@@ -190,6 +194,7 @@ export const AdditionalDataFormWrapper = ({
     try {
       setAlertMessage(null);
       const success = await onSubmit(data);
+      // return;
       if (success) {
         reset();
         setAlertMessage({
@@ -266,6 +271,7 @@ export const AdditionalDataFormWrapper = ({
               <Button
                 type="submit"
                 className="h-11 px-10 cursor-pointer w-full md:w-auto bg-kover-widget-primary hover:bg-kover-widget-primary-hover"
+                disabled={isSubmitting}
               >
                 {isSubmitting ? 'Guardando...' : 'GUARDAR DATOS'}
               </Button>
