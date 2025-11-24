@@ -36,6 +36,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
   const selectedProvince = form.watch('customer.address.province');
   const selectedMunicipality = form.watch('customer.address.municipality');
   const street = form.watch('customer.address.street');
+  const isReferencePoint = form.watch('customer.address.referencePoint');
   const isStreetValid = useMemo(() => street && street.length >= 3, [street]);
   const politicallyExposed = form.watch('customer.dueDiligence.politicallyExposed');
 
@@ -65,23 +66,31 @@ export const AddressForm = ({ form }: AddressFormProps) => {
   }, [selectedProvince, provinces]);
   // Optimización: usar useEffect con un debounce implícito o solo cuando sea necesario
   useEffect(() => {
-    if (!isStreetValid && (selectedProvince || selectedMunicipality)) {
+    if (
+      !isReferencePoint &&
+      !isStreetValid &&
+      (selectedProvince || selectedMunicipality)
+    ) {
       form.setValue('customer.address.province', '', { shouldValidate: false });
       form.setValue('customer.address.municipality', '', { shouldValidate: false });
       form.setValue('customer.address.sector', '', { shouldValidate: false });
+      form.setValue('customer.address.referencePoint', '', { shouldValidate: false });
       form.clearErrors([
         'customer.address.province',
         'customer.address.municipality',
         'customer.address.sector',
+        'customer.address.referencePoint',
       ]);
     }
-  }, [isStreetValid, selectedProvince, selectedMunicipality, form]);
+  }, [isReferencePoint, isStreetValid, selectedProvince, selectedMunicipality, form]);
 
   return (
     <div className="space-y-8">
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-kover-widget-primary">Información Laboral</h3>
+          <h3 className="text-sm font-semibold text-kover-widget-primary">
+            Información Laboral
+          </h3>
         </div>
 
         <Controller
@@ -111,7 +120,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
           <Controller
             control={form.control}
             name="customer.dueDiligence.politicallyExposed"
@@ -180,7 +188,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
           />
         </div>
 
-      
         {politicallyExposed && <PoliticalExposeData form={form} />}
       </div>
 
@@ -197,8 +204,10 @@ export const AddressForm = ({ form }: AddressFormProps) => {
               control={form.control}
               name="customer.address.street"
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="address.street">Calle y número</FieldLabel>
+                <Field data-invalid={fieldState.invalid} className="mb-4">
+                  <FieldLabel htmlFor="customer.address.street">
+                    Calle y número
+                  </FieldLabel>
                   <Input
                     type="text"
                     id={field.name}
@@ -206,6 +215,23 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                     className="bg-[#F8FAFC]"
                     {...field}
                     aria-invalid={fieldState.invalid}
+                  />
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                </Field>
+              )}
+            />
+            <Controller
+              control={form.control}
+              name="customer.address.referencePoint"
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel>Referencia</FieldLabel>
+                  <Input
+                    type="text"
+                    id={field.name}
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Referencias"
+                    {...field}
                   />
                   {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
@@ -227,7 +253,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                     form.setValue('customer.address.municipality', '');
                     form.clearErrors(['customer.address.municipality']);
                   }}
-                  disabled={!isStreetValid}
+                  disabled={!isReferencePoint || !isStreetValid}
                 >
                   <SelectTrigger
                     id="address.province"
@@ -274,7 +300,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                   >
                     <SelectValue placeholder="Selecciona un municipio" />
                   </SelectTrigger>
-                  <SelectContent className="bg-popover z-50 h-52">
+                  <SelectContent className="bg-popover z-50">
                     {municipalities.map((muni) => (
                       <SelectItem key={muni.id} value={muni.nombre}>
                         {muni.nombre}

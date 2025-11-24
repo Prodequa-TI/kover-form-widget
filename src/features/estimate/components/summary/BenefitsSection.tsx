@@ -20,7 +20,7 @@ export const BenefitsSection = ({ terms }: BenefitsSectionProps) => {
             </div>
             <div className="ml-7 space-y-2 text-sm text-gray-700">
               <p>• Daños materiales (Todo Riesgo)</p>
-              <p>• Seguro de Ley - Base</p>
+              <p>• Seguro de Ley - {terms.lawInsurance}</p>
             </div>
           </div>
 

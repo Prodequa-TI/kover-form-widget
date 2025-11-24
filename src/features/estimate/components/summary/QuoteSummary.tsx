@@ -16,7 +16,6 @@ import { Button } from '@/components/ui/button';
 import {
   AlertCircleIcon,
   Calendar,
-  CardSim,
   CarFront,
   CarIcon,
   CheckCircleIcon,
@@ -24,7 +23,6 @@ import {
   Fuel,
   MailIcon,
   MapPinIcon,
-  Palette,
   PhoneIcon,
   ShieldCheckIcon,
   UserIcon,
@@ -163,13 +161,15 @@ export function QuoteSummary({
                       Nombre Completo
                     </p>
                     <p className="text-base font-semibold text-foreground">
-                      {insuranceData.quotationResponse.data.cliente.nombre} {insuranceData.quotationResponse.data.cliente.apellido}
+                      {insuranceData.quotationResponse.data.cliente.nombre}{' '}
+                      {insuranceData.quotationResponse.data.cliente.apellido}
                     </p>
                   </div>
                   <div className="space-y-1">
                     <p className="text-sm font-medium text-muted-foreground">Documento</p>
                     <p className="text-base font-semibold text-foreground">
-                      {insuranceData.quotationResponse.data.cliente.tipoDocumento === 'cedula'
+                      {insuranceData.quotationResponse.data.cliente.tipoDocumento ===
+                      'cedula'
                         ? 'Cédula'
                         : insuranceData.quotationResponse.data.cliente.tipoDocumento}
                       : {insuranceData.quotationResponse.data.cliente.numeroDocumento}
@@ -182,7 +182,9 @@ export function QuoteSummary({
                     <div className="flex items-center gap-2">
                       <Calendar className="h-4 w-4 text-muted-foreground" />
                       <p className="text-base font-semibold text-foreground">
-                        {formatDate(insuranceData.quotationResponse.data.cliente.fechaNacimiento)}
+                        {formatDate(
+                          insuranceData.quotationResponse.data.cliente.fechaNacimiento
+                        )}
                       </p>
                     </div>
                   </div>
@@ -260,15 +262,7 @@ export function QuoteSummary({
                     </p>
                   </div>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Color</p>
-                  <div className="flex items-center gap-2">
-                    <Palette className="h-4 w-4 text-muted-foreground" />
-                    <p className="text-base font-semibold text-foreground">
-                      {insuranceData.quotationResponse.data.vehiculo.inspeccion.color}
-                    </p>
-                  </div>
-                </div>
+
                 <div className="space-y-1">
                   <p className="text-sm font-medium text-muted-foreground">
                     Tipo de Combustible
@@ -279,27 +273,6 @@ export function QuoteSummary({
                       {insuranceData.quotationResponse.data.vehiculo.combustible}
                     </p>
                   </div>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Placa</p>
-                  <div className="flex items-center gap-2">
-                    <CardSim className="h-4 w-4 text-muted-foreground" />
-                    <p className="text-base font-semibold text-foreground">
-                      {insuranceData.quotationResponse.data.vehiculo.inspeccion.placa}
-                    </p>
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Motor</p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.quotationResponse.data.vehiculo.inspeccion.motor}
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">Chasis</p>
-                  <p className="text-base font-semibold text-foreground">
-                    {insuranceData.quotationResponse.data.vehiculo.inspeccion.chasis}
-                  </p>
                 </div>
               </div>
             </AccordionContent>
