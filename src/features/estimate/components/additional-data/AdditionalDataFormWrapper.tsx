@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { RelationShip } from '../../type/types';
+import LoadingOverlay from '../LoadingOverlay';
 
 interface AdditionalDataFormWrapperProps {
   insuranceData: InsurancesData;
@@ -27,7 +28,8 @@ const additionalDataSchema = yup.object({
         .string()
         .required('La calle es requerida.')
         .min(3, 'Mínimo 3 caracteres'),
-      province: yup.string().when('street', {
+      referencePoint: yup.string().optional(),
+      province: yup.string().when('referencePoint', {
         is: (street: string) => !!street && street.length >= 3,
         then: (schema) =>
           schema
@@ -45,8 +47,7 @@ const additionalDataSchema = yup.object({
       }),
       sector: yup.string().when('municipality', {
         is: (municipality: string) => !!municipality && municipality.length > 0,
-        then: (schema) =>
-          schema.required('El sector es requerido.').min(1, 'Selecciona un sector.'),
+        then: (schema) => schema.required('El sector es requerido.'),
         otherwise: (schema) => schema.optional(),
       }),
     }),
@@ -156,6 +157,7 @@ export const AdditionalDataFormWrapper = ({
           province: '',
           municipality: '',
           sector: '',
+          referencePoint: '',
         },
         dueDiligence: {
           politicallyExposed: false,
@@ -216,63 +218,66 @@ export const AdditionalDataFormWrapper = ({
     }
   };
   return (
-    <div className="px-4 py-6 md:py-10 w-full">
-      <div className="mb-8 text-center">
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
-          Datos adicionales
-        </h1>
-        <p className="mt-1 text-slate-500">
-          Por favor, completa la siguiente información para continuar con la emisión
-        </p>
-      </div>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="flex justify-center w-full"
-      >
-        <FieldGroup className="w-full max-w-3xl">
-          {alertMessage && (
-            <Alert variant={alertMessage.type == 'success' ? 'default' : 'destructive'}>
-              {alertMessage.type === 'success' ? (
-                <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0" />
-              ) : (
-                <XCircle className="h-5 w-5 text-red-600 shrink-0" />
-              )}
-              {alertMessage.type === 'success' ? (
-                <AlertTitle>Pefecto!, tus cambios se guardaron</AlertTitle>
-              ) : (
-                <AlertTitle>Error en la actualización</AlertTitle>
-              )}
-              <AlertDescription
-                className={`text-sm  ${
-                  alertMessage.type === 'success' ? 'text-green-800' : 'text-red-800'
-                }`}
-              >
-                {alertMessage.message}
-              </AlertDescription>
-            </Alert>
-          )}
-          <div className="w-full">
-            <AddressForm form={form} />
-            <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4 w-full">
-              <Button
-                type="button"
-                variant="secondary"
-                className="h-11 px-10 cursor-pointer w-full md:w-44"
-                onClick={onBack}
-                disabled={isSubmitting}
-              >
-                ATRÁS
-              </Button>
-              <Button
-                type="submit"
-                className="h-11 px-10 cursor-pointer w-full md:w-auto bg-kover-widget-primary hover:bg-kover-widget-primary-hover"
-              >
-                {isSubmitting ? 'Guardando...' : 'GUARDAR DATOS'}
-              </Button>
+    <>
+      {isSubmitting && <LoadingOverlay message="Actualizando datos" />}
+      <div className="px-4 py-6 md:py-10 w-full">
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
+            Datos adicionales
+          </h1>
+          <p className="mt-1 text-slate-500">
+            Por favor, completa la siguiente información para continuar con la emisión
+          </p>
+        </div>
+        <form
+          onSubmit={form.handleSubmit(handleSubmit)}
+          className="flex justify-center w-full"
+        >
+          <FieldGroup className="w-full max-w-3xl">
+            {alertMessage && (
+              <Alert variant={alertMessage.type == 'success' ? 'default' : 'destructive'}>
+                {alertMessage.type === 'success' ? (
+                  <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0" />
+                ) : (
+                  <XCircle className="h-5 w-5 text-red-600 shrink-0" />
+                )}
+                {alertMessage.type === 'success' ? (
+                  <AlertTitle>Pefecto!, tus cambios se guardaron</AlertTitle>
+                ) : (
+                  <AlertTitle>Error en la actualización</AlertTitle>
+                )}
+                <AlertDescription
+                  className={`text-sm  ${
+                    alertMessage.type === 'success' ? 'text-green-800' : 'text-red-800'
+                  }`}
+                >
+                  {alertMessage.message}
+                </AlertDescription>
+              </Alert>
+            )}
+            <div className="w-full">
+              <AddressForm form={form} />
+              <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="h-11 px-10 cursor-pointer w-full md:w-44"
+                  onClick={onBack}
+                  disabled={isSubmitting}
+                >
+                  ATRÁS
+                </Button>
+                <Button
+                  type="submit"
+                  className="h-11 px-10 cursor-pointer w-full md:w-auto bg-kover-widget-primary hover:bg-kover-widget-primary-hover"
+                >
+                  {isSubmitting ? 'Guardando...' : 'Guardar datos'}
+                </Button>
+              </div>
             </div>
-          </div>
-        </FieldGroup>
-      </form>
-    </div>
+          </FieldGroup>
+        </form>
+      </div>
+    </>
   );
 };
