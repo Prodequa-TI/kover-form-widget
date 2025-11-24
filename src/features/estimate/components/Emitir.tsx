@@ -71,7 +71,7 @@ export default function Emitir({
             {/* Encabezado */}
             <div className='mb-8 text-center'>
                 <div className='flex flex-col items-center gap-3'>
-                    <CarFrontIcon className=' size-14 md:size-20 text-kover-widget-primary' />
+                    <CarFrontIcon className=' size-14 md:size-20 text-orange-500' />
                     <h1 className=' text-2xl md:text-3xl font-bold tracking-tight text-slate-900'>
                         Por lo que conduces
                     </h1>
