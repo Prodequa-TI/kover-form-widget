@@ -2,18 +2,18 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { AdditionalDataFormData } from './AdditionalDataFormWrapper';
 import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { SelectCustom } from './SelectCustom';
-import { financialInstitutions, intermediaries } from '@/mocks/emit.mock';
+import { financialInstitutions } from '@/mocks/emit.mock';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { MaskedInput } from '../customer/MaskedInput';
-import { installationMunicipalities } from '@/mocks/installation.mock';
+import { installationMunicipalities, installationTypes } from '@/mocks/installation.mock';
 
 interface PolicyDataProps {
   form: UseFormReturn<AdditionalDataFormData>;
 }
 
 export const PolicyData = ({ form }: PolicyDataProps) => {
-  const [hasIntermediary, setHasIntermediary] = useState<boolean>(false);
+  // const [hasIntermediary, setHasIntermediary] = useState<boolean>(false);
   const [hasEndorsmentPolicy, setHasEndorsmentPolicy] = useState<boolean>(false);
 
   return (
@@ -119,7 +119,7 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
           </h3>
         </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 col-span-2">
         <Controller
           control={form.control}
           name="endorsmentPolicy.hasEndorsmentPolicy"

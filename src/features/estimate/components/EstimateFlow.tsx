@@ -14,7 +14,8 @@ import {
   type AdditionalDataFormData,
 } from './additional-data/AdditionalDataFormWrapper';
 import { QuoteSummary } from './summary/QuoteSummary';
-import type { FlowStep } from '../type/types';
+import { type FlowStep } from '../type/types';
+import { formatInsuranceUpdateRequest } from '../mappers/format-update-insurance';
 
 interface FlowProps {
   storeToken?: string;
@@ -56,17 +57,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     data: AdditionalDataFormData
   ): Promise<boolean> => {
     if (!insuranceData) return false;
-    const updatePayload = {
-      customer: {
-        occupation: data.customer.occupation,
-        address: {
-          street: data.customer.address.street,
-          province: data.customer.address.province,
-          municipality: data.customer.address.municipality,
-          sector: data.customer.address.sector,
-        },
-      },
-    };
+    const updatePayload = formatInsuranceUpdateRequest(data);
     const success = await updateInsurance(insuranceData.id, updatePayload);
 
     return success;
@@ -159,7 +150,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           insuranceData={insuranceData}
         />
       )}
-      {currentStep === 'additional-data' && insuranceData && (
+      {currentStep === 'additional-data' && insuranceData &&(
         <AdditionalDataFormWrapper
           insuranceData={insuranceData as InsurancesData}
           onBack={handleBackFromAdditionalData}

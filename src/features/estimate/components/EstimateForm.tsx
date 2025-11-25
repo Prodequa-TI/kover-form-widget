@@ -15,7 +15,7 @@ import { FieldGroup } from '@/components/ui/field';
 import { Button } from '@/components/ui/button';
 
 import { generateQuota } from '../services/car-estimate.service';
-import type { InsurancesData } from '@/mocks/request.mock';
+import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { XCircle } from 'lucide-react';
