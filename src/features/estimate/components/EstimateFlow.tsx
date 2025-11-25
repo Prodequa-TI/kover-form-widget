@@ -1,4 +1,4 @@
-import type { InsurancesData } from '@/mocks/request.mock';
+import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { useEffect, useState } from 'react';
 import { EstimateForm } from './EstimateForm';
 import Emitir from './Emitir';
@@ -14,7 +14,8 @@ import {
   type AdditionalDataFormData,
 } from './additional-data/AdditionalDataFormWrapper';
 import { QuoteSummary } from './summary/QuoteSummary';
-import type { FlowStep } from '../type/types';
+import { type FlowStep } from '../type/types';
+import { formatInsuranceUpdateRequest } from '../mappers/format-update-insurance';
 
 interface FlowProps {
   storeToken?: string;
@@ -56,21 +57,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     data: AdditionalDataFormData
   ): Promise<boolean> => {
     if (!insuranceData) return false;
-
-    // Preparar el payload con solo los campos que el backend acepta
-    const updatePayload = {
-      customer: {
-        occupation: data.customer.occupation,
-        address: {
-          street: data.customer.address.street,
-          province: data.customer.address.province,
-          municipality: data.customer.address.municipality,
-          sector: data.customer.address.sector,
-        },
-        requiresFiscalReceipt: data.customer.requiresFiscalReceipt,
-        hasIntermediary: data.customer.hasIntermediary,
-      },
-    };
+    const updatePayload = formatInsuranceUpdateRequest(data);
     const success = await updateInsurance(insuranceData.id, updatePayload);
 
     if (success) {
@@ -89,9 +76,8 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           },
         },
       });
-      return true;
     }
-    return false;
+    return success;
   };
   const handleProcessPayment = async () => {
     if (insuranceData) {
@@ -181,7 +167,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           insuranceData={insuranceData}
         />
       )}
-      {currentStep === 'additional-data' && insuranceData && (
+      {currentStep === 'additional-data' && insuranceData &&(
         <AdditionalDataFormWrapper
           insuranceData={insuranceData as InsurancesData}
           onBack={handleBackFromAdditionalData}

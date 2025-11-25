@@ -7,7 +7,7 @@ import {
 import {
     type Insurances,
     type InsurancesData,
-} from '@/mocks/request.mock';
+} from '@/features/estimate/type/insurance.types';
 import type { EstimateFormData } from '../config/EstimeFormConfig';
 import { API_DEFAULTS } from '../config/apiDefaults';
 import { LAW_INSURANCE_LABEL, REPLACEMENT_CAR_LABEL } from '../config/mappers';

@@ -2,6 +2,7 @@ import * as React from "react"
 import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 import { cn } from "@/lib/utils"
+import { ShadowRootContext } from "./select"
 
 function TooltipProvider({
   delayDuration = 0,
@@ -38,8 +39,9 @@ function TooltipContent({
   children,
   ...props
 }: React.ComponentProps<typeof TooltipPrimitive.Content>) {
+  const shadowRoot = React.useContext(ShadowRootContext);
   return (
-    <TooltipPrimitive.Portal>
+    <TooltipPrimitive.Portal container={shadowRoot?.querySelector("#widget-container") as HTMLElement || undefined}>
       <TooltipPrimitive.Content
         data-slot="tooltip-content"
         sideOffset={sideOffset}
@@ -50,7 +52,7 @@ function TooltipContent({
         {...props}
       >
         {children}
-        <TooltipPrimitive.Arrow className="bg-foreground fill-foreground z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px]" />
+        <TooltipPrimitive.Arrow className="bg-foreground fill-foreground z-50 size-2.5 translate-y-[calc(-50%_-_2px)] rotate-45 rounded-[2px] bottom-[0px] top-[-5px] absolute" />
       </TooltipPrimitive.Content>
     </TooltipPrimitive.Portal>
   )

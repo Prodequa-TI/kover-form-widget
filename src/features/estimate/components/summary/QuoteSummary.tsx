@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import type { InsurancesData } from '@/mocks/request.mock';
+import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { BenefitsSection } from './BenefitsSection';
 import { ExclusionsSection } from './ExclusionsSection';
 import { Checkbox } from '@/components/ui/checkbox';

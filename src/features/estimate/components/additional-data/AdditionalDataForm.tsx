@@ -336,11 +336,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
       </div>
 
       <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-kover-widget-primary">
-            Intermediarios y Endosos
-          </h3>
-        </div>
 
         <PolicyData form={form} />
       </div>
