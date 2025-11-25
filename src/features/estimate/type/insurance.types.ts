@@ -38,6 +38,8 @@ export interface AddressData {
   province: string;
   municipality: string;
   street: string;
+  referencePoint?: string;
+  sector?: string;
 }
 
 export interface QuotationRequest {
