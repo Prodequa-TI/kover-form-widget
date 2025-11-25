@@ -8,8 +8,9 @@ interface SelectProps {
   invalid?: boolean;
   disabled?: boolean;
   required?: boolean;
+  placeHolder?: string;
 }
-export const SelectCustom = ({ items, value, name, disabled, invalid, onChange, required }: SelectProps) => {
+export const SelectCustom = ({ items, value, name, disabled, invalid, onChange, required, placeHolder }: SelectProps) => {
   return (
     <div>
       <Select
@@ -24,7 +25,7 @@ export const SelectCustom = ({ items, value, name, disabled, invalid, onChange, 
           aria-invalid={invalid ?? false}
           className="bg-[#F8FAFC]"
         >
-          <SelectValue placeholder="Seleccionar valor" />
+          <SelectValue placeholder={placeHolder ?? "Selecciona una opción"} />
         </SelectTrigger>
         <SelectContent className="bg-popover z-50">
           {items.map((item, i) => (
