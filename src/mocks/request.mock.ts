@@ -18,26 +18,33 @@ export interface InsurancesData {
     createdAt:         Date;
     updatedAt:         Date;
     id:                string;
+    endorsmentPolicy?: EndorsmentPolicy;
 }
 
 export interface DataCustomer {
-    firstName:      string;
-    lastName:       string;
-    gender:         string;
-    birthDate:      Date;
-    documentType:   string;
-    documentNumber: string;
-    phone:          string;
-    email:          string;
-    occupation:     string;
-    address:        AddressData;
-    _id:            string;
+    firstName:              string;
+    lastName:               string;
+    gender:                 string;
+    birthDate:              Date;
+    documentType:           string;
+    documentNumber:         string;
+    phone:                  string;
+    email:                  string;
+    occupation:             string;
+    address:                AddressData;
+    _id:                    string;
+    dueDiligence?:          DueDiligence;
+    requiresFiscalReceipt?: boolean;
+    hasIntermediary?:       boolean;
+    intermediary?:          string;
 }
 
 export interface AddressData {
-    province:     string;
-    municipality: string;
-    street:       string;
+    province:        string;
+    municipality:    string;
+    street:          string;
+    sector?:         string;
+    referencePoint?: string;
 }
 
 export interface QuotationRequest {
@@ -223,4 +230,22 @@ export interface DataTerms {
     tax:                 number;
     totalAmount:         number;
     _id:                 string;
+}
+
+export interface DueDiligence {
+    politicallyExposed:  boolean;
+    isItACloseRelative?: string;
+    familyName?:         string;
+    kinship?:            string;
+    position?:           string;
+    positionFamily?:     string;
+}
+
+export interface EndorsmentPolicy {
+    hasEndorsmentPolicy:   boolean;
+    institution?:          string;
+    subsidiary?:           string;
+    executiveName?:        string;
+    executiveEmail?:       string;
+    executivePhoneNumber?: string;
 }

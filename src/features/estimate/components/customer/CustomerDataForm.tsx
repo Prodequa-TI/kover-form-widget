@@ -44,7 +44,7 @@ export const CustomerDataForm = ({
             setCedulaFound(false);
             setCedulaError(false);
             onCedulaVerified?.(false);
-            if (numValue === Documents.ID) {
+            if (numValue !== Documents.ID) {
                 form.setValue('customer.firstName', '');
                 form.setValue('customer.lastname', '');
                 form.setValue('customer.birthDate', '');
