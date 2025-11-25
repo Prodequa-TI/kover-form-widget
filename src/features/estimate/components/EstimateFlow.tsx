@@ -60,6 +60,23 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     const updatePayload = formatInsuranceUpdateRequest(data);
     const success = await updateInsurance(insuranceData.id, updatePayload);
 
+    if (success) {
+      // Actualizar el estado local de los datos momentaniamente
+      setInsuranceData({
+        ...insuranceData,
+        customer: {
+          ...insuranceData.customer,
+          occupation: data.customer.occupation,
+          address: {
+            ...insuranceData.customer.address,
+            street: data.customer.address.street,
+            province: data.customer.address.province || insuranceData.customer.address.province,
+            municipality: data.customer.address.municipality || insuranceData.customer.address.municipality,
+            sector: data.customer.address.sector,
+          },
+        },
+      });
+    }
     return success;
   };
   const handleProcessPayment = async () => {

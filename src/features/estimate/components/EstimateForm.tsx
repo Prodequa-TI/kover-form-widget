@@ -20,7 +20,7 @@ import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { XCircle } from 'lucide-react';
 import { usePreventScrollLock } from '../hook/usePreventSchrollLock';
-import LoadingOverlay from './LoadingOverlay';
+import LoadingOverlay from '../../../shared/LoadingOverlay';
 
 interface EstimateFormProps {
   onSuccess: (data: InsurancesData) => void;
