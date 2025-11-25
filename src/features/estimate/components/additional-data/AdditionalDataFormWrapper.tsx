@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { CheckCircle2, XCircle } from 'lucide-react';
 import { RelationShip } from '../../type/types';
-import LoadingOverlay from '../LoadingOverlay';
+import LoadingOverlay from '@/shared/LoadingOverlay';
 
 interface AdditionalDataFormWrapperProps {
   insuranceData: InsurancesData;

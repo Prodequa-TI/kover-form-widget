@@ -56,6 +56,8 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     data: AdditionalDataFormData
   ): Promise<boolean> => {
     if (!insuranceData) return false;
+
+    // Preparar el payload con solo los campos que el backend acepta
     const updatePayload = {
       customer: {
         occupation: data.customer.occupation,
@@ -65,11 +67,28 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           municipality: data.customer.address.municipality,
           sector: data.customer.address.sector,
         },
+        requiresFiscalReceipt: data.customer.requiresFiscalReceipt,
+        hasIntermediary: data.customer.hasIntermediary,
       },
     };
     const success = await updateInsurance(insuranceData.id, updatePayload);
 
     if (success) {
+      // Actualizar el estado local de los datos momentaniamente
+      setInsuranceData({
+        ...insuranceData,
+        customer: {
+          ...insuranceData.customer,
+          occupation: data.customer.occupation,
+          address: {
+            ...insuranceData.customer.address,
+            street: data.customer.address.street,
+            province: data.customer.address.province || insuranceData.customer.address.province,
+            municipality: data.customer.address.municipality || insuranceData.customer.address.municipality,
+            sector: data.customer.address.sector,
+          },
+        },
+      });
       return true;
     }
     return false;

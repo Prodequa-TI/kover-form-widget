@@ -17,6 +17,11 @@ export const enum Documents {
   ID = 1,
   PASSPORT = 2,
 }
+export const enum MaritalStatus{
+  SOLTERO = 'S',
+  CASADO = 'C',
+  VIUDO = 'V'
+}
 export const enum Gender {
   MALE = 1,
   FEMALE = 2,
@@ -84,6 +89,7 @@ export interface Customer {
   address?: Address;
   politicallyExposed?: boolean;
   requiresFiscalReceipt?: boolean;
+  maritalStatus?: MaritalStatus;
 }
 export interface Address {
   street?: string;

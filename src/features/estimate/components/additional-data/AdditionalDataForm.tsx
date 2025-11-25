@@ -32,11 +32,11 @@ export const AddressForm = ({ form }: AddressFormProps) => {
   const [municipalities, setMunicipalities] = useState<Municipality[]>([]);
   const [occupation, setOccupation] = useState<Occupations[]>([]);
 
-  // Optimización: usar useMemo para evitar cálculos innecesarios
   const selectedProvince = form.watch('customer.address.province');
   const selectedMunicipality = form.watch('customer.address.municipality');
   const street = form.watch('customer.address.street');
   const isReferencePoint = form.watch('customer.address.referencePoint');
+  // Optimización: usar useMemo para evitar cálculos innecesarios
   const isStreetValid = useMemo(() => street && street.length >= 3, [street]);
   const politicallyExposed = form.watch('customer.dueDiligence.politicallyExposed');
 
@@ -64,7 +64,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
       setMunicipalities([]);
     }
   }, [selectedProvince, provinces]);
-  // Optimización: usar useEffect con un debounce implícito o solo cuando sea necesario
+
   useEffect(() => {
     if (
       !isReferencePoint &&
@@ -74,7 +74,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
       form.setValue('customer.address.province', '', { shouldValidate: false });
       form.setValue('customer.address.municipality', '', { shouldValidate: false });
       form.setValue('customer.address.sector', '', { shouldValidate: false });
-      form.setValue('customer.address.referencePoint', '', { shouldValidate: false });
       form.clearErrors([
         'customer.address.province',
         'customer.address.municipality',
@@ -253,7 +252,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                     form.setValue('customer.address.municipality', '');
                     form.clearErrors(['customer.address.municipality']);
                   }}
-                  disabled={!isReferencePoint || !isStreetValid}
                 >
                   <SelectTrigger
                     id="address.province"

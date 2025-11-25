@@ -205,7 +205,7 @@ export function QuoteSummary({
                         {insuranceData.quotationResponse.data.cliente.correo}
                       </p>
                     </div>
-                  </div>
+                  </div>         
                 </div>
 
                 <div className="space-y-2 pt-2 border-t">
@@ -215,12 +215,22 @@ export function QuoteSummary({
                   </p>
                   <div className="pl-6 space-y-1">
                     <p className="text-base text-foreground">
-                      {insuranceData.quotationResponse.data.cliente.direccion.calle}
+                      {insuranceData.customer.address.street}
                     </p>
+                    {insuranceData.customer.address.sector && (
+                      <p className="text-base text-foreground">
+                        Sector: {insuranceData.customer.address.sector}
+                      </p>
+                    )}
                     <p className="text-base text-foreground">
-                      {insuranceData.quotationResponse.data.cliente.direccion.municipio},{' '}
-                      {insuranceData.quotationResponse.data.cliente.direccion.provincia}
+                      {insuranceData.customer.address.municipality},{' '}
+                      {insuranceData.customer.address.province}
                     </p>
+                    {insuranceData.customer.address.referencePoint && (
+                      <p className="text-sm text-muted-foreground italic">
+                        Referencia: {insuranceData.customer.address.referencePoint}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -297,7 +307,7 @@ export function QuoteSummary({
               <div className="flex items-center gap-3">
                 <ShieldCheckIcon className="h-5 w-5 text-kover-widget-primary" />
                 <span className="font-semibold text-lg">
-                  Exlusiones y consideraciones
+                  Exclusiones y consideraciones
                 </span>
               </div>
             </AccordionTrigger>
