@@ -98,6 +98,7 @@ export interface FluffyAddress {
   street: string;
   houseNumber?: string;
   referencePoint?: string;
+  building?: string;
 }
 
 export interface QuotationRequestTerms {

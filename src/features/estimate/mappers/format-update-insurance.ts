@@ -11,6 +11,7 @@ export const formatInsuranceUpdateRequest = (data: AdditionalDataFormData): Upda
             province: data.customer.address.province ?? '',
             municipality: data.customer.address.municipality ?? '',
             sector: data.customer.address.sector ?? '',
+            building: data.customer.address.referencePoint ?? '',
           },
           dueDiligence: {
             politicallyExposed: data.customer.dueDiligence.politicallyExposed,

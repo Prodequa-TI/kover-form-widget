@@ -18,6 +18,11 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-kover-widget-primary">
+            Dispositivo Smart
+          </h3>
+        </div>
       <div className="col-span-2 flex flex-col gap-4">
         <Controller
           control={form.control}
@@ -108,6 +113,11 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
           </div>
         )}
       </div> */}
+      <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-kover-widget-primary">
+            Endosos
+          </h3>
+        </div>
 
       <div className="space-y-4 col-span-2">
         <Controller

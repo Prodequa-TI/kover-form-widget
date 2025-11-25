@@ -1,4 +1,4 @@
-import type { InsurancesData, UpdateInsuranceRequest } from '@/features/estimate/type/insurance.types';
+import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { useEffect, useState } from 'react';
 import { EstimateForm } from './EstimateForm';
 import Emitir from './Emitir';
@@ -76,9 +76,8 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           },
         },
       });
-      return true;
     }
-    return false;
+    return success;
   };
   const handleProcessPayment = async () => {
     if (insuranceData) {
