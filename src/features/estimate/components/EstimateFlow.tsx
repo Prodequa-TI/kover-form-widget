@@ -1,4 +1,4 @@
-import type { InsurancesData } from '@/mocks/request.mock';
+import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { useEffect, useState } from 'react';
 import { EstimateForm } from './EstimateForm';
 import Emitir from './Emitir';
@@ -69,10 +69,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     };
     const success = await updateInsurance(insuranceData.id, updatePayload);
 
-    if (success) {
-      return true;
-    }
-    return false;
+    return success;
   };
   const handleProcessPayment = async () => {
     if (insuranceData) {

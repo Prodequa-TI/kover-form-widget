@@ -6,6 +6,7 @@ import { financialInstitutions, intermediaries } from '@/mocks/emit.mock';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { MaskedInput } from '../customer/MaskedInput';
+import { installationMunicipalities } from '@/mocks/installation.mock';
 
 interface PolicyDataProps {
   form: UseFormReturn<AdditionalDataFormData>;
@@ -17,7 +18,57 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div className="space-y-4">
+       <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-kover-widget-primary">
+            Dispositivo Smart
+          </h3>
+        </div>
+      <div className="col-span-2 flex flex-col gap-4">
+        <Controller
+          control={form.control}
+          name="smartDevice.installationType"
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel>¿Cómo deseas instalar el dispositivo smart?</FieldLabel>
+              <SelectCustom
+                items={installationTypes}
+                value={field.value ?? ''}
+                name="smartDevice.installationType"
+                placeHolder="Seleccionar tipo de dispositivo"
+                onChange={(value) => {
+                  field.onChange(value);
+                }}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        <Controller
+          control={form.control}
+          name="smartDevice.installationCenter"
+          render={({ field, fieldState }) => (
+            <Field>
+              <SelectCustom
+                items={
+                  installationMunicipalities[
+                    form.watch('smartDevice.installationType')
+                  ] ?? []
+                }
+                value={field.value ?? ''}
+                name="smartDevice.installationCenter"
+                placeHolder="Seleccionar centro de instalación"
+                onChange={(value) => {
+                  field.onChange(value);
+                }}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+      </div>
+      {/** Intermediario no es necesario por el momento */}
+      {/* <div className="space-y-4">
         <Controller
           control={form.control}
           name="customer.hasIntermediary"
@@ -61,7 +112,12 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
             />
           </div>
         )}
-      </div>
+      </div> */}
+      <div className="flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-kover-widget-primary">
+            Endosos
+          </h3>
+        </div>
 
       <div className="space-y-4">
         <Controller
