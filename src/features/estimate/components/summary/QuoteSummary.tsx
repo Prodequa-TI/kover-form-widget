@@ -205,7 +205,7 @@ export function QuoteSummary({
                         {insuranceData.quotationResponse.data.cliente.correo}
                       </p>
                     </div>
-                  </div>         
+                  </div>
                 </div>
 
                 <div className="space-y-2 pt-2 border-t">
