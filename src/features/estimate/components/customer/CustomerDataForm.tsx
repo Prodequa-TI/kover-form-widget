@@ -230,23 +230,23 @@ export const CustomerDataForm = ({
                                             ? 'A12345678'
                                             : ''
                                     }
-                                    className='bg-[#F8FAFC] pr-10'
+                                    className='bg-[#F8FAFC] pr-10 flex items-center'
                                     aria-invalid={fieldState.invalid}
                                     disabled={!documentType}
                                 />
 
                                 {isLoadingCedula && (
-                                    <div className='absolute right-3 top-1/2 -translate-y-1/2'>
+                                    <div className='absolute right-3 top-1/3 -translate-y-1/2'>
                                         <Loader2 className='h-4 w-4 animate-spin text-blue-500' />
                                     </div>
                                 )}
                                 {cedulaFound && !isLoadingCedula && (
-                                    <div className='absolute right-3 top-1/2 -translate-y-1/2'>
+                                    <div className='absolute right-3 top-1/3 -translate-y-1/2'>
                                         <CheckCircle2 className='h-4 w-4 text-green-500' />
                                     </div>
                                 )}
                                 {cedulaError && !isLoadingCedula && (
-                                    <div className='absolute right-3 top-1/2 -translate-y-1/2'>
+                                    <div className='absolute right-3 top-1/3 -translate-y-1/2'>
                                         <XCircle className='h-4 w-4 text-red-500' />
                                     </div>
                                 )}
