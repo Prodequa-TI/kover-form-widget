@@ -83,7 +83,7 @@ export const initialValuesCar: Car = {
   fuelType: undefined,
   gasType: undefined,
   installationType: undefined,
-  isPersonalUse: undefined,
+  isPersonalUse: false,
   worth: 0,
   terms: {
     insuranceType: CarInsurances.BASE,
@@ -183,13 +183,20 @@ export const schemaEstimate = yup.object().shape({
       then: (schema) => schema.min(1, 'Selecciona un modelo válido.'),
       otherwise: (schema) => schema.optional().transform(() => 0),
     }),
-    year: yup.number().when('brand', {
-      is: (brand: string) => !!brand && brand.length > 0,
-      then: (schema) =>
-        schema
-          .min(1980, 'Seleccione un año válido.')
-          .max(currentYear, 'El año no es valido'),
-      otherwise: (schema) => schema.optional().transform(() => 0),
+    year: yup.number().when(['brand', 'isNew'], ([brand, isNew], schema) => {
+      if (!brand || brand.length === 0) {
+        return schema.optional();
+      }
+      let yearSchema = schema
+        .min(1990, 'Seleccione un año válido.')
+        .max(currentYear, 'El año no es válido.');
+      if (isNew === true) {
+        yearSchema = yearSchema.oneOf(
+          [currentYear],
+          `Si el vehículo es nuevo, el año debe ser ${currentYear}`
+        );
+      }
+      return yearSchema;
     }),
     isNew: yup.boolean().defined().default(false),
     fuelType: yup

@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 
 import { generateQuota } from '../services/car-estimate.service';
 import type { InsurancesData } from '@/features/estimate/type/insurance.types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { XCircle } from 'lucide-react';
 import { usePreventScrollLock } from '../hook/usePreventSchrollLock';
@@ -75,9 +75,19 @@ export const EstimateForm = ({
   };
 
   usePreventScrollLock();
+  useEffect(() => {
+    //SI HAY UN ALERT DE ERROR Y NO HAY ERRORE DE VALIDACIÓN
+    if(errorAlert && form.formState.isValid){
+      const timer = setTimeout(() => {
+        setErrorAlert(null);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  },[errorAlert, form.formState.isValid]);
+
   return (
     <>
-      {isSubmitting && <LoadingOverlay message="Generando tu cotización..." />}
+      {isSubmitting && <LoadingOverlay message="Generando tu cotización" />}
       <h1 className="text-center text-2xl font-bold text-gray-900 mb-8">
         Cotización por lo que conduces
       </h1>
@@ -118,15 +128,18 @@ export const EstimateForm = ({
               <ReplaceCar form={form} />
             </div>
             {errorAlert && (
-              <Alert variant="destructive" className="mb-6 relative border-red-500">
-                <XCircle className="h-4 w-4 text-red-600" />
+              <Alert
+                variant="destructive"
+                className="mb-6 relative border-red-500 bg-red-50"
+              >
+                <XCircle className="h-4 w-4 " />
                 <AlertTitle>Error en la cotización</AlertTitle>
                 <AlertDescription>{errorAlert}</AlertDescription>
 
                 <button
                   type="button"
                   onClick={() => setErrorAlert(null)}
-                  className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+                  className="absolute top-1 right-3 text-red-500 hover:text-red-700"
                 >
                   ✕
                 </button>

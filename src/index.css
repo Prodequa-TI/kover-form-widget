@@ -46,6 +46,7 @@
         --color-kover-widget-primary-foreground: var(--kover-widget-primary-foreground);
         --color-kover-widget-secondary: var(--kover-widget-secondary);
         --color-kover-widget-secondary-foreground: var(--kover-widget-secondary-foreground);
+        --color-kover-widget-primary-50: var(--kover-widget-primary-50);
 
     }
 
@@ -90,7 +91,8 @@
         
         /* Indigo como color principal */
         --kover-widget-primary: #4f46e5;           
-        --kover-widget-primary-hover: #4338ca;         
+        --kover-widget-primary-hover: #4338ca;       
+        --kover-widget-primary-50: #eef2ff;  
         /* Purple como secundario */
         --kover-widget-secondary: #a855f7;           
         --kover-widget-secondary-foreground: #9333ea; 

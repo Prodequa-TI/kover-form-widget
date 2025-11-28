@@ -1,4 +1,10 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface SelectProps {
   items: string[];
@@ -10,12 +16,21 @@ interface SelectProps {
   required?: boolean;
   placeHolder?: string;
 }
-export const SelectCustom = ({ items, value, name, disabled, invalid, onChange, required, placeHolder }: SelectProps) => {
+export const SelectCustom = ({
+  items,
+  value,
+  name,
+  disabled,
+  invalid,
+  onChange,
+  required,
+  placeHolder,
+}: SelectProps) => {
   return (
     <div>
       <Select
         name={name}
-        value={value || ""}
+        value={value || ''}
         onValueChange={onChange}
         disabled={disabled ?? false}
         required={required ?? false}
@@ -23,9 +38,10 @@ export const SelectCustom = ({ items, value, name, disabled, invalid, onChange, 
         <SelectTrigger
           id={name}
           aria-invalid={invalid ?? false}
-          className="bg-[#F8FAFC]"
+          data-invalid={invalid}
+          className="bg-[#F8FAFC] data-[invalid=true]:border-red-500"
         >
-          <SelectValue placeholder={placeHolder ?? "Selecciona una opción"} />
+          <SelectValue placeholder={placeHolder ?? 'Selecciona una opción'} />
         </SelectTrigger>
         <SelectContent className="bg-popover z-50">
           {items.map((item, i) => (

@@ -73,8 +73,8 @@ export async function generateQuota(
         isPersonalUse: data.car.isPersonalUse,
         value: data.car.worth,
         isNew: data.car.isNew,
-        gasType: data.car.gasType || undefined,
-        installationType: data.car.installationType || undefined,
+        gasType: data.car.gasType ,
+        installationType: data.car.installationType,
         // Datos que se pedirán después
         plate: API_DEFAULTS.vehicleDefaults.plate,
         color: API_DEFAULTS.vehicleDefaults.color,
