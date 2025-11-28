@@ -26,7 +26,7 @@ export function SelectFuelType({
             <SelectTrigger
                 data-invalid={invalid}
                 aria-invalid={invalid}
-                className='data-[invalid=true]:border-red-500 select-none'>
+                className='data-[invalid=true]:border-red-500 select-none' id={name}>
                 <SelectValue placeholder='Tipo de combustible' />
             </SelectTrigger>
             <SelectContent className='max-h-40 overflow-y-auto'>

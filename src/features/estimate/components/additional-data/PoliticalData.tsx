@@ -32,7 +32,7 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
           control={form.control}
           name="smartDevice.installationType"
           render={({ field, fieldState }) => (
-            <Field>
+            <Field data-invalid={fieldState.invalid}>
               <FieldLabel>¿Cómo deseas instalar el dispositivo smart?</FieldLabel>
               <SelectCustom
                 items={installationTypes}
@@ -42,6 +42,7 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
                 onChange={(value) => {
                   field.onChange(value);
                 }}
+                invalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -52,7 +53,7 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
           control={form.control}
           name="smartDevice.installationCenter"
           render={({ field, fieldState }) => (
-            <Field>
+            <Field data-invalid={fieldState.invalid}>
               <SelectCustom
                 items={
                   installationMunicipalities[
@@ -65,6 +66,7 @@ export const PolicyData = ({ form }: PolicyDataProps) => {
                 onChange={(value) => {
                   field.onChange(value);
                 }}
+                invalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>

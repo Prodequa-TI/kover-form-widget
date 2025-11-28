@@ -83,11 +83,11 @@ export function QuoteSummary({
   };
   return (
     <>
-      <div className="flex flex-col items-center gap-6 mb-4">
-        <h1 className="text-3xl text-kover-widget-primary font-semibold">
+      <div className="flex flex-col items-center gap-2 mb-4">
+        <h1 className="text-2xl text-slate-900 font-semibold">
           Por lo que conduces
         </h1>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center text-slate-500">
           <p className="text-sm">Aquí te mostramos lo que estas contratando,</p>
           <p className="text-sm">por favor revisa que todo este correcto.</p>
         </div>
@@ -326,7 +326,7 @@ export function QuoteSummary({
             <a
               target="_blank"
               href="https://app-unit-corefrontend-desa-eastus.azurewebsites.net/terminos-y-condiciones"
-              className="text-[#0671AD]"
+              className="text-kover-widget-primary hover:underline"
             >
               términos y condiciones
             </a>

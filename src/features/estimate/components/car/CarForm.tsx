@@ -184,10 +184,11 @@ export function CarForm({ form }: CarFormProps) {
           name="car.worth"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel>Valor del vehículo</FieldLabel>
+              <FieldLabel htmlFor="car.worth">Valor del vehículo</FieldLabel>
               <div className="relative w-full">
                 <Input
                   type="text"
+                  id='car.worth'
                   inputMode="numeric"
                   placeholder="0.00"
                   value={field.value || ''}

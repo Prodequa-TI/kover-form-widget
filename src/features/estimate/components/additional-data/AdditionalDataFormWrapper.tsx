@@ -5,9 +5,9 @@ import * as yup from 'yup';
 import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { AddressForm } from './AdditionalDataForm';
 import { FieldGroup } from '@/components/ui/field';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { CheckCircle2, XCircle } from 'lucide-react';
+import { XCircle } from 'lucide-react';
 import { RelationShip } from '../../type/types';
 import LoadingOverlay from '@/shared/LoadingOverlay';
 
@@ -29,14 +29,10 @@ const additionalDataSchema = yup.object({
         .required('La calle es requerida.')
         .min(3, 'Mínimo 3 caracteres'),
       referencePoint: yup.string().optional(),
-      province: yup.string().when('referencePoint', {
-        is: (street: string) => !!street && street.length >= 3,
-        then: (schema) =>
-          schema
-            .required('Selecciona una provincia.')
-            .min(1, 'Selecciona una provincia.'),
-        otherwise: (schema) => schema.optional(),
-      }),
+      province: yup
+        .string()
+        .required('La provincia es requerida.')
+        .min(1, 'Selecciona una provincia.'),
       municipality: yup.string().when('province', {
         is: (province: string) => !!province && province.length > 0,
         then: (schema) =>
@@ -147,10 +143,7 @@ export const AdditionalDataFormWrapper = ({
   onSubmit,
   nextStep,
 }: AdditionalDataFormWrapperProps) => {
-  const [alertMessage, setAlertMessage] = useState<{
-    type: 'success' | 'error';
-    message: string;
-  } | null>(null);
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const form = useForm<AdditionalDataFormData>({
     resolver: yupResolver(additionalDataSchema),
     defaultValues: {
@@ -196,38 +189,45 @@ export const AdditionalDataFormWrapper = ({
     try {
       setAlertMessage(null);
       const success = await onSubmit(data);
-      // return;
       if (success) {
         reset();
-        setAlertMessage({
-          type: 'success',
-          message: '¡Datos guardados exitosamente!',
-        });
+        setAlertMessage(null);
         setTimeout(() => setAlertMessage(null), 5000);
         nextStep();
       } else {
-        setAlertMessage({
-          type: 'error',
-          message: 'No se pudieron guardar los datos. Por favor intenta nuevamente.',
-        });
+        setAlertMessage(
+          'No se pudieron guardar los datos. Por favor intenta nuevamente.'
+        );
       }
     } catch (error) {
       const errorMessage =
         error instanceof Error
           ? error.message
           : 'Ocurrió un error inesperado. Por favor intenta nuevamente.';
-      setAlertMessage({
-        type: 'error',
-        message: errorMessage,
-      });
+      setAlertMessage(errorMessage);
     }
   };
+  const onError = () => {
+    const message = `
+          Faltan por completar o corregir en algunos campos
+      `;
+    setAlertMessage(message);
+  };
+  useEffect(() => {
+    if (alertMessage && form.formState.isValid) {
+      const timer = setTimeout(() => {
+        setAlertMessage(null);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [alertMessage, form.formState.isValid]);
+
   return (
     <>
       {isSubmitting && <LoadingOverlay message="Actualizando datos" />}
       <div className="px-4 py-6 md:py-10 w-full">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
             Datos adicionales
           </h1>
           <p className="mt-1 text-slate-500">
@@ -235,33 +235,19 @@ export const AdditionalDataFormWrapper = ({
           </p>
         </div>
         <form
-          onSubmit={form.handleSubmit(handleSubmit)}
+          onSubmit={form.handleSubmit(handleSubmit, onError)}
           className="flex justify-center w-full"
         >
           <FieldGroup className="w-full max-w-3xl">
-            {alertMessage && (
-              <Alert variant={alertMessage.type == 'success' ? 'default' : 'destructive'}>
-                {alertMessage.type === 'success' ? (
-                  <CheckCircle2 className="h-5 w-5 text-green-600 shrink-0" />
-                ) : (
-                  <XCircle className="h-5 w-5 text-red-600 shrink-0" />
-                )}
-                {alertMessage.type === 'success' ? (
-                  <AlertTitle>Pefecto!, tus cambios se guardaron</AlertTitle>
-                ) : (
-                  <AlertTitle>Error en la actualización</AlertTitle>
-                )}
-                <AlertDescription
-                  className={`text-sm  ${
-                    alertMessage.type === 'success' ? 'text-green-800' : 'text-red-800'
-                  }`}
-                >
-                  {alertMessage.message}
-                </AlertDescription>
-              </Alert>
-            )}
             <div className="w-full">
               <AddressForm form={form} />
+              {alertMessage && (
+                <Alert variant={'destructive'} className="border-red-500 bg-red-50 mt-6">
+                  <XCircle className="h-5 w-5 text-red-600 shrink-0" />
+                  <AlertTitle>Error en la actualización</AlertTitle>
+                  <AlertDescription className="text-sm">{alertMessage}</AlertDescription>
+                </Alert>
+              )}
               <div className="mt-10 flex flex-col md:flex-row items-center justify-between gap-4 w-full">
                 <Button
                   type="button"
@@ -276,7 +262,7 @@ export const AdditionalDataFormWrapper = ({
                   type="submit"
                   className="h-11 px-10 cursor-pointer w-full md:w-auto bg-kover-widget-primary hover:bg-kover-widget-primary-hover"
                 >
-                  {isSubmitting ? 'Guardando...' : 'Guardar datos'}
+                  {isSubmitting ? 'GUARDANDO...' : 'GUARDAR'}
                 </Button>
               </div>
             </div>

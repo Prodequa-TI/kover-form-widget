@@ -85,7 +85,7 @@ export const PoliticalExposeData = ({ form }: PoliticalExposeDataProps) => {
                     Nombre del familiar
                   </FieldLabel>
                   <Input
-                    id={field.name}
+                    id="customer.dueDiligence.familyName"
                     placeholder="Nombre completo"
                     className="bg-white text-sm"
                     value={field.value || ''}
@@ -106,7 +106,7 @@ export const PoliticalExposeData = ({ form }: PoliticalExposeDataProps) => {
                     Relación familiar
                   </FieldLabel>
                   <Select
-                    name={field.name}
+                    name="customer.dueDiligence.kinship"
                     value={field.value || ''}
                     onValueChange={field.onChange}
                   >
@@ -141,7 +141,7 @@ export const PoliticalExposeData = ({ form }: PoliticalExposeDataProps) => {
                       ¿Qué cargo ocupa tu familiar?
                     </FieldLabel>
                     <Input
-                      id={field.name}
+                      id="customer.dueDiligence.positionFamily"
                       placeholder="Ej: Ministro de Salud, Senador, etc."
                       className="bg-white text-sm"
                       value={field.value || ''}
@@ -167,7 +167,7 @@ export const PoliticalExposeData = ({ form }: PoliticalExposeDataProps) => {
                     ¿Qué cargo público ocupas?
                   </FieldLabel>
                   <Input
-                    id={field.name}
+                    id="customer.dueDiligence.position"
                     placeholder="Ej: Alcalde, Diputado, Director de institución pública, etc."
                     className="bg-white"
                     value={field.value || ''}

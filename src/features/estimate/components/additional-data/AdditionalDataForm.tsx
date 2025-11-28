@@ -71,15 +71,9 @@ export const AddressForm = ({ form }: AddressFormProps) => {
       !isStreetValid &&
       (selectedProvince || selectedMunicipality)
     ) {
-      form.setValue('customer.address.province', '', { shouldValidate: false });
       form.setValue('customer.address.municipality', '', { shouldValidate: false });
       form.setValue('customer.address.sector', '', { shouldValidate: false });
-      form.clearErrors([
-        'customer.address.province',
-        'customer.address.municipality',
-        'customer.address.sector',
-        'customer.address.referencePoint',
-      ]);
+      form.clearErrors(['customer.address.municipality', 'customer.address.sector']);
     }
   }, [isReferencePoint, isStreetValid, selectedProvince, selectedMunicipality, form]);
 
@@ -209,7 +203,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                   </FieldLabel>
                   <Input
                     type="text"
-                    id={field.name}
+                    id="customer.address.street"
                     placeholder="Ej: Calle Principal #123, Edificio Torre"
                     className="bg-[#F8FAFC]"
                     {...field}
@@ -269,9 +263,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                     ))}
                   </SelectContent>
                 </Select>
-                {fieldState.invalid && isStreetValid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               </Field>
             )}
           />
@@ -320,7 +312,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
                   <FieldLabel htmlFor="customer.address.sector">Sector</FieldLabel>
                   <Input
                     type="text"
-                    id={field.name}
+                    id="customer.address.sector"
                     placeholder="Ej: Centro, Zona Colonial, etc."
                     className="bg-[#F8FAFC]"
                     {...field}
@@ -336,7 +328,6 @@ export const AddressForm = ({ form }: AddressFormProps) => {
       </div>
 
       <div className="space-y-4">
-
         <PolicyData form={form} />
       </div>
     </div>
