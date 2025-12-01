@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { AlertCircleIcon, AlertTriangle, CreditCardIcon } from 'lucide-react';
+import { AlertCircleIcon, AlertTriangle } from 'lucide-react';
 import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { sendInspectionEmail } from '../services/insurance.service';
 import { useCallback, useEffect, useState } from 'react';
