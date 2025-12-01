@@ -17,7 +17,6 @@ import { QuoteSummary } from './summary/QuoteSummary';
 import { type FlowStep } from '../type/types';
 import { formatInsuranceUpdateRequest } from '../mappers/format-update-insurance';
 
-
 interface FlowProps {
   storeToken?: string;
 }
@@ -71,8 +70,11 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           address: {
             ...insuranceData.customer.address,
             street: data.customer.address.street,
-            province: data.customer.address.province || insuranceData.customer.address.province,
-            municipality: data.customer.address.municipality || insuranceData.customer.address.municipality,
+            province:
+              data.customer.address.province || insuranceData.customer.address.province,
+            municipality:
+              data.customer.address.municipality ||
+              insuranceData.customer.address.municipality,
             sector: data.customer.address.sector,
           },
         },
@@ -108,7 +110,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
       return;
     }
 
-    const popupHeight = 700;
+    const popupHeight = 850;
     const popupWidth = 600;
     const left = screen.width / 2 - popupWidth / 2;
     const top = screen.height / 2 - popupHeight / 2;
@@ -116,7 +118,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
     const popup = window.open(
       paymentUrl,
       'popupPago',
-      `width=600,height=700,left=${left},top=${top},scrollbars=yes,resizable=yes`
+      `width=${popupWidth},height=${popupHeight},left=${left},top=${top},scrollbars=yes`
     );
 
     if (!popup) {
@@ -168,7 +170,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           insuranceData={insuranceData}
         />
       )}
-      {currentStep === 'additional-data' && insuranceData &&(
+      {currentStep === 'additional-data' && insuranceData && (
         <AdditionalDataFormWrapper
           insuranceData={insuranceData as InsurancesData}
           onBack={handleBackFromAdditionalData}
@@ -186,7 +188,7 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           paymentErrorMessage={paymentErrorMessage}
         />
       )}
-      {currentStep === 'confirmation' && insuranceData &&  paymentData && (
+      {currentStep === 'confirmation' && insuranceData && paymentData && (
         <PaymentConfirmation
           insuranceData={insuranceData}
           onFinish={() => {
