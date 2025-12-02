@@ -15,7 +15,7 @@ export const BenefitsSection = ({ terms }: BenefitsSectionProps) => {
         <div className="space-y-4">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-500" />
+              <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
               <h3 className="font-semibold text-gray-900">Coberturas</h3>
             </div>
             <div className="ml-7 space-y-2 text-sm text-gray-700">
@@ -26,7 +26,7 @@ export const BenefitsSection = ({ terms }: BenefitsSectionProps) => {
 
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-500" />
+              <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
               <h3 className="font-semibold text-gray-900">
                 Límite de cobro por Km.
               </h3>
@@ -39,7 +39,7 @@ export const BenefitsSection = ({ terms }: BenefitsSectionProps) => {
 
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-500" />
+              <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
               <h3 className="font-semibold text-gray-900">
                 Beneficios de Buen Conductor.
               </h3>
@@ -52,7 +52,7 @@ export const BenefitsSection = ({ terms }: BenefitsSectionProps) => {
 
           <div>
             <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-blue-500" />
+              <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
               <h3 className="font-semibold text-gray-900">
                 Gastos de Protección
               </h3>
@@ -64,7 +64,7 @@ export const BenefitsSection = ({ terms }: BenefitsSectionProps) => {
         <div>
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <CheckCircle2 className="w-5 h-5 text-blue-500" />
+              <CheckCircle2 className="w-5 h-5 text-muted-foreground" />
               <h3 className="font-semibold text-gray-900">
                 Coberturas Opcionales
               </h3>
