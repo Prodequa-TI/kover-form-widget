@@ -33,31 +33,35 @@ export default function PaymentConfirmation({
   }, [sendEmail]);
 
   return (
-    <div className="mx-auto max-w-4xl py-10">
+    <div className="mx-auto max-w-2xl py-10">
       <div className="rounded-xl overflow-hidden bg-white">
-        <div className="p-2 text-center">
-          <h1 className="text-2xl md:text-4xl font-bold text-slate-900 mb-6">
+        <div className="p-2">
+          <h1 className="text-2xl md:text-4xl font-bold text-slate-900 mb-10 text-center">
             Método de pago aceptado
           </h1>
-          <p className="text-slate-700 text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-slate-700 text-base leading-relaxed max-w-2xl mx-auto text-center mb-10">
             Hemos realizado una pre-autorización en tu tarjeta, una vez que inspecciones
             tu vehículo, el cobro se completará y la cobertura quedará activa.
           </p>
+          <Alert variant={'warning'} className="mb-10 p-4">
+            <AlertTriangle className="size-6 text-amber-600" />
+            <AlertTitle>Inspección requerida en 72 horas</AlertTitle>
+            <AlertDescription>
+              Si no completas la inspección en este plazo, tu cotización será cancelada
+              automáticamente.
+            </AlertDescription>
+          </Alert>
 
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <AlertTriangle className="size-6 text-orange-500" />
-          </div>
-
-          <p className="text-orange-500 font-medium text-base mb-8">
-            Tienes 72 horas para inspeccionar, de lo contrario la cotización se cancelará.
-          </p>
-          <p className="text-slate-700 text-base leading-relaxed mb-2 max-w-2xl mx-auto">
+          <p className="text-slate-700 text-base leading-relaxed mb-2 max-w-2xl mx-auto text-center">
             Te hemos enviado un email y SMS con un link para que realices la inspección en
             linea desde tu celular.
           </p>
-          <p className="text-slate-700 text-base leading-relaxed mb-8 max-w-2xl mx-auto">
+          <p className="text-slate-700 text-base leading-relaxed mb-8 max-w-2xl mx-auto text-center">
             ¿No lo recibiste?{' '}
-            <span className="text-orange-500 cursor-pointer" onClick={resendEmail}>
+            <span
+              className="text-kover-widget-primary cursor-pointer"
+              onClick={resendEmail}
+            >
               Has click para reenviar
             </span>
           </p>
@@ -96,7 +100,7 @@ export default function PaymentConfirmation({
             <Button
               variant="outline"
               onClick={onFinish}
-              className="px-12 h-12 text-base font-semibold border-2 border-kover-widget-primary text-blue-900 hover:bg-blue-50 cursor-pointer"
+              className="px-12 h-12 text-base font-semibold border-2 border-kover-widget-primary text-blue-900 hover:bg-kover-widget-primary-50 cursor-pointer"
             >
               SALIR
             </Button>
