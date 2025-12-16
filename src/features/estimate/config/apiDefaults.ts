@@ -2,7 +2,7 @@
 // Estos valores se reemplazarán con datos reales más adelante.
 export const API_DEFAULTS = {
     
-    product: 'auto-insurance',
+    product: 'drive-insurance',
     
     customerDefaults: {
         occupation: 'Vendedor o Comerciante', // O 'A definir'
