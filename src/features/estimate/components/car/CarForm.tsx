@@ -21,7 +21,7 @@ import type { EstimateFormData } from '../../config/EstimeFormConfig';
 import { Switch } from '@/components/ui/switch';
 import { GasAndInstallToggel } from './GasAndInstallToggel';
 import { SelectCarModel } from './SelectBrancModel';
-import { Input } from '@/components/ui/input';
+import { CurrencyInput } from '@/components/ui/currency-input';
 
 interface CarFormProps {
     form: UseFormReturn<EstimateFormData>;
@@ -238,11 +238,15 @@ export function CarForm({ form }: CarFormProps) {
                         <Field data-invalid={fieldState.invalid}>
                             <FieldLabel>Valor del vehículo</FieldLabel>
                             <div className='relative w-full'>
-                                <Input
-                                    type='text'
-                                    inputMode='numeric'
+                                <CurrencyInput
+                                    currency='RD'
+                                    thousandsSeparator=','
+                                    decimalSeparator='.'
+                                    decimalPlaces={2}
+                                    min={MIN_WORTH}
+                                    max={MAX_WORTH}
                                     placeholder='0.00'
-                                    value={field.value || ''}
+                                    value={field.value}
                                     onChange={(value) => field.onChange(value)}
                                     className='mb-2'
                                     aria-invalid={fieldState.invalid}

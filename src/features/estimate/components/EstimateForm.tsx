@@ -85,7 +85,7 @@ export const EstimateForm = ({ onSuccess }: EstimateFormProps) => {
                         <Separator />
                         <div className='space-y-6 animate-in fade-in-50 duration-500'>
                             <h4 className=' font-bold text-indigo-500 mb-6'>
-                                Planes de seguros
+                                Seguro de Ley
                             </h4>
                             <LawInsuranceForm form={form} />
                         </div>
