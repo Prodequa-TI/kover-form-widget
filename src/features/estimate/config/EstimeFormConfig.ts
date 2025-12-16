@@ -218,6 +218,11 @@ export const schemaEstimate = yup.object().shape({
           .required('Selecciona el tipo de instalación.'),
       otherwise: (schema) => schema.optional().nullable(),
     }),
+    meetsRequirements: yup.boolean().when('installationType', {
+      is: InstallatationType.ADAPTED,
+      then: (schema) => schema.oneOf([true], 'Debe cumplir con los requisitos de adaptación.').required('Debe cumplir con los requisitos de adaptación.'),
+      otherwise: (schema) => schema.optional().nullable(),
+    }),
     isPersonalUse: yup
       .boolean()
       .required('Debe seleccionar el tipo de uso del vehículo.')

@@ -7,7 +7,12 @@ import {
   FieldLabel,
 } from '@/components/ui/field';
 import { useState } from 'react';
-import { FuelsType, type CarListResponse, type CarModels } from '../../type/types';
+import {
+  FuelsType,
+  InstallatationType,
+  type CarListResponse,
+  type CarModels,
+} from '../../type/types';
 import { SelectFuelType } from './SelectFuelType';
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { EstimateFormData } from '../../config/EstimeFormConfig';
@@ -16,6 +21,7 @@ import { Input } from '@/components/ui/input';
 import { GasAndInstallToggle } from './GasAndInstallToggle';
 import { SelectBrandCar } from './SearchBrandCar';
 import { Checkbox } from '@/components/ui/checkbox';
+import { RequerimentsAdaptedInstallationType } from './RequirementAdaptedInstallationType';
 
 interface CarFormProps {
   form: UseFormReturn<EstimateFormData>;
@@ -28,6 +34,7 @@ export function CarForm({ form }: CarFormProps) {
   const years = Array.from({ length: 16 }, (_, i) => actualYear - i);
   const brand = form.watch('car.brand');
   const fuelType = form.watch('car.fuelType');
+  const installationType = form.watch('car.installationType');
   const gasEnabled = fuelType === FuelsType.GAS;
   const MIN_WORTH = 200_000;
   const MAX_WORTH = 7_000_000;
@@ -170,6 +177,7 @@ export function CarForm({ form }: CarFormProps) {
                   if (value !== FuelsType.GAS) {
                     form.setValue('car.gasType', undefined);
                     form.setValue('car.installationType', undefined);
+                    form.setValue('car.meetsRequirements', undefined);
                     form.clearErrors(['car.gasType', 'car.installationType']);
                   }
                 }}
@@ -188,7 +196,7 @@ export function CarForm({ form }: CarFormProps) {
               <div className="relative w-full">
                 <Input
                   type="text"
-                  id='car.worth'
+                  id="car.worth"
                   inputMode="numeric"
                   placeholder="0.00"
                   value={field.value || ''}
@@ -221,6 +229,9 @@ export function CarForm({ form }: CarFormProps) {
       </div>
       {fuelType === FuelsType.GAS && (
         <GasAndInstallToggle form={form} gasEnabled={gasEnabled} />
+      )}
+      {installationType === InstallatationType.ADAPTED && (
+        <RequerimentsAdaptedInstallationType form={form} />
       )}
     </>
   );

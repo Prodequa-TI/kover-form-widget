@@ -31,8 +31,8 @@ function generateObjectId(): string {
   return timestamp + randomValue + counterHex;
 }
 
-export const getCars = async (brand: string): Promise<CarListResponse[]> => {
-  const cars = await httpClient.get<CarListResponse[]>(`/insurances/cars/${brand}`);
+export const getCars = async (): Promise<CarListResponse[]> => {
+  const cars = await httpClient.get<CarListResponse[]>(`/insurances/cars`);
   return cars.data;
 };
 
@@ -71,6 +71,7 @@ export async function generateQuota(
         year: data.car.year,
         fuelType: data.car.fuelType || undefined,
         isPersonalUse: data.car.isPersonalUse,
+        meetsRequirements: data.car.meetsRequirements,
         value: data.car.worth,
         isNew: data.car.isNew,
         gasType: data.car.gasType ,
@@ -92,6 +93,7 @@ export async function generateQuota(
         paymentMethod: API_DEFAULTS.paymentDefaults.paymentMethod,
       },
     };
+
     const result = await httpClient.post<InsurancesData>('/insurances', requestData, {
       headers: {
         'Content-Type': 'application/json',
