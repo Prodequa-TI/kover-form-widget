@@ -1,7 +1,7 @@
 import { CustomerDataForm } from './customer/CustomerDataForm';
 import { CarForm } from './car/CarForm';
-import { LawInsuranceForm } from './LawInsuranceForm';
-import { AssistantForm } from './AssistantForm';
+import { LawInsuranceForm } from './law-insurance/LawInsuranceForm';
+import { AssistantForm } from './Assistant/AssistantForm';
 import { ReplaceCar } from './ReplaceCar';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -21,6 +21,11 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { XCircle } from 'lucide-react';
 import { usePreventScrollLock } from '../hook/usePreventSchrollLock';
 import LoadingOverlay from '../../../shared/LoadingOverlay';
+import { CustomTooltip } from '@/shared/CustomTooltip';
+import { Modal } from '@/shared/Modal';
+import { LawInsurancePlans } from './law-insurance/LawInsurancePlans';
+import { LawInsuranceModal } from './law-insurance/LawInsuranceModal';
+import { AssistantModal } from './Assistant/AssistantModal';
 
 interface EstimateFormProps {
   onSuccess: (data: InsurancesData) => void;
@@ -34,6 +39,9 @@ export const EstimateForm = ({
   storeToken,
 }: EstimateFormProps) => {
   const [errorAlert, setErrorAlert] = useState<string | null>(null);
+  const [openLaw, setOpenLaw] = useState(false);
+  const [openAssistant, setOpenAssistant] = useState(false);
+
   const form = useForm<EstimateFormData>({
     resolver: yupResolver(schemaEstimate),
     defaultValues: initialValues,
@@ -77,19 +85,19 @@ export const EstimateForm = ({
   usePreventScrollLock();
   useEffect(() => {
     //SI HAY UN ALERT DE ERROR Y NO HAY ERRORE DE VALIDACIÓN
-    if(errorAlert && form.formState.isValid){
+    if (errorAlert && form.formState.isValid) {
       const timer = setTimeout(() => {
         setErrorAlert(null);
       }, 1000);
       return () => clearTimeout(timer);
     }
-  },[errorAlert, form.formState.isValid]);
+  }, [errorAlert, form.formState.isValid]);
 
   return (
     <>
       {isSubmitting && <LoadingOverlay message="Generando tu cotización" />}
-      <h1 className="text-center text-2xl font-bold text-gray-900 mb-8">
-        Cotización por lo que conduces
+      <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
+        Por lo que conduces
       </h1>
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>
         <FieldGroup>
@@ -109,22 +117,39 @@ export const EstimateForm = ({
             </div>
             <Separator />
             <div className="space-y-6 animate-in fade-in-50 duration-500">
-              <h4 className=" font-bold text-kover-widget-primary mb-6">
-                Planes de seguros
-              </h4>
+              <div className="flex justify-start items-center gap-1">
+                <h4 className="font-bold text-kover-widget-primary ">Seguro de Ley</h4>
+                <CustomTooltip
+                  message="Click para más información"
+                  onClick={() => setOpenLaw(true)}
+                />
+              </div>
               <LawInsuranceForm form={form} />
             </div>
             <Separator />
             <div className="space-y-6 animate-in fade-in-50 duration-500">
-              <h4 className=" font-bold text-kover-widget-primary mb-6">
-                Asistencia Vehicular
-              </h4>
+              <div className="flex justify-start items-center gap-1">
+                <h4 className=" font-bold text-kover-widget-primary">
+                  Asistencia Vehicular
+                </h4>
+                <CustomTooltip
+                  message="Click para más información"
+                  iconClassName="text-kover-widget-primary mt-1"
+                  onClick={() => setOpenAssistant(true)}
+                />
+              </div>
+
               <AssistantForm form={form} />
             </div>
             <div className="space-y-6 animate-in fade-in-50 duration-500">
-              <h4 className=" font-bold text-kover-widget-primary mb-6">
-                Auto sustituto
-              </h4>
+              <div className="flex justify-start items-center gap-1">
+                <h4 className=" font-bold text-kover-widget-primary">Auto sustituto</h4>
+                <CustomTooltip
+                  message="Rent a car 15 dias compacto anuales / Uber RD$5,000 anuales"
+                  iconClassName="text-kover-widget-primary mt-1"
+                />
+              </div>
+
               <ReplaceCar form={form} />
             </div>
             {errorAlert && (
@@ -154,6 +179,8 @@ export const EstimateForm = ({
           </div>
         </FieldGroup>
       </form>
+      <LawInsuranceModal openLaw={openLaw} setOpenLaw={setOpenLaw} />
+      <AssistantModal openAssistant={openAssistant} setOpenAssistant={setOpenAssistant} />
     </>
   );
 };

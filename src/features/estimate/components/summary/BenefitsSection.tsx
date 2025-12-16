@@ -1,6 +1,6 @@
 
 import { CheckCircle2 } from "lucide-react";
-import { CustomTooltip } from "../CustomTooltip";
+import { CustomTooltip } from "../../../../shared/CustomTooltip";
 import type { InsurancesData } from "@/features/estimate/type/insurance.types";
 
 interface BenefitsSectionProps {

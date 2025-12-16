@@ -6,7 +6,7 @@ import {
   FieldError,
   FieldLabel,
 } from '@/components/ui/field';
-import { useState } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import { FuelsType, type CarListResponse, type CarModels } from '../../type/types';
 import { SelectFuelType } from './SelectFuelType';
 import { Controller, type UseFormReturn } from 'react-hook-form';
@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { GasAndInstallToggle } from './GasAndInstallToggle';
 import { SelectBrandCar } from './SearchBrandCar';
 import { Checkbox } from '@/components/ui/checkbox';
+import { formatNumber } from '@/utils';
 
 interface CarFormProps {
   form: UseFormReturn<EstimateFormData>;
@@ -23,7 +24,6 @@ interface CarFormProps {
 
 export function CarForm({ form }: CarFormProps) {
   const [models, setModels] = useState<CarModels[]>([]);
-
   const actualYear = new Date().getFullYear();
   const years = Array.from({ length: 16 }, (_, i) => actualYear - i);
   const brand = form.watch('car.brand');
@@ -39,6 +39,19 @@ export function CarForm({ form }: CarFormProps) {
     form.clearErrors('car.modelId');
   };
 
+  const handleWorthChange = (
+    e: ChangeEvent<HTMLInputElement> | string,
+    onChange: (value: number | '') => void
+  ) => {
+    // 1. Obtenemos el valor crudo (ya sea evento o string directo)
+    const rawValue = typeof e === 'string' ? e : e.target.value;
+
+    // 2. Limpiamos: quitamos todo lo que NO sea números o punto
+    const cleanValue = rawValue.replace(/[^0-9.]/g, '');
+
+    // 3. Enviamos el valor limpio al formulario
+    onChange(cleanValue === '' ? '' : Number(cleanValue));
+  };
   return (
     <>
       <div className="flex flex-col md:grid md:grid-cols-2 gap-4 ">
@@ -188,15 +201,21 @@ export function CarForm({ form }: CarFormProps) {
               <div className="relative w-full">
                 <Input
                   type="text"
-                  id='car.worth'
+                  id="car.worth"
                   inputMode="numeric"
                   placeholder="0.00"
-                  value={field.value || ''}
-                  onChange={(value) => field.onChange(value)}
-                  className="mb-2"
+                  value={field.value ? formatNumber(field.value) : ''}
+                  onChange={(e) => handleWorthChange(e, field.onChange)}
+                  className="mb-2 pl-10"
                   aria-invalid={fieldState.invalid}
                 />
-
+                <span
+                  className={`pointer-events-none absolute left-3 top-0 flex h-10 items-center text-sm ${
+                    fieldState.invalid ? 'text-red-500' : 'text-muted-foreground'
+                  }`}
+                >
+                  RD$
+                </span>
                 {fieldState.invalid ? (
                   <FieldError errors={[fieldState.error]} />
                 ) : (

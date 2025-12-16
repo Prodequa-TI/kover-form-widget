@@ -1,5 +1,5 @@
 import { FileText, XCircle } from "lucide-react";
-import { CustomTooltip } from "../CustomTooltip";
+import { CustomTooltip } from "../../../../shared/CustomTooltip";
 
 export const ExclusionsSection = () => {
   return (
