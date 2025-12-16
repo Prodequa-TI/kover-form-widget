@@ -128,7 +128,7 @@ export function QuoteSummary({
                     Plazo de seguro
                   </p>
                   <p className="text-base font-semibold text-foreground">
-                    {formatYears(insuranceData.quotationResponse.data.terminos.plazo)}
+                    12 meses {/* {formatYears(insuranceData.quotationResponse.data.terminos.plazo)} */}
                   </p>
                 </div>
                 <div className="space-y-1">
