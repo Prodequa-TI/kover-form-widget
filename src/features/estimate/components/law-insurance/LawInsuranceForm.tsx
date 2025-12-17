@@ -1,10 +1,15 @@
-import { Field, FieldContent, FieldDescription, FieldLabel } from '@/components/ui/field';
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { CarInsurances } from '../../type/types';
 
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { EstimateFormData } from '../../config/EstimeFormConfig';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useState } from 'react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 type Plan = {
   id: CarInsurances;
@@ -47,49 +52,46 @@ export const LawInsuranceForm = ({ form }: PlansAccordionProps) => {
           name="car.terms.insuranceType"
           render={({ field, fieldState }) => {
             const isInvalid = fieldState.invalid;
+            const selectedPlan = PLANS.find((p) => String(p.id) === field.value);
+
             return (
-              <RadioGroup
-                name={field.name}
-                value={field.value}
-                onValueChange={(value) => field.onChange(value)}
-                aria-invalid={isInvalid}
-                className="flex flex-col gap-4"
-              >
-                {PLANS.map((plan) => {
-                  const inputId = `insurance-${plan.id}`;
-                  return (
-                    <div
-                      key={plan.id}
-                      className={`relative rounded-lg border-2 bg-card p-4 transition-all hover:shadow-sm ${
-                        field.value === String(plan.id)
-                          ? 'border-kover-widget-primary'
-                          : 'border-gray-200'
-                      }`}
-                    >
-                      <div className="absolute right-3 top-3">
-                        <RadioGroupItem
-                          id={inputId}
-                          value={String(plan.id)}
-                          className="text-blue-500"
-                        />
-                      </div>
-                      <label htmlFor={inputId} className="cursor-pointer select-none">
-                        <Field>
-                          <FieldContent>
-                            <FieldLabel className="text-md">{plan.title}</FieldLabel>
-                            <div className="text-sm text-muted-foreground">
-                              {plan.price}
-                            </div>
-                            <FieldDescription className="text-[15px] leading-relaxed">
-                              {plan.summary}
-                            </FieldDescription>
-                          </FieldContent>
-                        </Field>
-                      </label>
-                    </div>
-                  );
-                })}
-              </RadioGroup>
+              <Field data-invalid={isInvalid}>
+                <FieldLabel className="mb-2 block">Selecciona tu Plan de Ley</FieldLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  value={field.value}
+                >
+                  <SelectTrigger
+                    className={`w-full ${isInvalid ? 'border-red-500' : ''}`}
+                  >
+                    <SelectValue placeholder="Selecciona un plan..." />
+                  </SelectTrigger>
+
+                  <SelectContent>
+                    {PLANS.map((plan) => (
+                      <SelectItem key={plan.id} value={String(plan.id)}>
+                        <span className="font-medium ">{plan.title}</span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {selectedPlan && (
+                  <div className="mt-3 p-3 bg-slate-50 rounded-md border text-sm text-slate-600 animate-in fade-in zoom-in-95 duration-200">
+                    <p className="font-semibold text-kover-widget-primary mb-1">
+                      {selectedPlan.title} - {selectedPlan.price}
+                    </p>
+                    <p>{selectedPlan.summary}</p>
+                  </div>
+                )}
+
+                {/* Mensaje de Error */}
+                {isInvalid && (
+                  <FieldDescription className="text-red-500 mt-2">
+                    {fieldState.error?.message}
+                  </FieldDescription>
+                )}
+              </Field>
             );
           }}
         />
