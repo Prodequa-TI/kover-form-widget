@@ -22,8 +22,6 @@ import { XCircle } from 'lucide-react';
 import { usePreventScrollLock } from '../hook/usePreventSchrollLock';
 import LoadingOverlay from '../../../shared/LoadingOverlay';
 import { CustomTooltip } from '@/shared/CustomTooltip';
-import { Modal } from '@/shared/Modal';
-import { LawInsurancePlans } from './law-insurance/LawInsurancePlans';
 import { LawInsuranceModal } from './law-insurance/LawInsuranceModal';
 import { AssistantModal } from './Assistant/AssistantModal';
 
@@ -121,6 +119,7 @@ export const EstimateForm = ({
                 <h4 className="font-bold text-kover-widget-primary ">Seguro de Ley</h4>
                 <CustomTooltip
                   message="Click para más información"
+                  iconClassName="text-kover-widget-primary mt-1"
                   onClick={() => setOpenLaw(true)}
                 />
               </div>
