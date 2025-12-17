@@ -1,11 +1,5 @@
 import { SelectCarYear } from './SelectType';
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from '@/components/ui/field';
+import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field';
 import { useState, type ChangeEvent } from 'react';
 import {
   FuelsType,
@@ -23,6 +17,8 @@ import { SelectBrandCar } from './SearchBrandCar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RequerimentsAdaptedInstallationType } from './RequirementAdaptedInstallationType';
 import { formatNumber } from '@/utils';
+
+import { CustomSelect } from '@/shared/CustomSelected';
 
 interface CarFormProps {
   form: UseFormReturn<EstimateFormData>;
@@ -50,15 +46,14 @@ export function CarForm({ form }: CarFormProps) {
     e: ChangeEvent<HTMLInputElement> | string,
     onChange: (value: number | '') => void
   ) => {
-    // 1. Obtenemos el valor crudo (ya sea evento o string directo)
     const rawValue = typeof e === 'string' ? e : e.target.value;
-
-    // 2. Limpiamos: quitamos todo lo que NO sea números o punto
     const cleanValue = rawValue.replace(/[^0-9.]/g, '');
-
-    // 3. Enviamos el valor limpio al formulario
     onChange(cleanValue === '' ? '' : Number(cleanValue));
   };
+  const boolOptions = [
+    { value: 'true', label: 'Sí' },
+    { value: 'false', label: 'No' },
+  ];
   return (
     <>
       <div className="flex flex-col md:grid md:grid-cols-2 gap-4 ">
@@ -67,7 +62,7 @@ export function CarForm({ form }: CarFormProps) {
           name="car.brand"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="car.brand">Marca del vehículo</FieldLabel>
+              <FieldLabel htmlFor="car.brand">Marca</FieldLabel>
               <SelectBrandCar
                 field={field}
                 handelGetModels={handleGetModels}
@@ -95,93 +90,52 @@ export function CarForm({ form }: CarFormProps) {
             </Field>
           )}
         />
-
-        <div className="md:col-start-1 md:col-end-3">
-          <Controller
-            control={form.control}
-            name="car.year"
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="car.year">Año</FieldLabel>
-                <SelectCarYear
-                  items={years}
-                  name={field.name}
-                  value={field.value || 0}
-                  onValueChange={(value) => field.onChange(Number(value))}
-                  invalid={fieldState.invalid}
-                  disabled={!brand}
-                />
-                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-              </Field>
-            )}
-          />
-        </div>
         <Controller
           control={form.control}
-          name="car.isNew"
+          name="car.year"
           render={({ field, fieldState }) => (
-            <label htmlFor="car.isNew" className="cursor-pointer select-none">
-              <Field
-                orientation="horizontal"
-                data-invalid={fieldState.invalid}
-                className="flex flex-row items-center justify-between rounded-lg border p-4 bg-card hover:bg-gray-50 transition-colors "
-              >
-                <Checkbox
-                  id="car.isNew"
-                  name={field.name}
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-                <FieldContent>
-                  <FieldLabel htmlFor="car.isNew">Vehículo nuevo</FieldLabel>
-                  <FieldDescription>
-                    Selecciona esta opción si el auto no ha sido previamente registrado o
-                    usado.
-                  </FieldDescription>
-                </FieldContent>
-              </Field>
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="car.year">Año</FieldLabel>
+              <SelectCarYear
+                items={years}
+                name={field.name}
+                value={field.value || 0}
+                onValueChange={(value) => field.onChange(Number(value))}
+                invalid={fieldState.invalid}
+                disabled={!brand}
+              />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-            </label>
+            </Field>
           )}
         />
         <Controller
           control={form.control}
-          name="car.isPersonalUse"
-          render={({ field, fieldState }) => {
-            const isInvalid = fieldState.invalid;
-            return (
-              <label htmlFor="car.isPersonalUse" className="cursor-pointer select-none">
-                <Field
-                  data-invalid={isInvalid}
-                  aria-invalid={isInvalid}
-                  orientation="horizontal"
-                  className="flex flex-row items-center justify-between rounded-lg border p-4 bg-card hover:bg-gray-50 transition-colors data-[invalid=true]:border-red-500 mb-2"
-                >
-                  <Checkbox
-                    id="car.isPersonalUse"
-                    name={field.name}
-                    aria-invalid={isInvalid}
-                    checked={field.value}
-                    onCheckedChange={(checked) => field.onChange(checked === true)}
-                  />
-                  <FieldContent>
-                    <FieldLabel>Vehículo de uso personal</FieldLabel>
-                    <FieldDescription>
-                      Usarás tu vehículo solo para actividades personales, no comerciales.
-                    </FieldDescription>
-                  </FieldContent>
-                </Field>
-                {isInvalid && <FieldError errors={[fieldState.error]} />}
-              </label>
-            );
-          }}
+          name="car.isNew"
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor="car.isNew">Cero Km</FieldLabel>
+              <CustomSelect
+                placeholder="¿Es Nuevo?"
+                name={field.name}
+                value={
+                  field.value !== undefined && field.value !== null
+                    ? String(field.value)
+                    : ''
+                }
+                options={boolOptions}
+                onValueChange={(val) => field.onChange(val === 'true')}
+                invalid={fieldState.invalid}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
         />
         <Controller
           control={form.control}
           name="car.fuelType"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="car.fuelType">Tipo de combustible</FieldLabel>
+              <FieldLabel htmlFor="car.fuelType">Combustible</FieldLabel>
               <SelectFuelType
                 name={field.name}
                 value={field.value || ''}
@@ -245,6 +199,41 @@ export function CarForm({ form }: CarFormProps) {
             </Field>
           )}
         />
+        <div className="col-start-1 col-end-3 mt-4">
+          <Controller
+            control={form.control}
+            name="car.isPersonalUse"
+            render={({ field, fieldState }) => (
+              <div className="space-y-2">
+                <div className="flex flex-row items-center space-x-3 space-y-0">
+                  <Checkbox
+                    id="car.isPersonalUse"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    aria-invalid={fieldState.invalid}
+                    className={`data-[state=checked]:bg-kover-widget-primary data-[state=checked]:border-kover-widget-primary ${
+                      fieldState.invalid ? 'border-red-500' : 'border-gray-400'
+                    }`}
+                  />
+                  <label
+                    htmlFor="car.isPersonalUse"
+                    className="text-sm font-bold text-kover-widget-primary leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                  >
+                    Favor confirmar que es de uso particular y no es deportivo o de uso
+                    público / comercial
+                  </label>
+                </div>
+
+                {/* Mensaje de error justo debajo si no lo marcan */}
+                {fieldState.invalid && (
+                  <p className="text-sm font-medium text-red-500 ml-1">
+                    {fieldState.error?.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
+        </div>
       </div>
       {fuelType === FuelsType.GAS && (
         <GasAndInstallToggle form={form} gasEnabled={gasEnabled} />
