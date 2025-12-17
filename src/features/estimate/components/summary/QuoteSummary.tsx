@@ -61,26 +61,26 @@ export function QuoteSummary({
   paymentErrorMessage,
 }: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
-  const formatYears = (totalMonths: number) => {
-    const years = Math.floor(totalMonths / 12);
-    const months = totalMonths % 12; //
-    if (totalMonths === 0) {
-      return '0 meses';
-    }
-    let result = '';
-    if (years > 0) {
-      const yearText = years === 1 ? 'año' : 'años';
-      result += years + ' ' + yearText;
-    } else if (months > 0) {
-      const monthText = months === 1 ? 'mes' : 'meses';
-      const monthString = months + ' ' + monthText;
-      if (result.length > 0) {
-        result += ' y ';
-      }
-      result += monthString;
-    }
-    return result;
-  };
+  // const formatYears = (totalMonths: number) => {
+  //   const years = Math.floor(totalMonths / 12);
+  //   const months = totalMonths % 12; //
+  //   if (totalMonths === 0) {
+  //     return '0 meses';
+  //   }
+  //   let result = '';
+  //   if (years > 0) {
+  //     const yearText = years === 1 ? 'año' : 'años';
+  //     result += years + ' ' + yearText;
+  //   } else if (months > 0) {
+  //     const monthText = months === 1 ? 'mes' : 'meses';
+  //     const monthString = months + ' ' + monthText;
+  //     if (result.length > 0) {
+  //       result += ' y ';
+  //     }
+  //     result += monthString;
+  //   }
+  //   return result;
+  // };
   return (
     <>
       <div className="flex flex-col items-center gap-2 mb-4">

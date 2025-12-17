@@ -1,6 +1,6 @@
 import { Modal } from '@/shared/Modal';
-import { Assistantinfo } from './Assistantinfo';
 import type { Dispatch } from 'react';
+import { Assistantinfo } from './AssistantInfo';
 type AssistantModalProps = {
   openAssistant: boolean;
   setOpenAssistant: Dispatch<React.SetStateAction<boolean>>;

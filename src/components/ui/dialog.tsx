@@ -3,6 +3,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { ShadowRootContext } from "./select"
 
 function Dialog({
   ...props
@@ -52,8 +53,9 @@ function DialogContent({
 }: React.ComponentProps<typeof DialogPrimitive.Content> & {
   showCloseButton?: boolean
 }) {
+  const shadowRoot = React.useContext(ShadowRootContext);
   return (
-    <DialogPortal data-slot="dialog-portal">
+    <DialogPortal data-slot="dialog-portal" container={shadowRoot?.querySelector('#widget-container') as HTMLElement || undefined}>
       <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
