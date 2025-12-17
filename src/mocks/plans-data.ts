@@ -48,4 +48,10 @@ export const InsurancePlansData = [
     autoExceso: 'Incluido',
   },
 ];
+export const ESPECIAL_DATA = {
+  specialCell: {
+    text: 'RD$5 millones en exceso sobre las coberturas del Plan Plus.',
+    rowspan: 5,
+  },
+};
 export const InsurancePlansHeader = ['Básico', 'Plus', 'Auto Exceso'];
