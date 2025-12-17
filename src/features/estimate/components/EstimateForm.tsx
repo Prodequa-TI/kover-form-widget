@@ -107,14 +107,14 @@ export const EstimateForm = ({
               <CustomerDataForm form={form} />
             </div>
             <Separator />
-            <div className="space-y-6 animate-in fade-in-50 duration-500">
+            <div className="space-y-4 animate-in fade-in-50 duration-500">
               <h4 className=" font-bold text-kover-widget-primary mb-6">
-                Datos del Vehículo
+                Vehículo asegurado
               </h4>
               <CarForm form={form} />
             </div>
             <Separator />
-            <div className="space-y-6 animate-in fade-in-50 duration-500">
+            <div className="space-y-4 animate-in fade-in-50 duration-500">
               <div className="flex justify-start items-center gap-1">
                 <h4 className="font-bold text-kover-widget-primary ">Seguro de Ley</h4>
                 <CustomTooltip
@@ -126,7 +126,7 @@ export const EstimateForm = ({
               <LawInsuranceForm form={form} />
             </div>
             <Separator />
-            <div className="space-y-6 animate-in fade-in-50 duration-500">
+            <div className="space-y-4 animate-in fade-in-50 duration-500">
               <div className="flex justify-start items-center gap-1">
                 <h4 className=" font-bold text-kover-widget-primary">
                   Asistencia Vehicular
@@ -140,7 +140,7 @@ export const EstimateForm = ({
 
               <AssistantForm form={form} />
             </div>
-            <div className="space-y-6 animate-in fade-in-50 duration-500">
+            <div className="space-y-4 animate-in fade-in-50 duration-500">
               <div className="flex justify-start items-center gap-1">
                 <h4 className=" font-bold text-kover-widget-primary">Auto sustituto</h4>
                 <CustomTooltip

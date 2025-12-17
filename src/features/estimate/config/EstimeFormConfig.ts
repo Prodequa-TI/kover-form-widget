@@ -79,7 +79,7 @@ export const initialValuesCar: Car = {
   brand: '',
   modelId: 0,
   year: currentYear,
-  isNew: false,
+  isNew: undefined,
   fuelType: undefined,
   gasType: undefined,
   installationType: undefined,
@@ -198,7 +198,10 @@ export const schemaEstimate = yup.object().shape({
       }
       return yearSchema;
     }),
-    isNew: yup.boolean().defined().default(false),
+    isNew: yup
+      .boolean()
+      .required('Debes seleccionar si es Cero Km.')
+      .typeError('Debes seleccionar una opción'),
     fuelType: yup
       .mixed<FuelsType>()
       .oneOf([FuelsType.GAS, FuelsType.GASOLINE, FuelsType.ELECTRIC])
@@ -220,7 +223,10 @@ export const schemaEstimate = yup.object().shape({
     }),
     meetsRequirements: yup.boolean().when('installationType', {
       is: InstallatationType.ADAPTED,
-      then: (schema) => schema.oneOf([true], 'Debe cumplir con los requisitos de adaptación.').required('Debe cumplir con los requisitos de adaptación.'),
+      then: (schema) =>
+        schema
+          .oneOf([true], 'Debe cumplir con los requisitos de adaptación.')
+          .required('Debe cumplir con los requisitos de adaptación.'),
       otherwise: (schema) => schema.optional().nullable(),
     }),
     isPersonalUse: yup

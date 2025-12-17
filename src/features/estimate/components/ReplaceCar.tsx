@@ -20,19 +20,19 @@ type Plan = {
 const REPLACEMENT_CAR: Plan[] = [
   {
     id: ReplacementsCar.UBER,
-    title: 'UBER',
+    title: 'Uber',
     price: 'RD$133/mes',
     summary: 'Seguro de Ley con cobertura de $500/$500/$1MM.',
   },
   {
     id: ReplacementsCar.RENT_A_CAR,
-    title: 'RENTA UN AUTO',
+    title: 'Rent-a-car',
     price: 'RD$329/mes',
     summary: 'Recibirás un auto compacto por hasta 15 días en un año.',
   },
   {
     id: ReplacementsCar.NONE,
-    title: 'NO, GRACIAS',
+    title: 'No',
   },
 ];
 
@@ -50,7 +50,6 @@ export const ReplaceCar = ({ form }: ReplaceCarProps) => {
             const isInvalid = fieldState.invalid;
             return (
               <Field>
-                <FieldLabel>Selecciona tu auto sustituto</FieldLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}

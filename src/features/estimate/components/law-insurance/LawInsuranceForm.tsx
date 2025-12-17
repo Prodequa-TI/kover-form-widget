@@ -56,7 +56,6 @@ export const LawInsuranceForm = ({ form }: PlansAccordionProps) => {
 
             return (
               <Field data-invalid={isInvalid}>
-                <FieldLabel className="mb-2 block">Selecciona tu Plan de Ley</FieldLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
