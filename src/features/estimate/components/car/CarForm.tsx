@@ -1,11 +1,5 @@
 import { SelectCarYear } from './SelectType';
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from '@/components/ui/field';
+import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui/field';
 import { useState, type ChangeEvent } from 'react';
 import {
   FuelsType,
