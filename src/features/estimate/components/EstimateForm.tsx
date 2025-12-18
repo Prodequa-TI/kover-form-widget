@@ -106,7 +106,7 @@ export const EstimateForm = ({
           <p className="text-gray-600">Seguro a todo riesgo</p>
         </div>
       ) : (
-        <h1 className="text-center text-2xl font-bold text-gray-900 mb-2 uppercase select-none">
+        <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
           Por lo que conduces
         </h1>
       )}
