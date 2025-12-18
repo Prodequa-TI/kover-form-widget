@@ -17,7 +17,6 @@ import { QuoteSummary } from './summary/QuoteSummary';
 import { type FlowStep } from '../type/types';
 import { formatInsuranceUpdateRequest } from '../mappers/format-update-insurance';
 import { AutoInsuranceEmit } from '@/features/auto-insurance/AutoInsuranceEmit';
-import { autoInsuranceQuoteMock } from '@/mocks/sector-data.mock';
 
 interface FlowProps {
   storeToken?: string;
@@ -31,7 +30,7 @@ export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState<boolean>(false);
   const [paymentErrorMessage, setPaymentErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
+const [selectedFrequency, setSelectedFrequency] = useState<string>('A');
   const handleStep = (step: FlowStep) => {
     setCurrentStep(step);
   };
@@ -163,6 +162,7 @@ export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
           storeToken={storeToken}
           onSuccess={handleEstimateSuccess}
           setGlobalSuccessMessage={setSuccessMessage}
+          typeInsurances={typeInsurances}
         />
       )}
       {currentStep === 'emit' &&
@@ -173,6 +173,8 @@ export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
             onBack={handleBack}
             successMessage={successMessage}
             onEmit={handleEmitClick}
+            onPlanSelect={setSelectedFrequency} //FALTA AGREGAR
+            selectedPlan={selectedFrequency}//FALTA AGREGAR
           />
         ) : (
           <Emitir
@@ -198,6 +200,8 @@ export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
           handleStep={handleStep}
           isCheckoutOpen={isCheckoutOpen}
           paymentErrorMessage={paymentErrorMessage}
+          typeInsurances={typeInsurances}
+          selectedFrequency={selectedFrequency} //FALTA AGREGAR
         />
       )}
       {currentStep === 'confirmation' && insuranceData && paymentData && (

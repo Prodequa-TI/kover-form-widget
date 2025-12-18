@@ -31,6 +31,6 @@ export const formatInsuranceUpdateRequest = (data: AdditionalDataFormData): Upda
           executivePhone: data.endorsmentPolicy.executivePhoneNumber,
         }}),
         ...(data.customer.hasIntermediary && { intermediary: data.customer.intermediary }),
-        smartDevice: data.smartDevice,
+    smartDevice: data.smartDevice,
       };
 };

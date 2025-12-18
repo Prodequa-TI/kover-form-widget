@@ -29,17 +29,19 @@ interface EstimateFormProps {
   onSuccess: (data: InsurancesData) => void;
   setGlobalSuccessMessage: (msg: string | null) => void;
   storeToken?: string;
+  typeInsurances?: string;
 }
 
 export const EstimateForm = ({
   onSuccess,
   setGlobalSuccessMessage,
   storeToken,
+  typeInsurances,
 }: EstimateFormProps) => {
   const [errorAlert, setErrorAlert] = useState<string | null>(null);
   const [openLaw, setOpenLaw] = useState(false);
   const [openAssistant, setOpenAssistant] = useState(false);
-
+  const isAuto = typeInsurances === 'auto-insurances'
   const form = useForm<EstimateFormData>({
     resolver: yupResolver(schemaEstimate),
     defaultValues: initialValues,
@@ -95,7 +97,7 @@ export const EstimateForm = ({
     <>
       {isSubmitting && <LoadingOverlay message="Generando tu cotización" />}
       <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
-        Por lo que conduces
+        {isAuto ? 'Para tu Auto' : 'Por lo que conduces'}
       </h1>
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>
         <FieldGroup>
