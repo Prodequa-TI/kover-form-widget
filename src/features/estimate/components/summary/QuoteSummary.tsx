@@ -65,6 +65,7 @@ export function QuoteSummary({
   selectedFrequency,
 }: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
+
   const isAuto = typeInsurances === 'auto-insurances';
   const selectedPrima = insuranceData.quotationResponse.data.primas.find(
     (p) => p.fraccionamientoPago === selectedFrequency

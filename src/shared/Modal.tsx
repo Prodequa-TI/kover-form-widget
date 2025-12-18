@@ -8,7 +8,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import type { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
 
 interface ModalProps {
   open: boolean;
