@@ -197,7 +197,7 @@ export function CarForm({ form }: CarFormProps) {
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Tipo de instalación</FieldLabel>
                 <CustomSelect
-                  placeholder="Seleccione la instalación"
+                  placeholder="Seleccione el tipo de instalación"
                   name={field.name}
                   value={field.value}
                   onValueChange={field.onChange}
