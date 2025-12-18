@@ -174,7 +174,7 @@ export function CarForm({ form }: CarFormProps) {
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Tipo de gas</FieldLabel>
                 <CustomSelect
-                  placeholder="Seleccione su tipo de gas"
+                  placeholder="Selecciona el tipo de gas"
                   name={field.name}
                   value={field.value}
                   onValueChange={field.onChange}
@@ -197,7 +197,7 @@ export function CarForm({ form }: CarFormProps) {
               <Field data-invalid={fieldState.invalid}>
                 <FieldLabel>Tipo de instalación</FieldLabel>
                 <CustomSelect
-                  placeholder="Seleccione la instalación"
+                  placeholder="Seleccione el tipo de instalación"
                   name={field.name}
                   value={field.value}
                   onValueChange={field.onChange}
