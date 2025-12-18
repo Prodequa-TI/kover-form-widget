@@ -1,8 +1,10 @@
-import type { AdditionalDataFormData } from "../components/additional-data/AdditionalDataFormWrapper";
+import { type AdditionalDataFormData } from "../components/additional-data/AdditionalDataFormWrapper";
 import type { UpdateInsuranceRequest } from "../type/insurance.types";
 import { RelationShip } from "../type/types";
 
-export const formatInsuranceUpdateRequest = (data: AdditionalDataFormData): UpdateInsuranceRequest => {
+export const formatInsuranceUpdateRequest = (data: AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>): UpdateInsuranceRequest => {
+  
+  const smartDevice = (data as any).smartDevice ?? null;
   return {
         customer: {
           occupation: data.customer.occupation,
@@ -31,6 +33,6 @@ export const formatInsuranceUpdateRequest = (data: AdditionalDataFormData): Upda
           executivePhone: data.endorsmentPolicy.executivePhoneNumber,
         }}),
         ...(data.customer.hasIntermediary && { intermediary: data.customer.intermediary }),
-        smartDevice: data.smartDevice,
+        smartDevice
       };
 };

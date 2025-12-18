@@ -23,11 +23,13 @@ import type { AdditionalDataFormData } from './AdditionalDataFormWrapper';
 import { Switch } from '@/components/ui/switch';
 import { PolicyData } from './PoliticalData';
 import { PoliticalExposeData } from './PoliticalExposeData';
+import type { InsurancesType } from '@/mocks/summary.mock';
 interface AddressFormProps {
-  form: UseFormReturn<AdditionalDataFormData>;
+  form: UseFormReturn<AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>>;
+  insuranceType: InsurancesType
 }
 
-export const AddressForm = ({ form }: AddressFormProps) => {
+export const AddressForm = ({ form, insuranceType }: AddressFormProps) => {
   const [provinces, setProvinces] = useState<Province[]>([]);
   const [municipalities, setMunicipalities] = useState<Municipality[]>([]);
   const [occupation, setOccupation] = useState<Occupations[]>([]);
@@ -328,7 +330,7 @@ export const AddressForm = ({ form }: AddressFormProps) => {
       </div>
 
       <div className="space-y-4">
-        <PolicyData form={form} />
+        <PolicyData form={form} insuranceType={insuranceType} />
       </div>
     </div>
   );

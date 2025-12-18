@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import type { FlowStep } from '../../type/types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import type { InsurancesType } from '@/mocks/summary.mock';
 
 interface QuoteSummaryProps {
   insuranceData: InsurancesData;
@@ -36,6 +37,7 @@ interface QuoteSummaryProps {
   handleStep: (step: FlowStep) => void;
   isCheckoutOpen: boolean;
   paymentErrorMessage: string;
+  insuranceType: InsurancesType;
 }
 
 const formatCurrency = (amount: number) => {
@@ -59,6 +61,7 @@ export function QuoteSummary({
   handleStep,
   isCheckoutOpen,
   paymentErrorMessage,
+  insuranceType,
 }: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
   // const formatYears = (totalMonths: number) => {
@@ -298,7 +301,7 @@ export function QuoteSummary({
             <AccordionContent className="px-6 pb-6 pt-2">
               <BenefitsSection
                 terms={insuranceData.terms}
-                typeInsurance="A-KM"
+                typeInsurance={insuranceType}
               ></BenefitsSection>
             </AccordionContent>
           </AccordionItem>
@@ -312,7 +315,7 @@ export function QuoteSummary({
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6 pt-2">
-              <ExclusionsSection></ExclusionsSection>
+              <ExclusionsSection typeInsurance={insuranceType}></ExclusionsSection>
             </AccordionContent>
           </AccordionItem>
         </Accordion>

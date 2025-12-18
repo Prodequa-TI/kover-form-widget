@@ -10,11 +10,13 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { XCircle } from 'lucide-react';
 import { RelationShip } from '../../type/types';
 import LoadingOverlay from '@/shared/LoadingOverlay';
+import { InsurancesType } from '@/mocks/summary.mock';
 
 interface AdditionalDataFormWrapperProps {
   insuranceData: InsurancesData;
+  insuranceType: InsurancesType;
   onBack: () => void;
-  onSubmit: (data: AdditionalDataFormData) => Promise<boolean>;
+  onSubmit: (data: AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>) => Promise<boolean>;
   onProcessPayment: () => Promise<void>;
   nextStep: () => void;
 }
@@ -142,10 +144,12 @@ export const AdditionalDataFormWrapper = ({
   onBack,
   onSubmit,
   nextStep,
+  insuranceType,
 }: AdditionalDataFormWrapperProps) => {
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
-  const form = useForm<AdditionalDataFormData>({
-    resolver: yupResolver(additionalDataSchema),
+  const schemaToResolve = insuranceType === InsurancesType.DRIVE_INSURANCE ? additionalDataSchema : additionalDataSchema.omit(['smartDevice']);
+  const form = useForm<AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>>({
+    resolver: yupResolver(schemaToResolve),
     defaultValues: {
       customer: {
         occupation: '',
@@ -185,7 +189,7 @@ export const AdditionalDataFormWrapper = ({
     formState: { isSubmitting },
   } = form;
 
-  const handleSubmit = async (data: AdditionalDataFormData) => {
+  const handleSubmit = async (data: AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>) => {
     try {
       setAlertMessage(null);
       const success = await onSubmit(data);
@@ -240,7 +244,7 @@ export const AdditionalDataFormWrapper = ({
         >
           <FieldGroup className="w-full max-w-3xl">
             <div className="w-full">
-              <AddressForm form={form} />
+              <AddressForm form={form} insuranceType={insuranceType} />
               {alertMessage && (
                 <Alert variant={'destructive'} className="border-red-500 bg-red-50 mt-6">
                   <XCircle className="h-5 w-5 text-red-600 shrink-0" />

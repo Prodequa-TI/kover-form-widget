@@ -16,15 +16,15 @@ import {
 import { QuoteSummary } from './summary/QuoteSummary';
 import { type FlowStep } from '../type/types';
 import { formatInsuranceUpdateRequest } from '../mappers/format-update-insurance';
+import { InsurancesType } from '@/mocks/summary.mock';
 import { AutoInsuranceEmit } from '@/features/auto-insurance/AutoInsuranceEmit';
-import { autoInsuranceQuoteMock } from '@/mocks/sector-data.mock';
 
 interface FlowProps {
   storeToken?: string;
-  typeInsurances?: string;
+  insuranceType: InsurancesType;
 }
 
-export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
+export const EstimateFlow = ({ storeToken, insuranceType }: FlowProps) => {
   const [currentStep, setCurrentStep] = useState<FlowStep>('estimate');
   const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(null);
   const [paymentData, setPayment] = useState<InsurancePaymentStatusResponse | null>(null);
@@ -167,7 +167,7 @@ export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
       )}
       {currentStep === 'emit' &&
         insuranceData &&
-        (typeInsurances === 'auto-insurances' ? (
+        (insuranceType === InsurancesType.AUTO_INSURANCE ? (
           <AutoInsuranceEmit
             insuranceData={insuranceData}
             onBack={handleBack}
@@ -198,6 +198,7 @@ export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
           handleStep={handleStep}
           isCheckoutOpen={isCheckoutOpen}
           paymentErrorMessage={paymentErrorMessage}
+          insuranceType={insuranceType}
         />
       )}
       {currentStep === 'confirmation' && insuranceData && paymentData && (
