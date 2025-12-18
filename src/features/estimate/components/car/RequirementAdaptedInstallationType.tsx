@@ -45,25 +45,6 @@ export const RequerimentsAdaptedInstallationType = ({
               onValueChange={(value) => field.onChange(value)}
               options={RequierementAdaptedInstllationOption}
             />
-            {/* <div className="grid grid-cols-2 gap-3 w-full">
-                <Button
-                  type="button"
-                  onClick={() => field.onChange(true)}
-                  className={`py-2.5 px-5 rounded-md border-none transition-colors w-full cursor-pointer
-                    ${field.value ? selectedStyles : noSelectedStyles}
-                  `}
-                >
-                  Si cumple
-                </Button>
-                <Button
-                  type="button"
-                  onClick={() => field.onChange(false)}
-                  className={`py-2.5 px-5 rounded-md border-none transition-colors w-full cursor-pointer
-                  ${field.value === false ? selectedStyles : noSelectedStyles}`}
-                >
-                  No cumple
-                </Button>
-              </div> */}
 
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </Field>

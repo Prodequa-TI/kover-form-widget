@@ -57,7 +57,7 @@ export const RequirimentsAdaptedModal = ({ open, onClose }: { open: boolean, onC
                   <ul className="space-y-4">
                     {GLPrequeriments.map((req, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <div className="shrink-0 w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
+                        <div className="shrink-0 w-2 h-2 bg-kover-widget-primary rounded-full mt-2"></div>
                         <span className="text-gray-700 text-sm leading-relaxed">
                           {req}
                         </span>
@@ -73,7 +73,7 @@ export const RequirimentsAdaptedModal = ({ open, onClose }: { open: boolean, onC
                   <ul className="space-y-4">
                     {GNVrequeriments.map((req, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <div className="shrink-0 w-2 h-2 bg-blue-400 rounded-full mt-2"></div>
+                        <div className="shrink-0 w-2 h-2 bg-kover-widget-primary rounded-full mt-2"></div>
                         <span className="text-gray-700 text-sm leading-relaxed">
                           {req}
                         </span>
