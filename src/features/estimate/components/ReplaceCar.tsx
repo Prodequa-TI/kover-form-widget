@@ -1,7 +1,7 @@
 import { Controller, type UseFormReturn } from 'react-hook-form';
 import { ReplacementsCar } from '../type/types';
 import type { EstimateFormData } from '../config/EstimeFormConfig';
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
+import { Field, FieldDescription } from '@/components/ui/field';
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ const REPLACEMENT_CAR: Plan[] = [
   },
   {
     id: ReplacementsCar.RENT_A_CAR,
-    title: 'Rent-a-car',
+    title: 'Rent-a-Car',
     price: 'RD$329/mes',
     summary: 'Recibirás un auto compacto por hasta 15 días en un año.',
   },
