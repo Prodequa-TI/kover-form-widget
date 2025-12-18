@@ -3,7 +3,6 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { CustomTooltip } from '@/shared/CustomTooltip';
 import { CheckCircle2, Coins } from 'lucide-react';
-import { useState } from 'react';
 import type { InsurancesData } from '../estimate/type/insurance.types';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -19,6 +18,8 @@ type AutoInsurancesEmit = {
   onBack: () => void;
   onEmit: () => void;
   successMessage: string | null;
+  selectedPlan?: string;
+  onPlanSelect?: (planId: string) => void;
 };
 
 export const AutoInsuranceEmit = ({
@@ -26,8 +27,9 @@ export const AutoInsuranceEmit = ({
   onBack,
   onEmit,
   successMessage,
+  selectedPlan,
+  onPlanSelect
 }: AutoInsurancesEmit) => {
-  const [selectedQuotes, setSelectedQuotes] = useState<string>('A');
 
   const availablePlans = insuranceData?.quotationResponse.data.primas
     .filter((prima) => PLAN_CONFIG[prima.fraccionamientoPago])
@@ -83,7 +85,7 @@ export const AutoInsuranceEmit = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div className="flex flex-col justify-center items-center gap-4">
               {availablePlans?.map((pay) => {
-                const isSelected = selectedQuotes === pay.id;
+                const isSelected = selectedPlan === pay.id;
                 return (
                   <div
                     className={cn(
@@ -92,7 +94,7 @@ export const AutoInsuranceEmit = ({
                         ? 'bg-kover-widget-primary text-white border-kover-widget-primary shadow-md'
                         : 'bg-white text-[#0a1f44] border-gray-100 shadow-sm hover:border-gray-300'
                     )}
-                    onClick={() => setSelectedQuotes(pay.id)}
+                    onClick={() => onPlanSelect?.(pay.id)}
                     key={pay.id}
                   >
                     <div className="flex justify-between items-center w-full gap-5">

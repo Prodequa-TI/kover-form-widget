@@ -29,7 +29,7 @@ import {
 } from 'lucide-react';
 import type { FlowStep } from '../../type/types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import type { InsurancesType } from '@/mocks/summary.mock';
+import { InsurancesType } from '@/mocks/summary.mock';
 
 interface QuoteSummaryProps {
   insuranceData: InsurancesData;
@@ -38,6 +38,7 @@ interface QuoteSummaryProps {
   isCheckoutOpen: boolean;
   paymentErrorMessage: string;
   insuranceType: InsurancesType;
+  selectedFrequency?: string;
 }
 
 const formatCurrency = (amount: number) => {
@@ -62,8 +63,15 @@ export function QuoteSummary({
   isCheckoutOpen,
   paymentErrorMessage,
   insuranceType,
+  selectedFrequency,
 }: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
+
+  const isAuto = insuranceType === InsurancesType.AUTO_INSURANCE;
+  const selectedPrima = insuranceData.quotationResponse.data.primas.find(
+    (p) => p.fraccionamientoPago === selectedFrequency
+  );
+  const primaAmount = selectedPrima ? selectedPrima.cobro : 0;
   // const formatYears = (totalMonths: number) => {
   //   const years = Math.floor(totalMonths / 12);
   //   const months = totalMonths % 12; //
@@ -88,7 +96,7 @@ export function QuoteSummary({
     <>
       <div className="flex flex-col items-center gap-2 mb-4">
         <h1 className="text-2xl text-slate-900 font-semibold">
-          Por lo que conduces
+          {isAuto ? 'Para tu Auto' : 'Por lo que conduces'}
         </h1>
         <div className="flex flex-col items-center text-slate-500">
           <p className="text-sm">Aquí te mostramos lo que estas contratando,</p>
@@ -105,50 +113,84 @@ export function QuoteSummary({
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6 pt-2">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Prima fija mensual
-                  </p>
-                  <p className="text-base font-semibold text-foreground">
-                    {formatCurrency(
-                      insuranceData.quotationResponse.data.terminos.primaFija
-                    )}
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Tarifa x KM:
-                  </p>
-                  <p className="text-base font-semibold text-foreground">
-                    {formatCurrency(
-                      insuranceData.quotationResponse.data.terminos.primaKm
-                    )}
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Plazo de seguro
-                  </p>
-                  <p className="text-base font-semibold text-foreground">
-                    12 meses {/* {formatYears(insuranceData.quotationResponse.data.terminos.plazo)} */}
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <p className="text-sm font-medium text-muted-foreground">
-                    Monto asegurado
-                  </p>
-                  <div className="flex items-center gap-2">
+              {isAuto ? (
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Suma Asegurada
+                    </p>
                     <p className="text-base font-semibold text-foreground">
                       {formatCurrency(
-                        insuranceData.quotationResponse.data.terminos.montoAsegurado
+                        insuranceData.quotationResponse.data.vehiculo.sumaAsegurada
                       )}
                     </p>
                   </div>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Plazo de seguro
+                    </p>
+                    <p className="text-base font-semibold text-foreground">
+                      1 año
+                      {/* {formatYears(insuranceData.quotationResponse.data.terminos.plazo)} */}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">Prima</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-base font-semibold text-foreground">
+                        {formatCurrency(primaAmount)}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Prima fija mensual
+                    </p>
+                    <p className="text-base font-semibold text-foreground">
+                      {formatCurrency(
+                        insuranceData.quotationResponse.data.terminos.primaFija
+                      )}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Tarifa x KM:
+                    </p>
+                    <p className="text-base font-semibold text-foreground">
+                      {formatCurrency(
+                        insuranceData.quotationResponse.data.terminos.primaKm
+                      )}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Plazo de seguro
+                    </p>
+                    <p className="text-base font-semibold text-foreground">
+                      12 meses{' '}
+                      {/* {formatYears(insuranceData.quotationResponse.data.terminos.plazo)} */}
+                    </p>
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-sm font-medium text-muted-foreground">
+                      Monto asegurado
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-base font-semibold text-foreground">
+                        {formatCurrency(
+                          insuranceData.quotationResponse.data.terminos.montoAsegurado
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="item-2" className="border-b last:border-b-0">
             <AccordionTrigger className="px-6 py-4 hover:bg-muted/50 transition-colors">
               <div className="flex items-center gap-3">

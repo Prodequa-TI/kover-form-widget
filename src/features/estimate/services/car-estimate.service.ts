@@ -114,7 +114,7 @@ export async function generateQuota(
         'Tu cotización está siendo procesada. Te notificaremos por correo electronico.'
       );
     }
-
+    
     return result;
   } catch (error) {
     console.error('Error generating insurance:', error);
