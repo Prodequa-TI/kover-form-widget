@@ -57,7 +57,7 @@ export const EstimateFlow = ({ storeToken, insuranceType }: FlowProps) => {
     setCurrentStep('emit');
   };
   const handleSaveAdditionalData = async (
-    data: AdditionalDataFormData
+    data: AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>
   ): Promise<boolean> => {
     if (!insuranceData) return false;
     const updatePayload = formatInsuranceUpdateRequest(data);
