@@ -41,7 +41,7 @@ export const EstimateForm = ({
   const [errorAlert, setErrorAlert] = useState<string | null>(null);
   const [openLaw, setOpenLaw] = useState(false);
   const [openAssistant, setOpenAssistant] = useState(false);
-  const isAuto = typeInsurances === 'auto-insurances'
+  const isAuto = typeInsurances === 'auto-insurances';
   const form = useForm<EstimateFormData>({
     resolver: yupResolver(schemaEstimate),
     defaultValues: initialValues,
@@ -96,9 +96,20 @@ export const EstimateForm = ({
   return (
     <>
       {isSubmitting && <LoadingOverlay message="Generando tu cotización" />}
-      <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
-        {isAuto ? 'Para tu Auto' : 'Por lo que conduces'}
-      </h1>
+
+      {isAuto ? (
+        <div className="text-center mb-8">
+          <h1 className="text-center text-2xl font-bold text-gray-900 mb-2 uppercase select-none">
+            Por lo que conduces
+          </h1>
+          <p className='text-gray-600'>Seguro a todo riesgo</p>
+        </div>
+      ) : (
+        <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
+          Para tu Auto
+        </h1>
+      )}
+
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>
         <FieldGroup>
           <div className="flex flex-col gap-8 max-w-4xl">
