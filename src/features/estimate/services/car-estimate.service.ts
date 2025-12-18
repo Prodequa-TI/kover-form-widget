@@ -13,6 +13,7 @@ import { API_DEFAULTS } from '../config/apiDefaults';
 import { LAW_INSURANCE_LABEL, REPLACEMENT_CAR_LABEL } from '../config/mappers';
 import { httpClient } from '@/core/httpClient';
 import { formatDate } from '@/lib/formatDate';
+import type { InsurancesType } from '@/mocks/summary.mock';
 
 let counter = Math.floor(Math.random() * 0xffffff);
 
@@ -38,13 +39,14 @@ export const getCars = async (): Promise<CarListResponse[]> => {
 
 export async function generateQuota(
   data: EstimateFormData,
+  insuranceType: InsurancesType,
   storeToken?: string
 ): Promise<Insurances> {
   try {
     //CONSTRUIR LA DATA QUE SE VA A ENVIAR A LA API
     const requestData = {
       companyId: storeToken || generateObjectId(),
-      product: API_DEFAULTS.product,
+      product: insuranceType,
       customer: {
         firstName: data.customer.firstName || '',
         lastName: data.customer.lastname || '',

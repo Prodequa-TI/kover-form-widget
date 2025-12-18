@@ -24,12 +24,13 @@ import LoadingOverlay from '../../../shared/LoadingOverlay';
 import { CustomTooltip } from '@/shared/CustomTooltip';
 import { LawInsuranceModal } from './law-insurance/LawInsuranceModal';
 import { AssistantModal } from './Assistant/AssistantModal';
+import { InsurancesType } from '@/mocks/summary.mock';
 
 interface EstimateFormProps {
   onSuccess: (data: InsurancesData) => void;
   setGlobalSuccessMessage: (msg: string | null) => void;
   storeToken?: string;
-  typeInsurances?: string;
+  typeInsurances: InsurancesType;
 }
 
 export const EstimateForm = ({
@@ -41,7 +42,7 @@ export const EstimateForm = ({
   const [errorAlert, setErrorAlert] = useState<string | null>(null);
   const [openLaw, setOpenLaw] = useState(false);
   const [openAssistant, setOpenAssistant] = useState(false);
-  const isAuto = typeInsurances === 'auto-insurances';
+  const isAuto = typeInsurances === InsurancesType.AUTO_INSURANCE;
   const form = useForm<EstimateFormData>({
     resolver: yupResolver(schemaEstimate),
     defaultValues: initialValues,
@@ -57,7 +58,7 @@ export const EstimateForm = ({
     try {
       setErrorAlert(null);
       // Llamar al servicio que hace fetch a la API
-      const response = await generateQuota(data, storeToken);
+      const response = await generateQuota(data, typeInsurances, storeToken);
 
       // setear el mensaje global de éxito
       setGlobalSuccessMessage(

@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import type { FlowStep } from '../../type/types';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { InsurancesType } from '@/mocks/summary.mock';
 
 interface QuoteSummaryProps {
   insuranceData: InsurancesData;
@@ -36,7 +37,7 @@ interface QuoteSummaryProps {
   handleStep: (step: FlowStep) => void;
   isCheckoutOpen: boolean;
   paymentErrorMessage: string;
-  typeInsurances?: string;
+  insuranceType: InsurancesType;
   selectedFrequency?: string;
 }
 
@@ -61,36 +62,36 @@ export function QuoteSummary({
   handleStep,
   isCheckoutOpen,
   paymentErrorMessage,
-  typeInsurances,
+  insuranceType,
   selectedFrequency,
 }: QuoteSummaryProps) {
   const [acceptedTerms, setAcceptedTerms] = useState<CheckedState>(false);
 
-  const isAuto = typeInsurances === 'auto-insurances';
+  const isAuto = insuranceType === InsurancesType.AUTO_INSURANCE;
   const selectedPrima = insuranceData.quotationResponse.data.primas.find(
     (p) => p.fraccionamientoPago === selectedFrequency
   );
   const primaAmount = selectedPrima ? selectedPrima.cobro : 0;
-  const formatYears = (totalMonths: number) => {
-    const years = Math.floor(totalMonths / 12);
-    const months = totalMonths % 12; //
-    if (totalMonths === 0) {
-      return '0 meses';
-    }
-    let result = '';
-    if (years > 0) {
-      const yearText = years === 1 ? 'año' : 'años';
-      result += years + ' ' + yearText;
-    } else if (months > 0) {
-      const monthText = months === 1 ? 'mes' : 'meses';
-      const monthString = months + ' ' + monthText;
-      if (result.length > 0) {
-        result += ' y ';
-      }
-      result += monthString;
-    }
-    return result;
-  };
+  // const formatYears = (totalMonths: number) => {
+  //   const years = Math.floor(totalMonths / 12);
+  //   const months = totalMonths % 12; //
+  //   if (totalMonths === 0) {
+  //     return '0 meses';
+  //   }
+  //   let result = '';
+  //   if (years > 0) {
+  //     const yearText = years === 1 ? 'año' : 'años';
+  //     result += years + ' ' + yearText;
+  //   } else if (months > 0) {
+  //     const monthText = months === 1 ? 'mes' : 'meses';
+  //     const monthString = months + ' ' + monthText;
+  //     if (result.length > 0) {
+  //       result += ' y ';
+  //     }
+  //     result += monthString;
+  //   }
+  //   return result;
+  // };
   return (
     <>
       <div className="flex flex-col items-center gap-2 mb-4">
@@ -342,7 +343,7 @@ export function QuoteSummary({
             <AccordionContent className="px-6 pb-6 pt-2">
               <BenefitsSection
                 terms={insuranceData.terms}
-                typeInsurance="A-KM"
+                typeInsurance={insuranceType}
               ></BenefitsSection>
             </AccordionContent>
           </AccordionItem>
@@ -356,7 +357,7 @@ export function QuoteSummary({
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6 pt-2">
-              <ExclusionsSection></ExclusionsSection>
+              <ExclusionsSection typeInsurance={insuranceType}></ExclusionsSection>
             </AccordionContent>
           </AccordionItem>
         </Accordion>

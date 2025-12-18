@@ -13,7 +13,7 @@ import { Field, FieldError, FieldLabel } from '@/components/ui/field';
 import { useEffect } from 'react';
 
 interface PoliticalExposeDataProps {
-  form: UseFormReturn<AdditionalDataFormData>;
+  form: UseFormReturn<AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>>;
 }
 const kingOptions = Object.values(Kinship);
 export const PoliticalExposeData = ({ form }: PoliticalExposeDataProps) => {

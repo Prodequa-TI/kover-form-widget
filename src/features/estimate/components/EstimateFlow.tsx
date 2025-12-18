@@ -16,14 +16,15 @@ import {
 import { QuoteSummary } from './summary/QuoteSummary';
 import { type FlowStep } from '../type/types';
 import { formatInsuranceUpdateRequest } from '../mappers/format-update-insurance';
+import { InsurancesType } from '@/mocks/summary.mock';
 import { AutoInsuranceEmit } from '@/features/auto-insurance/AutoInsuranceEmit';
 
 interface FlowProps {
-  storeToken?: string;
-  typeInsurances?: string;
+  storeToken: string;
+  insuranceType: InsurancesType;
 }
 
-export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
+export const EstimateFlow = ({ storeToken, insuranceType }: FlowProps) => {
   const [currentStep, setCurrentStep] = useState<FlowStep>('estimate');
   const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(null);
   const [paymentData, setPayment] = useState<InsurancePaymentStatusResponse | null>(null);
@@ -56,7 +57,7 @@ const [selectedFrequency, setSelectedFrequency] = useState<string>('A');
     setCurrentStep('emit');
   };
   const handleSaveAdditionalData = async (
-    data: AdditionalDataFormData
+    data: AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>
   ): Promise<boolean> => {
     if (!insuranceData) return false;
     const updatePayload = formatInsuranceUpdateRequest(data);
@@ -162,12 +163,12 @@ const [selectedFrequency, setSelectedFrequency] = useState<string>('A');
           storeToken={storeToken}
           onSuccess={handleEstimateSuccess}
           setGlobalSuccessMessage={setSuccessMessage}
-          typeInsurances={typeInsurances}
+          typeInsurances={insuranceType}
         />
       )}
       {currentStep === 'emit' &&
         insuranceData &&
-        (typeInsurances === 'auto-insurances' ? (
+        (insuranceType === InsurancesType.AUTO_INSURANCE ? (
           <AutoInsuranceEmit
             insuranceData={insuranceData}
             onBack={handleBack}
@@ -191,6 +192,7 @@ const [selectedFrequency, setSelectedFrequency] = useState<string>('A');
           onSubmit={handleSaveAdditionalData}
           onProcessPayment={handleProcessPayment}
           nextStep={handleUpdateInsurance}
+          insuranceType={insuranceType}
         />
       )}
       {currentStep === 'quote-summary' && insuranceData && (
@@ -200,7 +202,7 @@ const [selectedFrequency, setSelectedFrequency] = useState<string>('A');
           handleStep={handleStep}
           isCheckoutOpen={isCheckoutOpen}
           paymentErrorMessage={paymentErrorMessage}
-          typeInsurances={typeInsurances}
+          insuranceType={insuranceType}
           selectedFrequency={selectedFrequency} //FALTA AGREGAR
         />
       )}
