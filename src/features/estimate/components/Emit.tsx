@@ -142,6 +142,7 @@ export default function Emitir({
           </div>
         </div>
       </div>
+      {/* CANCULAR TU AHORRO */}
       <div className="mt-8 bg-white rounded-lg border border-gray-200 ">
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="item-1">

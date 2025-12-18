@@ -3,7 +3,6 @@ import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui
 import { useState, type ChangeEvent } from 'react';
 import {
   FuelsType,
-  InstallatationType,
   type CarListResponse,
   type CarModels,
 } from '../../type/types';
@@ -15,7 +14,6 @@ import { Input } from '@/components/ui/input';
 import { GasAndInstallToggle } from './GasAndInstallToggle';
 import { SelectBrandCar } from './SearchBrandCar';
 import { Checkbox } from '@/components/ui/checkbox';
-import { RequerimentsAdaptedInstallationType } from './RequirementAdaptedInstallationType';
 import { formatNumber } from '@/utils';
 
 import { CustomSelect } from '@/shared/CustomSelected';
@@ -23,14 +21,16 @@ import { CustomSelect } from '@/shared/CustomSelected';
 interface CarFormProps {
   form: UseFormReturn<EstimateFormData>;
 }
-
+const boolOptions = [
+  { value: 'true', label: 'Sí' },
+  { value: 'false', label: 'No' },
+];
 export function CarForm({ form }: CarFormProps) {
   const [models, setModels] = useState<CarModels[]>([]);
   const actualYear = new Date().getFullYear();
   const years = Array.from({ length: 16 }, (_, i) => actualYear - i);
   const brand = form.watch('car.brand');
   const fuelType = form.watch('car.fuelType');
-  const installationType = form.watch('car.installationType');
   const gasEnabled = fuelType === FuelsType.GAS;
   const MIN_WORTH = 200_000;
   const MAX_WORTH = 7_000_000;
@@ -50,10 +50,7 @@ export function CarForm({ form }: CarFormProps) {
     const cleanValue = rawValue.replace(/[^0-9.]/g, '');
     onChange(cleanValue === '' ? '' : Number(cleanValue));
   };
-  const boolOptions = [
-    { value: 'true', label: 'Sí' },
-    { value: 'false', label: 'No' },
-  ];
+
   return (
     <>
       <div className="flex flex-col md:grid md:grid-cols-2 gap-4 ">
@@ -154,6 +151,9 @@ export function CarForm({ form }: CarFormProps) {
             </Field>
           )}
         />
+        {fuelType === FuelsType.GAS && (
+          <GasAndInstallToggle form={form} gasEnabled={gasEnabled} />
+        )}
         <Controller
           control={form.control}
           name="car.worth"
@@ -199,48 +199,43 @@ export function CarForm({ form }: CarFormProps) {
             </Field>
           )}
         />
-        <div className="col-start-1 col-end-3 mt-4">
-          <Controller
-            control={form.control}
-            name="car.isPersonalUse"
-            render={({ field, fieldState }) => (
-              <div className="space-y-2">
-                <div className="flex flex-row items-center space-x-3 space-y-0">
-                  <Checkbox
-                    id="car.isPersonalUse"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    aria-invalid={fieldState.invalid}
-                    className={`data-[state=checked]:bg-kover-widget-primary data-[state=checked]:border-kover-widget-primary ${
-                      fieldState.invalid ? 'border-red-500' : 'border-gray-400'
-                    }`}
-                  />
-                  <label
-                    htmlFor="car.isPersonalUse"
-                    className="text-sm font-bold text-kover-widget-primary leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                  >
-                    Favor confirmar que es de uso particular y no es deportivo o de uso
-                    público / comercial
-                  </label>
-                </div>
-
-                {/* Mensaje de error justo debajo si no lo marcan */}
-                {fieldState.invalid && (
-                  <p className="text-sm font-medium text-red-500 ml-1">
-                    {fieldState.error?.message}
-                  </p>
-                )}
-              </div>
-            )}
-          />
-        </div>
       </div>
-      {fuelType === FuelsType.GAS && (
-        <GasAndInstallToggle form={form} gasEnabled={gasEnabled} />
-      )}
-      {installationType === InstallatationType.ADAPTED && (
-        <RequerimentsAdaptedInstallationType form={form} />
-      )}
+
+      <div className="col-start-1 col-end-3 mt-4">
+        <Controller
+          control={form.control}
+          name="car.isPersonalUse"
+          render={({ field, fieldState }) => (
+            <div className="space-y-2">
+              <div className="flex flex-row items-center space-x-3 space-y-0">
+                <Checkbox
+                  id="car.isPersonalUse"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                  aria-invalid={fieldState.invalid}
+                  className={`data-[state=checked]:bg-kover-widget-primary data-[state=checked]:border-kover-widget-primary ${
+                    fieldState.invalid ? 'border-red-500' : 'border-gray-400'
+                  }`}
+                />
+                <label
+                  htmlFor="car.isPersonalUse"
+                  className="text-sm font-bold text-kover-widget-primary leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                  Favor confirmar que es de uso particular y no es deportivo o de uso
+                  público / comercial
+                </label>
+              </div>
+
+              {/* Mensaje de error justo debajo si no lo marcan */}
+              {fieldState.invalid && (
+                <p className="text-sm font-medium text-red-500 ml-1">
+                  {fieldState.error?.message}
+                </p>
+              )}
+            </div>
+          )}
+        />
+      </div>
     </>
   );
 }

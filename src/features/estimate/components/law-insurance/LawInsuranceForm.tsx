@@ -78,7 +78,7 @@ export const LawInsuranceForm = ({ form }: PlansAccordionProps) => {
                 {selectedPlan && (
                   <div className="mt-3 p-3 bg-slate-50 rounded-md border text-sm text-slate-600 animate-in fade-in zoom-in-95 duration-200">
                     <p className="font-semibold text-kover-widget-primary mb-1">
-                      {selectedPlan.title} - {selectedPlan.price}
+                      Plan de Responsabilidad Civil
                     </p>
                     <p>{selectedPlan.summary}</p>
                   </div>

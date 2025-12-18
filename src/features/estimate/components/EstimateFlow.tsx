@@ -1,7 +1,7 @@
 import type { InsurancesData } from '@/features/estimate/type/insurance.types';
 import { useEffect, useState } from 'react';
 import { EstimateForm } from './EstimateForm';
-import Emitir from './Emitir';
+import Emitir from './Emit';
 import {
   checkStatusPayment,
   getUrlPayment,
@@ -16,12 +16,15 @@ import {
 import { QuoteSummary } from './summary/QuoteSummary';
 import { type FlowStep } from '../type/types';
 import { formatInsuranceUpdateRequest } from '../mappers/format-update-insurance';
+import { AutoInsuranceEmit } from '@/features/auto-insurance/AutoInsuranceEmit';
+import { autoInsuranceQuoteMock } from '@/mocks/sector-data.mock';
 
 interface FlowProps {
   storeToken?: string;
+  typeInsurances?: string;
 }
 
-export const EstimateFlow = ({ storeToken }: FlowProps) => {
+export const EstimateFlow = ({ storeToken, typeInsurances }: FlowProps) => {
   const [currentStep, setCurrentStep] = useState<FlowStep>('estimate');
   const [insuranceData, setInsuranceData] = useState<InsurancesData | null>(null);
   const [paymentData, setPayment] = useState<InsurancePaymentStatusResponse | null>(null);
@@ -162,14 +165,23 @@ export const EstimateFlow = ({ storeToken }: FlowProps) => {
           setGlobalSuccessMessage={setSuccessMessage}
         />
       )}
-      {currentStep === 'emit' && insuranceData && (
-        <Emitir
-          onBack={handleBack}
-          successMessage={successMessage}
-          onEmit={handleEmitClick}
-          insuranceData={insuranceData}
-        />
-      )}
+      {currentStep === 'emit' &&
+        insuranceData &&
+        (typeInsurances === 'auto-insurances' ? (
+          <AutoInsuranceEmit
+            insuranceData={insuranceData}
+            onBack={handleBack}
+            successMessage={successMessage}
+            onEmit={handleEmitClick}
+          />
+        ) : (
+          <Emitir
+            onBack={handleBack}
+            successMessage={successMessage}
+            onEmit={handleEmitClick}
+            insuranceData={insuranceData}
+          />
+        ))}
       {currentStep === 'additional-data' && insuranceData && (
         <AdditionalDataFormWrapper
           insuranceData={insuranceData as InsurancesData}
