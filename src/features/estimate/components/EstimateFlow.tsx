@@ -20,7 +20,7 @@ import { InsurancesType } from '@/mocks/summary.mock';
 import { AutoInsuranceEmit } from '@/features/auto-insurance/AutoInsuranceEmit';
 
 interface FlowProps {
-  storeToken?: string;
+  storeToken: string;
   insuranceType: InsurancesType;
 }
 
