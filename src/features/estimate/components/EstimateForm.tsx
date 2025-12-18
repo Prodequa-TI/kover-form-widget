@@ -99,16 +99,16 @@ export const EstimateForm = ({
       {isSubmitting && <LoadingOverlay message="Generando tu cotización" />}
 
       {isAuto ? (
-        <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
-          Para tu Auto
-        </h1>
-      ) : (
         <div className="text-center mb-8">
-          <h1 className="text-center text-2xl font-bold text-gray-900 mb-2 uppercase select-none">
-            Por lo que conduces
+          <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
+            Para tu Auto
           </h1>
           <p className="text-gray-600">Seguro a todo riesgo</p>
         </div>
+      ) : (
+        <h1 className="text-center text-2xl font-bold text-gray-900 mb-2 uppercase select-none">
+          Por lo que conduces
+        </h1>
       )}
 
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>

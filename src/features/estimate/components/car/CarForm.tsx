@@ -3,6 +3,8 @@ import { Field, FieldDescription, FieldError, FieldLabel } from '@/components/ui
 import { useState, type ChangeEvent } from 'react';
 import {
   FuelsType,
+  Gas,
+  InstallatationType,
   type CarListResponse,
   type CarModels,
 } from '../../type/types';
@@ -11,12 +13,12 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { EstimateFormData } from '../../config/EstimeFormConfig';
 import { SelectCarModel } from './SelectBrancModel';
 import { Input } from '@/components/ui/input';
-import { GasAndInstallToggle } from './GasAndInstallToggle';
 import { SelectBrandCar } from './SearchBrandCar';
 import { Checkbox } from '@/components/ui/checkbox';
 import { formatNumber } from '@/utils';
 
 import { CustomSelect } from '@/shared/CustomSelected';
+import { RequerimentsAdaptedInstallationType } from './RequirementAdaptedInstallationType';
 
 interface CarFormProps {
   form: UseFormReturn<EstimateFormData>;
@@ -25,12 +27,24 @@ const boolOptions = [
   { value: 'true', label: 'Sí' },
   { value: 'false', label: 'No' },
 ];
+const gasOptions = [
+  { value: Gas.GLP, label: 'GLP' },
+  { value: Gas.GNV, label: 'GNV' },
+];
+const installationOptions = [
+  {
+    value: InstallatationType.ADAPTED,
+    label: 'Adaptado',
+  },
+  { value: InstallatationType.TO_BUILD, label: 'De fabrica' },
+];
 export function CarForm({ form }: CarFormProps) {
   const [models, setModels] = useState<CarModels[]>([]);
   const actualYear = new Date().getFullYear();
   const years = Array.from({ length: 16 }, (_, i) => actualYear - i);
   const brand = form.watch('car.brand');
   const fuelType = form.watch('car.fuelType');
+  const installationType = form.watch('car.installationType');
   const gasEnabled = fuelType === FuelsType.GAS;
   const MIN_WORTH = 200_000;
   const MAX_WORTH = 7_000_000;
@@ -151,9 +165,55 @@ export function CarForm({ form }: CarFormProps) {
             </Field>
           )}
         />
+        {/* 6. TIPO DE GAS (Renderizado Condicional INTEGRADO en el Grid) */}
         {fuelType === FuelsType.GAS && (
-          <GasAndInstallToggle form={form} gasEnabled={gasEnabled} />
+          <Controller
+            control={form.control}
+            name="car.gasType"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Tipo de gas</FieldLabel>
+                <CustomSelect
+                  placeholder="Seleccione su tipo de gas"
+                  name={field.name}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  disabled={!gasEnabled}
+                  invalid={fieldState.invalid}
+                  options={gasOptions}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
         )}
+
+        {/* 7. TIPO DE INSTALACIÓN (Renderizado Condicional INTEGRADO en el Grid) */}
+        {fuelType === FuelsType.GAS && (
+          <Controller
+            control={form.control}
+            name="car.installationType"
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Tipo de instalación</FieldLabel>
+                <CustomSelect
+                  placeholder="Seleccione la instalación"
+                  name={field.name}
+                  value={field.value}
+                  onValueChange={field.onChange}
+                  disabled={!gasEnabled}
+                  invalid={fieldState.invalid}
+                  options={installationOptions}
+                />
+                {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              </Field>
+            )}
+          />
+        )}
+        {installationType === InstallatationType.ADAPTED && (
+          <RequerimentsAdaptedInstallationType form={form} />
+        )}
+        {/* 8. VALOR DEL VEHÍCULO */}
         <Controller
           control={form.control}
           name="car.worth"
@@ -182,17 +242,14 @@ export function CarForm({ form }: CarFormProps) {
                   <FieldError errors={[fieldState.error]} />
                 ) : (
                   <FieldDescription>
-                    Aseguramos vehículos desde{' '}
+                    Desde{' '}
                     <span className="font-medium">
-                      RD$
-                      {MIN_WORTH.toLocaleString('es-DO')}
+                      RD$ {MIN_WORTH.toLocaleString('es-DO')}
                     </span>{' '}
                     hasta{' '}
                     <span className="font-medium">
-                      RD$
-                      {MAX_WORTH.toLocaleString('es-DO')}
+                      RD$ {MAX_WORTH.toLocaleString('es-DO')}
                     </span>
-                    .
                   </FieldDescription>
                 )}
               </div>

@@ -6,12 +6,6 @@ import { financialInstitutions } from '@/mocks/emit.mock';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { MaskedInput } from '../customer/MaskedInput';
-import {
-  installationMunicipalities,
-  InstallationTypes,
-  installationTypes,
-  municipalityLocations,
-} from '@/mocks/installation.mock';
 import { SmartDeviceField } from './SmartDeviceField';
 import { InsurancesType } from '@/mocks/summary.mock';
 
@@ -24,7 +18,7 @@ export const PolicyData = ({ form, insuranceType }: PolicyDataProps) => {
   // const [hasIntermediary, setHasIntermediary] = useState<boolean>(false);
   const [hasEndorsmentPolicy, setHasEndorsmentPolicy] = useState<boolean>(false);
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {
         insuranceType === InsurancesType.DRIVE_INSURANCE &&
         <SmartDeviceField form={form} />
@@ -79,7 +73,6 @@ export const PolicyData = ({ form, insuranceType }: PolicyDataProps) => {
       <div className="flex items-center gap-2">
         <h3 className="text-sm font-semibold text-kover-widget-primary">Endosos</h3>
       </div>
-
       <div className="space-y-4 col-span-2">
         <Controller
           control={form.control}
@@ -88,12 +81,12 @@ export const PolicyData = ({ form, insuranceType }: PolicyDataProps) => {
             <Field>
               <FieldLabel>¿Requieres endoso de cesión?</FieldLabel>
               <SelectCustom
-                items={['Si', 'No']}
-                value={hasEndorsmentPolicy ? 'Si' : 'No'}
+                items={['Si, endosar mi póliza', 'No requiere']}
+                value={hasEndorsmentPolicy ? 'Si, endosar mi póliza' : 'No requiere'}
                 name={field.name}
                 onChange={(value) => {
-                  setHasEndorsmentPolicy(value === 'Si');
-                  field.onChange(value === 'Si');
+                  setHasEndorsmentPolicy(value === 'Si, endosar mi póliza');
+                  field.onChange(value === 'Si, endosar mi póliza');
                 }}
               />
             </Field>

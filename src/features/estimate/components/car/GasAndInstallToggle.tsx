@@ -69,9 +69,7 @@ export const GasAndInstallToggle = ({ form, gasEnabled }: CarFormProps) => {
           </Field>
         )}
       />
-      {installationType === InstallatationType.ADAPTED && (
-        <RequerimentsAdaptedInstallationType form={form} />
-      )}
+      
     </>
   );
 };

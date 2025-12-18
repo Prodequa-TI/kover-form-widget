@@ -24,7 +24,7 @@ export const RequerimentsAdaptedInstallationType = ({
         control={form.control}
         name="car.meetsRequirements"
         render={({ field, fieldState }) => (
-          <Field className="flex flex-col items-center justify-center gap-4">
+          <Field data-invalid={fieldState.invalid}>
             <FieldLabel>
               <div className="flex gap-2 justify-center items-center">
                 <p>Exigencias de adaptación</p>
