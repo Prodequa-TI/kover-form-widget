@@ -47,6 +47,9 @@
         --color-kover-widget-secondary: var(--kover-widget-secondary);
         --color-kover-widget-secondary-foreground: var(--kover-widget-secondary-foreground);
         --color-kover-widget-primary-50: var(--kover-widget-primary-50);
+        --color-tooltip-info-bg: var(--tooltip-info-bg);
+        --color-tooltip-info-text: var(--tooltip-info-text);
+        --color-tooltip-info-border: var(--tooltip-info-border);
 
     }
 
@@ -96,7 +99,9 @@
         /* Purple como secundario */
         --kover-widget-secondary: #a855f7;           
         --kover-widget-secondary-foreground: #9333ea; 
-
+        --tooltip-info-bg: #EFF6FF;     /* azul muy suave */
+        --tooltip-info-text: #1E40AF;   /* azul informativo */
+        --tooltip-info-border: #BFDBFE;
         
     }
 
@@ -139,6 +144,9 @@
         --kover-widget-primary: oklch(0.65 0.22 277);
         --kover-widget-primary-hover: oklch(0.55 0.26 277);
         --kover-widget-primary-foreground: oklch(0.99 0 0);
+        --tooltip-info-bg: oklch(0.28 0.09 266);
+        --tooltip-info-text: oklch(0.95 0.02 266);
+        --tooltip-info-border: oklch(0.45 0.12 266);
     }
 
     @layer base {
