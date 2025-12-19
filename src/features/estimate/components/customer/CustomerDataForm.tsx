@@ -179,7 +179,7 @@ export const CustomerDataForm = ({ form, onCedulaVerified }: CustomDataFormProps
                 </SelectTrigger>
                 <SelectContent className="bg-popover z-50">
                   <SelectItem value={Documents.ID.toString()}>
-                    Cedula de identidad
+                    Cédula de identidad
                   </SelectItem>
                   <SelectItem value={Documents.PASSPORT.toString()}>Pasaporte</SelectItem>
                 </SelectContent>

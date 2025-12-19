@@ -28,8 +28,13 @@ export const CustomTooltip = ({
           )}
         />
       </TooltipTrigger>
-      <TooltipContent className={cn('p-2 text-xs ', contentClassName)}>
-        <p>{message}</p>
+      <TooltipContent
+        className={cn(
+          'p-2 text-xs',
+          contentClassName
+        )}
+      >
+        <p className="mx-auto max-w-[200px] whitespace-normal">{message}</p>
       </TooltipContent>
     </Tooltip>
   );

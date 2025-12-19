@@ -70,9 +70,9 @@ export const AutoInsuranceEmit = ({
             </AlertDescription>
           </Alert>
         )}
-        <h1 className="text-2xl text-kover-widget-primary">¡Tú eliges como pagas!</h1>
+        <h1 className="text-2xl text-kover-widget-primary">¡Tú eliges cómo pagas!</h1>
         <p className="text-center mx-auto max-w-[500px] whitespace-normal text-sm">
-          ¿Con qué frecuencia deseas pagar el seguro de tu {}?
+          ¿Con qué frecuencia deseas pagar el seguro de tu ?
         </p>
       </div>
       <div className="w-full max-w-4xl mx-auto transition-shadow">
@@ -114,7 +114,7 @@ export const AutoInsuranceEmit = ({
 
                         {pay.hasInfo && (
                           <CustomTooltip
-                            message="Mensajes iguales y consecutivas"
+                            message="Mensajes iguales y consecutivas."
                             iconClassName="ml-1 absolute -top-2 right-1 text-orange-500 hover:text-orange-600"
                           />
                         )}

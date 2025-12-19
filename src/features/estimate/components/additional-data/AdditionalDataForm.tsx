@@ -166,7 +166,7 @@ export const AddressForm = ({ form, insuranceType }: AddressFormProps) => {
                     <FieldLabel htmlFor="customer.requiresFiscalReceipt">
                       ¿Requieres comprobante fiscal?
                     </FieldLabel>
-                    <FieldDescription>Necesito factura con NCF</FieldDescription>
+                    <FieldDescription>Requiero factura con NCF</FieldDescription>
                   </FieldContent>
                   <Switch
                     id="customer.requiresFiscalReceipt"
@@ -189,7 +189,7 @@ export const AddressForm = ({ form, insuranceType }: AddressFormProps) => {
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <h3 className="text-sm font-semibold text-kover-widget-primary">
-            Dirección de Residencia
+            Dirección de residencia
           </h3>
         </div>
 
@@ -206,7 +206,7 @@ export const AddressForm = ({ form, insuranceType }: AddressFormProps) => {
                   <Input
                     type="text"
                     id="customer.address.street"
-                    placeholder="Ej: Calle Principal #123, Edificio Torre"
+                    placeholder="Ej.: Calle Principal #123, Edificio Torre"
                     className="bg-[#F8FAFC]"
                     {...field}
                     aria-invalid={fieldState.invalid}
@@ -220,7 +220,7 @@ export const AddressForm = ({ form, insuranceType }: AddressFormProps) => {
               name="customer.address.referencePoint"
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel>Referencia</FieldLabel>
+                  <FieldLabel>Referencias</FieldLabel>
                   <Input
                     type="text"
                     id={field.name}
@@ -315,7 +315,7 @@ export const AddressForm = ({ form, insuranceType }: AddressFormProps) => {
                   <Input
                     type="text"
                     id="customer.address.sector"
-                    placeholder="Ej: Centro, Zona Colonial, etc."
+                    placeholder="Ej.: Centro, Zona Colonial, etc."
                     className="bg-[#F8FAFC]"
                     {...field}
                     aria-invalid={fieldState.invalid}

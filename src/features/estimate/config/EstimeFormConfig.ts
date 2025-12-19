@@ -87,7 +87,7 @@ export const initialValuesCar: Car = {
   worth: 0,
   terms: {
     insuranceType: CarInsurances.BASE,
-    vehicleAssistance: false,
+    vehicleAssistance: true,
     replacementCar: ReplacementsCar.NONE,
   },
 };
@@ -247,7 +247,7 @@ export const schemaEstimate = yup.object().shape({
           .oneOf([CarInsurances.BASE, CarInsurances.PLUS, CarInsurances.AUTO_EXCESO])
           .default(CarInsurances.BASE),
 
-        vehicleAssistance: yup.boolean().default(false),
+        vehicleAssistance: yup.boolean().default(true),
 
         replacementCar: yup
           .mixed<ReplacementsCar>()

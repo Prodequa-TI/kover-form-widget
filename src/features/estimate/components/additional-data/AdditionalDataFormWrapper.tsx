@@ -59,7 +59,7 @@ const additionalDataSchema = yup.object({
               [RelationShip.FAMILY, RelationShip.IAM],
               'Selecciona una opción válida.'
             )
-            .required('Selecciona un tipo de combustible.'),
+            .required('Selecciona una opción válida.'),
         otherwise: (schema) => schema.optional(),
       }),
       familyName: yup.string().when(['politicallyExposed', 'isItACloseRelative'], {
@@ -114,7 +114,7 @@ const additionalDataSchema = yup.object({
     }),
     executiveEmail: yup
       .string()
-      .email('Debe ser un correo válido')
+      .email('Debe ser un correo válido.')
       .when('hasEndorsmentPolicy', {
         is: (hasEndorsmentPolicy: boolean) => hasEndorsmentPolicy,
         then: (schema) =>
@@ -127,7 +127,7 @@ const additionalDataSchema = yup.object({
       is: (hasEndorsmentPolicy: boolean) => hasEndorsmentPolicy,
       then: (schema) =>
         schema
-          .matches(/^\d{10}$/, 'Teléfono debe tener 10 digitos.')
+          .matches(/^\d{10}$/, 'El teléfono debe tener 10 dígitos.')
           .dominicPhone('El teléfono debe comenzar con 809, 829 o 849.'),
       otherwise: (schema) => schema.optional(),
     }),
@@ -235,7 +235,7 @@ export const AdditionalDataFormWrapper = ({
             Datos adicionales
           </h1>
           <p className="mt-1 text-slate-500">
-            Por favor, completa la siguiente información para continuar con la emisión
+            Por favor, completa la siguiente información para continuar con la emisión.
           </p>
         </div>
         <form

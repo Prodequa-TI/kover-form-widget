@@ -124,9 +124,9 @@ export function CarForm({ form }: CarFormProps) {
           name="car.isNew"
           render={({ field, fieldState }) => (
             <Field data-invalid={fieldState.invalid}>
-              <FieldLabel htmlFor="car.isNew">Cero Km</FieldLabel>
+              <FieldLabel htmlFor="car.isNew">Cero km</FieldLabel>
               <CustomSelect
-                placeholder="¿Es Nuevo?"
+                placeholder="¿Es nuevo?"
                 name={field.name}
                 value={
                   field.value !== undefined && field.value !== null
@@ -278,8 +278,8 @@ export function CarForm({ form }: CarFormProps) {
                   htmlFor="car.isPersonalUse"
                   className="text-sm font-bold text-kover-widget-primary leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                 >
-                  Favor confirmar que es de uso particular y no es deportivo o de uso
-                  público / comercial
+                  Por favor, confirme que es de uso particular y no deportivo ni de uso
+                  público/comercial.
                 </label>
               </div>
 

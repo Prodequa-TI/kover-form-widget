@@ -100,7 +100,7 @@ export const EstimateForm = ({
 
       {isAuto ? (
         <div className="text-center mb-8">
-          <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
+          <h1 className="text-center text-2xl font-bold text-gray-900 mb-1 uppercase select-none">
             Para tu Auto
           </h1>
           <p className="text-gray-600">Seguro a todo riesgo</p>
@@ -158,7 +158,7 @@ export const EstimateForm = ({
               <div className="flex justify-start items-center gap-1">
                 <h4 className=" font-bold text-kover-widget-primary">Auto sustituto</h4>
                 <CustomTooltip
-                  message="Rent a car 15 dias compacto anuales / Uber RD$5,000 anuales"
+                  message="Lo puedes usar en caso de siniestro que supere el deducible."
                   iconClassName="text-kover-widget-primary mt-1"
                 />
               </div>
