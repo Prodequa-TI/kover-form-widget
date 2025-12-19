@@ -3,7 +3,6 @@ import { Controller, type UseFormReturn } from 'react-hook-form';
 import type { EstimateFormData } from '../../config/EstimeFormConfig';
 import { Gas, InstallatationType } from '../../type/types';
 import { CustomSelect } from '@/shared/CustomSelected';
-import { RequerimentsAdaptedInstallationType } from './RequirementAdaptedInstallationType';
 interface CarFormProps {
   form: UseFormReturn<EstimateFormData>;
   gasEnabled: boolean;
@@ -20,7 +19,6 @@ const installationOptions = [
   { value: InstallatationType.TO_BUILD, label: 'De fabrica' },
 ];
 export const GasAndInstallToggle = ({ form, gasEnabled }: CarFormProps) => {
-  const installationType = form.watch('car.installationType');
   return (
     <>
       <Controller

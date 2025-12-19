@@ -96,7 +96,7 @@ export function QuoteSummary({
     <>
       <div className="flex flex-col items-center gap-2 mb-4">
         <h1 className="text-2xl text-slate-900 font-semibold">
-          {isAuto ? 'Para tu Auto' : 'Por lo que conduces'}
+          {isAuto ? 'Para Tu Auto' : 'Por Lo Que conduces'}
         </h1>
         <div className="flex flex-col items-center text-slate-500">
           <p className="text-sm">Aquí te mostramos lo que estas contratando,</p>

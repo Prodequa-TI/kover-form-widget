@@ -74,7 +74,7 @@ export default function Emitir({
       <div className="mb-8 text-center">
         <div className="flex flex-col items-center gap-3">
           <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            Por lo que conduces
+            Por Lo Que Conduces
           </h1>
           <p className="text-slate-500">
             ¡Listo, mira cuánto ahorrarás con tu{' '}

@@ -33,13 +33,11 @@ export const RequirimentsAdaptedModal = ({
       open={open}
       onOpenChange={handleOpenChange}
       size="3xl"
-      onCancel={onClose}
-      cancelText="Cerrar"
     >
       <h1 className="text-center text-2xl mb-4">Requisitos de Instalación</h1>
       <div className="grid md:grid-cols-2 gap-8 md:gap-16 pt-4">
         <div>
-          <h2 className="text-xl font-bold text-[#301fe6] mb-6">Sistema de gas GLP:</h2>
+          <h2 className="text-xl font-bold text-[#301fe6] mb-6">Sistema de Gas GLP:</h2>
           <ul className="space-y-4">
             {GLPrequeriments.map((req, index) => (
               <li key={index} className="flex items-start gap-3">
