@@ -100,15 +100,18 @@ export const EstimateForm = ({
 
       {isAuto ? (
         <div className="text-center mb-8">
-          <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
-            Para tu Auto
+          <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 select-none">
+            Para Tu Auto
           </h1>
-          <p className="text-gray-600">Seguro a todo riesgo</p>
+          <p className="text-gray-600">Asegura tu auto nuevo o usado con la cobertura más completa, al mejor precio del mercado.</p>
         </div>
       ) : (
-        <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 uppercase select-none">
-          Por lo que conduces
+        <div className="text-center mb-8">
+        <h1 className="text-center text-2xl font-bold text-gray-900 mb-8 select-none">
+          Por Lo Que Conduces
         </h1>
+          <p className="text-gray-600">Seguro de Auto Full por Kilometraje</p>
+        </div>
       )}
 
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>

@@ -45,6 +45,8 @@ export const AutoInsuranceEmit = ({
     })
     .sort((a, b) => a.order - b.order);
 
+    const vehicle = insuranceData?.quotationResponse.data.vehiculo
+    const vehicleInfo = `${vehicle?.marca} ${vehicle?.modelo} ${vehicle?.anio}`;
   const formatMoney = (amount: number) => {
     const formated = new Intl.NumberFormat('es-DO', {
       style: 'currency',
@@ -72,7 +74,7 @@ export const AutoInsuranceEmit = ({
         )}
         <h1 className="text-2xl text-kover-widget-primary">¡Tú eliges como pagas!</h1>
         <p className="text-center mx-auto max-w-[500px] whitespace-normal text-sm">
-          ¿Con qué frecuencia deseas pagar el seguro de tu {}?
+          ¿Con qué frecuencia deseas pagar el seguro de tu {vehicleInfo}?
         </p>
       </div>
       <div className="w-full max-w-4xl mx-auto transition-shadow">
@@ -114,7 +116,7 @@ export const AutoInsuranceEmit = ({
 
                         {pay.hasInfo && (
                           <CustomTooltip
-                            message="Mensajes iguales y consecutivas"
+                            message="Mensuales iguales y consecutivas."
                             iconClassName="ml-1 absolute -top-2 right-1 text-orange-500 hover:text-orange-600"
                           />
                         )}

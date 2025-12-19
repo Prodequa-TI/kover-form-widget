@@ -126,6 +126,8 @@ const [selectedFrequency, setSelectedFrequency] = useState<string>('A');
 
     if (!popup) {
       alert('Popup bloqueado, por favor habilite las ventanas emergentes');
+      setIsCheckoutOpen(false);
+      setPaymentErrorMessage('Por favor, habilite las ventanas emergentes');
       return;
     }
 

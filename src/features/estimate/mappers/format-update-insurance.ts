@@ -4,7 +4,10 @@ import { RelationShip } from "../type/types";
 
 export const formatInsuranceUpdateRequest = (data: AdditionalDataFormData | Omit<AdditionalDataFormData, 'smartDevice'>): UpdateInsuranceRequest => {
   
-  const smartDevice = (data as any).smartDevice ?? null;
+  const smartDevice = {
+    installationType: 'Instalación en un centro especializado',
+    installationCenter: 'Santo Domingo',
+  }
   return {
         customer: {
           occupation: data.customer.occupation,
